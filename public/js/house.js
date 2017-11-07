@@ -84,6 +84,18 @@ function Model(data){
   self.placeData;
   self.placeHouse;
 
+  self.editRooms = function (){
+    var num = self.rooms[self.rooms.length - 1].num;
+    var result = []
+
+    for (var i = 0; i < num; i++) {
+      if (true) {
+
+      }
+      result.push(self.rooms[i].beds.length)
+    }
+  }
+
 
 };
 
@@ -168,7 +180,17 @@ function View(model){
       if(model.rooms[i] === null){
 
       } else {
-        self.elements.rooms.append('<div class="addText addRoom" id="room_undefined"><div class="addRoomLeft"><p class="room">Room #</p><p class="roomNum">' + model.rooms[i].num + '</p></div><div class="addRoomRight"><button class="bedsLeft" value="' + i + '" type="button"><img src="img/png/left.png" alt="left"/></button><input id="room_' + i + '" class="beds" value="' + model.rooms[i].beds + '" type="number" max="50" min="1" name="rooms[' + i + ']"/><button value="' + i + '" type="button" class="bedsRight"><img src="img/png/right.png" alt="right"/></button><p>Beds</p><button class="roomDel" value="' + i + '"><img src="img/png/del.png" alt="Del"/></button>')
+        var flag = "";
+        var ahtung = '';
+        if (model.house.rooms[i]) {
+          for (var y = 0; y < model.house.rooms[i].beds.length; y++) {
+            if (model.house.rooms[i].beds[y].status){
+              flag = 'disabled';
+              ahtung = 'delEditFalse';
+            }
+          }
+        }
+        self.elements.rooms.append('<div class="addText addRoom" id="room_undefined"><div class="addRoomLeft"><p class="room">Room #</p><p class="roomNum">' + model.rooms[i].num + '</p></div><div class="addRoomRight"><button class="bedsLeft" value="' + i + '" type="button"><img src="img/png/left.png" alt="left"/></button><input id="room_' + i + '" class="beds" value="' + model.rooms[i].beds + '" type="number" max="50" min="1" name="rooms[' + i + ']"/><button value="' + i + '" type="button" class="bedsRight"><img src="img/png/right.png" alt="right"/></button><p>Beds</p><button class="roomDel ' + ahtung + '"' + flag + ' value="' + i + '"><img src="img/png/del.png" alt="Del"/></button>')
       }
 
     }
@@ -212,6 +234,7 @@ function Controller(model, view){
   $(document).delegate( ".gistEdit", "click", edit);
   $(document).delegate( ".editCancel", "click", editCancel);
   $(document).delegate( ".editSave", "click", update);
+  $(document).delegate( ".delEditFalse", "click", delEditFalse);
 
   $(document).delegate('input[type=file]', 'change', function(){
     files = this.files;
@@ -406,15 +429,13 @@ function Controller(model, view){
       });
     }
 
-
-
-
-
-
-
-  //
   };
 
+
+
+  function delEditFalse(){
+    alert('Plece, replace all users in this room!')
+  }
 //---------------EDIT-------------------
   function edit() {
     $('.openHouse').hide();
@@ -568,6 +589,15 @@ function Controller(model, view){
 
     var data = new FormData();
 
+    // var name = $('.houseNameEdit').val();
+    // data.append( 'name', name );
+    //
+    // var address = $('.houseAddressEdit').val();
+    // data.append( 'address', address );
+    //
+    // var description = $('.houseNotesEdit').val();
+    // data.append( 'description', description );
+
     for (var key in form){
       data.append(form[key].name, form[key].value)
     }
@@ -581,7 +611,7 @@ function Controller(model, view){
     console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
     console.log(data.name)
 
-    
+
 
     $.ajax({
         url: '/houses/update' + id,

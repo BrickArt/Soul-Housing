@@ -130,23 +130,23 @@ block content
                             input(type='file', encType="multipart/form-data", accept='image/jpg, image/jpeg, image/png, image/gif').updateInput
                         .addText.addTitle
                           -if (house.name)
-                            input(type="text", placeholder="Title", name='name', value= house.name)
+                            input.houseNameEdit(type="text", placeholder="Title", name='name', value= house.name)
                           -else
-                            input(type="text", placeholder="Title", name='name', value= '')
+                            input.houseNameEdit(type="text", placeholder="Title", name='name', value= '')
                         .addText.addAddress
                           -if(house.address)
-                            input(type="text", placeholder="Address", name='address', value= house.address)
+                            input.houseAddressEdit(type="text", placeholder="Address", name='address', value= house.address)
                           -else
-                            input(type="text", placeholder="Address", name='address', value= '')
+                            input.houseAddressEdit(type="text", placeholder="Address", name='address', value= '')
                         
                         .rooms
                         .addText.addRoomBtn
                           button(type="button").roomAdd Add Room
                         .addDiscription
                           -if(house.description)
-                            textarea(placeholder="Notes", name='description', value= house.description)= house.description
+                            textarea.houseNotesEdit(placeholder="Notes", name='description', value= house.description)= house.description
                           -else
-                            textarea(placeholder="Notes", name='description', value= house.description)
+                            textarea.houseNotesEdit(placeholder="Notes", name='description', value= house.description)
                         .addButtons
                           button.editSave(type="button", value= house._id) Save changes
                           button.editCancel(type="reset", value= house._id) Cancel

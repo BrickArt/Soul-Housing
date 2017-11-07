@@ -341,40 +341,31 @@ router.post('/houses/update:id?', upload.any(), function(req, res, next){
       doc.image = item.image;
     }
     if (item.rooms){
-      if(item.rooms.length < doc.rooms.length){
-        for (var i = 0; i < doc.rooms.length; i++){
-          if(item.rooms[i]){
-            if (item.rooms[i] === doc.rooms[i].beds.length) {
-              console.log('its a analog room');
-            } else {
-              doc.rooms[i] = rooms[i]
-            }
-          }else{
-            // doc.rooms[i].beds = 0
-          }
-        }
-      } else{
-        for (var i = 0; i < item.rooms.length; i++) {
-          console.log('room is -------------' + i);
-
-          if(item.rooms.length === doc.rooms.length){
-            if (item.rooms[i] === doc.rooms[i].beds.length) {
-            } else {
-              doc.rooms[i] = rooms[i]
-            }
-          }
-          if(item.rooms.length > doc.rooms.length){
-            if(doc.rooms[i]){
-              if (item.rooms[i] === doc.rooms[i].beds.length) {
-              } else {
+      if (rooms.length >= doc.rooms.length) {
+        if (rooms.length > doc.rooms.length) {
+          for (var i = 0; i < rooms.length; i++) {
+            if (doc.rooms[i]) {
+              if (rooms[i].beds.length != doc.rooms[i].beds.length) {
                 doc.rooms[i] = rooms[i]
               }
-            }else{
+            } else {
               doc.rooms.push(rooms[i])
             }
           }
-        }
+        } else {
 
+        }
+      } else {
+        for (var y = 0; y < doc.rooms.length; y++) {
+          if (rooms[y]) {
+            if (rooms[y].beds.length != doc.rooms[y].beds.length) {
+              doc.rooms[y] = rooms[y]
+            }
+          } else {
+            doc.rooms.splice(y, 1);
+            y--;
+          }
+        }
       }
     }
     if(req.files[0]){
@@ -391,6 +382,49 @@ router.post('/houses/update:id?', upload.any(), function(req, res, next){
     });
   });
 });
+
+
+//
+// if(item.rooms.length < doc.rooms.length){
+//   for (var i = 0; i < doc.rooms.length; i++){
+//     if(item.rooms[i]){
+//       if (item.rooms[i] === doc.rooms[i].beds.length) {
+//         console.log('its a analog room');
+//       } else {
+//         doc.rooms[i] = rooms[i]
+//       }
+//     }else{
+//       doc.rooms.splice(i, 1)
+//       i--
+//     }
+//   }
+// } else{
+//   for (var i = 0; i < item.rooms.length; i++) {
+//     console.log('room is -------------' + i);
+//
+//     if(item.rooms.length === doc.rooms.length){
+//       if (item.rooms[i] === doc.rooms[i].beds.length) {
+//       } else {
+//         doc.rooms[i] = rooms[i]
+//       }
+//     }
+//     if(item.rooms.length > doc.rooms.length){
+//       if(doc.rooms[i]){
+//         if (item.rooms[i] === doc.rooms[i].beds.length) {
+//         } else {
+//           doc.rooms[i] = rooms[i]
+//         }
+//       }else{
+//         doc.rooms.push(rooms[i])
+//       }
+//     }
+//   }
+//
+// }
+
+
+
+
 
 
 //------------------FreeBeds-------------------
