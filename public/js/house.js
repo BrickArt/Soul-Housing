@@ -190,7 +190,7 @@ function View(model){
             }
           }
         }
-        self.elements.rooms.append('<div class="addText addRoom" id="room_undefined"><div class="addRoomLeft"><p class="room">Room #</p><p class="roomNum">' + model.rooms[i].num + '</p></div><div class="addRoomRight"><button ' + flag + ' class="bedsLeft" value="' + i + '" type="button"><img src="img/png/left.png" alt="left"/></button><input ' + flag + ' id="room_' + i + '" class="beds" value="' + model.rooms[i].beds + '" type="number" max="50" min="1" name="rooms[' + i + ']"/><button value="' + i + '" type="button" ' + flag + ' class="bedsRight"><img src="img/png/right.png" alt="right"/></button><p>Beds</p><button class="roomDel ' + ahtung + '"' + flag + ' value="' + i + '"><img src="img/png/del.png" alt="Del"/></button>')
+        self.elements.rooms.append('<div class="addText addRoom ' + ahtung + '"><div class="addRoomLeft "><p class="room">Room #</p><p class="roomNum">' + model.rooms[i].num + '</p></div><div class="addRoomRight"><button ' + flag + ' class="bedsLeft" value="' + i + '" type="button"><img src="img/png/left.png" alt="left"/></button><input id="room_' + i + '" class="beds" value="' + model.rooms[i].beds + '" type="number" max="50" min="1" name="rooms[' + i + ']"/><button value="' + i + '" type="button" ' + flag + ' class="bedsRight"><img src="img/png/right.png" alt="right"/></button><p>Beds</p><button class="roomDel ' + ahtung + '"' + flag + ' value="' + i + '"><img src="img/png/del.png" alt="Del"/></button></div></div>')
       }
 
     }
@@ -437,7 +437,7 @@ function Controller(model, view){
 
 
   function delEditFalse(){
-    alert('Plece, replace all users in this room!')
+    alert('Please replace users before deleting occupied beds!')
   }
 //---------------EDIT-------------------
   function edit() {
