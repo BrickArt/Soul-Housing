@@ -1,6 +1,6 @@
 {
   "mongoose": {
-    "uri": "mongodb://artemrebrik:mersedese280@ds147454.mlab.com:47454/soul",
+    "uri": "mongodb://artemrebrik:mersedese280@ds147454.mlab.com:47454/soul-housing",
     "options": {
       "useMongoClient": true
     }
