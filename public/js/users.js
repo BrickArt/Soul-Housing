@@ -132,8 +132,11 @@ init();
 function nav(){
   var a = $(this).attr('value');
   console.log('function');
-  sessvars.house = null;
-  sessvars.user = null;
+  $.session.remove('houseID');
+  $.session.remove('userID');
+  $.session.remove('room');
+  $.session.remove('bed');
+  $.session.remove('price');
   window.location.href = a
 };
 //------------------ADD----------------------
@@ -181,6 +184,7 @@ function nav(){
         200: function() {
           right.html("User is deleted").addClass('alert-success');
           view.delete(id);
+          window.location.href = "/users";
         },
         403: function(jqXHR) {
           var error = JSON.parse(jqXHR.responseText);
@@ -368,7 +372,7 @@ function nav(){
       type: 'POST',
       statusCode: {
         200: function() {
-          window.location.href = "/users";
+          window.location.href = "/users" + model.user._id;
         },
         403: function(jqXHR) {
           var error = JSON.parse(jqXHR.responseText);

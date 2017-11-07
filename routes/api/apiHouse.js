@@ -162,7 +162,32 @@ router.post('/houses/update:id?', upload.any(), function(req, res, next){
       doc.image = item.image;
     }
     if (item.rooms){
-      doc.rooms = item.rooms
+      if (item.rooms.length >= doc.rooms.length) {
+        if (item.rooms.length > doc.rooms.length) {
+          for (var i = 0; i < item.rooms.length; i++) {
+            if (doc.rooms[i]) {
+              if (item.rooms[i].beds.length != doc.rooms[i].beds.length) {
+                doc.rooms[i] = item.rooms[i]
+              }
+            } else {
+              doc.rooms.push(item.rooms[i])
+            }
+          }
+        } else {
+
+        }
+      } else {
+        for (var y = 0; y < doc.rooms.length; y++) {
+          if (item.rooms[y]) {
+            if (item.rooms[y].beds.length != doc.rooms[y].beds.length) {
+              doc.rooms[y] = item.rooms[y]
+            }
+          } else {
+            doc.rooms.splice(y, 1);
+            y--;
+          }
+        }
+      }
     }
 
     doc.save(function (err) {

@@ -106,8 +106,11 @@ function Controller(model, view){
   function nav(){
     var a = $(this).attr('value');
     console.log('function');
-    sessvars.house = null;
-    sessvars.user = null;
+    $.session.remove('houseID');
+    $.session.remove('userID');
+    $.session.remove('room');
+    $.session.remove('bed');
+    $.session.remove('price');
     window.location.href = a
   };
 //---------------ADD-------------------
