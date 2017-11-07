@@ -289,11 +289,11 @@ router.get('/api/doc/houses/house_:id?', function(req, res, next){
         status: items.house.rooms[i].beds[y].status,
         user: {}
       }
+      console.log('ooooooooooook');
       for (var z = 0; z < items.users.length; z++) {
         console.log(items.house.rooms[i].beds[y].userID);
         if (items.users[z]._id == items.house.rooms[i].beds[y].userID) {
           bed.user = items.users[z]
-          console.log('ooooooooooook');
         }
         if (z === items.users.length - 1) {
           room.beds.push(bed);
