@@ -1,0 +1,68 @@
+@import url("https://fonts.googleapis.com/css?family=Ubuntu:300,400");
+body {
+  background-color: #358DE0;
+  font-family: 'Ubuntu';
+  font-weight: 300; }
+
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); }
+
+.form-control::-webkit-input-placeholder {
+  color: #fff; }
+
+.authImg {
+  width: 13px;
+  height: 13px;
+  margin-right: 11px; }
+
+.authInput {
+  width: 90%;
+  background-color: #358DE0;
+  border: none;
+  margin: 11px 0;
+  color: #fff; }
+  .authInput:focus {
+    outline: none; }
+  .authInput::-webkit-input-placeholder {
+    color: #fff;
+    font-weight: 300;
+    letter-spacing: 0; }
+  .authInput::-moz-placeholder {
+    color: #fff;
+    font-weight: 300;
+    letter-spacing: 0; }
+  .authInput:-moz-placeholder {
+    color: #fff;
+    font-weight: 300;
+    letter-spacing: 0; }
+  .authInput:-ms-input-placeholder {
+    color: #fff;
+    font-weight: 300;
+    letter-spacing: 0; }
+
+.logo {
+  margin-left: 20px; }
+
+.username {
+  font-size: 14px;
+  border-bottom: 1px solid #fff;
+  margin-bottom: 15px; }
+
+.password {
+  font-size: 14px;
+  border-bottom: 1px solid #fff; }
+  .password > .authInput {
+    letter-spacing: 4px; }
+
+.authBtn {
+  width: 100%;
+  margin-top: 38px;
+  font-weight: 400;
+  font-size: 16px;
+  color: #656565; }
+  .authBtn:hover {
+    color: #656565; }
+

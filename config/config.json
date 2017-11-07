@@ -1,0 +1,16 @@
+{
+  "mongoose": {
+    "uri": "mongodb://artemrebrik:mersedese280@ds147454.mlab.com:47454/soul",
+    "options": {
+      "useMongoClient": true
+    }
+  },
+  "port": 3000,
+  "session": {
+    "secret": "KillerIsJim",
+    "maxAge": 14400000
+  },
+  "logger": {
+    "format": "default"
+  }
+}

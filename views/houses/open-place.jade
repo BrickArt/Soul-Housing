@@ -1,0 +1,27 @@
+.overview
+  -if (image)
+    .overviewImg(style="background: url(img/upload/gists/#{image}); background-size: auto 156px; background-position: center; background-repeat: none")
+  -else 
+    .overviewImg(style="background: url(img/upload/gist.png); background-size: auto 156px; background-position: center")
+  .overviewStatus
+    .statusHeader
+      h2= name + ' ' + lastname
+      p= program
+    .statusFoter
+      h3.active Active
+      p (Soul 7)
+      img(src='img/png/toggle.png', alt='Toggle')
+.ocerviewContent
+  .overviewBith.overviewName
+    p= dateOfBirth
+  .overviewSex.overviewName
+    p= gender
+  .overviewBith.overviewName
+    p= address
+  .overviewSex.overviewName
+    p= phone
+  .overviewText
+    p= discription
+  .overviewButtons
+    button.gistPlace.gistBtn.place.placeHouse(value= _id) Place
+    button.gistShelterHistory.gistBtn.cancel(value= _id) Cancel

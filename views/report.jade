@@ -1,0 +1,91 @@
+extends layout
+
+block script
+  link(rel='stylesheet', href='/stylesheets/report.css')
+  link(rel='stylesheet', href='/stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+  script(src="/js/bootstrap.min.js")
+  script(src="/js/moment.js")
+  script(src="/js/Chart.min.js")
+  script(src="/js/daterangepicker.js")
+  link(rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css")
+
+
+block content
+      .row
+        .col-lg-3
+          button.rooms
+            .reportHeader
+              .reportIcon
+                img(src='img/png/viewHouse.png')
+              .reportStat
+                h2.freeBeds 0
+                p Vacancies
+            .reportFooter
+        .col-lg-3
+          button.amount
+            .reportHeader
+              .reportIcon
+                img(src='img/svg/header-4.svg')
+              .reportStat
+                h2.money 0
+                p Unpaid
+            .reportFooter
+              .reportView
+                p View details
+              .reportViewBtn
+                img(src='img/png/arrow.png')
+        .col-lg-3
+          button.guests
+            .reportHeader
+              .reportIcon
+                img(src='img/png/viewGuist.png')
+              .reportStat
+                h2.users 0
+                p Census
+            .reportFooter
+              .reportView
+                p View details
+              .reportViewBtn
+                  img(src='img/png/arrow.png')
+        .col-lg-3
+          button.houses
+            .reportHeader
+              .reportIcon
+                img(src='img/png/viewHouse2.png')
+              .reportStat
+                h2.totalHouses 0
+                p Total houses
+            .reportFooter
+              .reportView
+                p View details
+              .reportViewBtn
+                img(src='img/png/arrow.png')
+      .row.charts
+        .col-lg-6
+            div.chartHeader.chartLeft
+                div.chartIcon
+                    img(src="img/png/calendar.png")
+                div.form-group#chartSelectpicker
+                    input#demo(type="text")
+                    //label.chartDescription(for="sel1") 2017-07-24 - 2017-11-26
+                    select.form-control.chartSelectpicker#sel1
+                      -each program in programs
+                        option= program.abbr
+                        
+            canvas#chartCanvasPayments
+          //img(src='img/png/chart.png')
+        .col-lg-6
+            div.chartHeader.chartRight
+                div.chartIcon
+                    img(src="img/png/book.png")
+                div
+                    label.chartDescription Programs
+
+            canvas#chartCanvasUsers
+          //img(src='img/png/pie.png')
+          
+block footer
+  script(src='js/report.js')
+  script(src="js/chartDrawLine.js")
+  script(src="js/chartDrawDonut.js")
+  script(src="js/onloadHandler.js")

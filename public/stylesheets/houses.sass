@@ -1,0 +1,538 @@
+
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, em, img, strong, sub, sup, b, u, i,  dl, dt, dd, ol, ul, li, fieldset, form, label, table, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video
+	margin: 0
+	padding: 0
+	border: 0
+	outline: 0
+	vertical-align: baseline
+	background: transparent
+	font-size: 100%
+
+a
+	margin: 0
+	padding: 0
+	font-size: 100%
+	vertical-align: baseline
+	background: transparent
+	outline: none
+
+table
+	border-collapse: collapse
+	border-spacing: 0
+
+td, td img
+	vertical-align: top
+
+input, select, button, textarea
+	margin: 0
+	font-size: 100%
+	outline: none
+
+input[type="text"], input[type="password"], textarea
+	padding: 0
+
+input[type="checkbox"]
+	vertical-align: bottom
+
+input[type="radio"]
+	vertical-align: text-bottom
+
+sub
+	vertical-align: sub
+	font-size: smaller
+
+sup
+	vertical-align: super
+	font-size: smaller
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section
+	display: block
+
+nav ul
+	 list-style: none
+
+html
+	min-height: 100%
+
+body
+	color: #7e7f84
+	text-align: left
+	font-size: 1em
+	min-height: 100%
+  font-family: 'Roboto', sans-serif
+
+
+a, a:visited
+	color: #f45a40
+	text-decoration: underline
+
+a:hover
+	color: #f45a40
+	text-decoration: none
+
+a:focus, a:active
+	color: #f45a40
+	text-decoration: underline
+
+h1, h2, h3, h4, h5, h6
+	font-weight: normal
+
+img
+
+	max-width: 100%
+
+.clr
+	clear: both
+
+.clearfix:after
+    clear: both
+    display: table
+
+
+
+
+
+
+
+
+
+
+
+
+$primary-color: #358DE0
+$secondary-color: #656565
+$border-color: #EDEDED
+$text-color: #95989A
+$btn-color: #5E82BC
+$white-color: #fff
+
+@import url('https://fonts.googleapis.com/css?family=Ubuntu:300,400')
+
+body
+  margin: 0
+  padding: 0
+
+.header
+  background-color: $primary-color
+  width: 100%
+  height: 60px
+
+
+.navBlock
+  width: 315px
+  margin: 0 auto
+
+.nav
+  width: 60px
+  height: 50px
+  float: left
+  margin-left: 25px
+  margin-top: 5px
+  background-color: $primary-color
+  border: none
+  &:first-child
+    margin-left: 0
+  &:hover
+    cursor: pointer
+  &:focus
+    outline: none
+  & > h1
+    font-size: 12px
+    text-align: center
+    color: #fff
+    margin: 0 auto
+  .navImg1
+    width: 34px
+    margin: 0 auto
+  .navImg2
+    width: 35px
+    margin: 0 auto
+  .navImg3
+    width: 38px
+    margin: 0 auto
+  .navImg4
+    width: 27px
+    margin: 0 auto
+
+
+// content
+.scrollParent
+  overflow: hidden
+  margin-right: -7px
+
+.scroll
+  overflow: auto
+  height: 91vh
+
+
+  &::-webkit-scrollbar
+    width: 7px
+    border-radius: 10px
+  &::-webkit-scrollbar-track
+    background-color: rgba(0,0,0,0.08)
+  &::-webkit-scrollbar-thumb
+    border-radius: 10px
+    background-color: rgba(0,0,0,0.15)
+    &:hover
+      background-color: rgba(0,0,0,0.4)
+
+.add
+  display: none
+
+.article
+  border-bottom: 1px solid $border-color
+  &:hover
+    background-color: $border-color
+
+  button
+    width: 100%
+    height: 75px
+    background-color: rgba(0,0,0,0)
+    border: none
+    &:hover
+      cursor: pointer
+    &:focus
+      outline: none
+
+  .house
+    float: left
+    display: block
+
+
+    h2, p
+      font-size: 14px
+      margin: 15px 0 0 15px
+      text-align: left
+
+    p
+      color: $secondary-color
+      margin-top: 5px
+
+  .members
+    float: right
+    display: block
+    width: 120px
+    &>p
+      float: left
+      display: block
+      margin-top: 26px
+      font-size: 14px
+      color: $secondary-color
+    .bad
+      margin-top: 33px
+      margin-right: 4px
+      width: 13px
+      float: left
+      display: block
+    .bow
+      width: 10px
+      margin-top: 28px
+
+
+.addBtn
+  position: absolute
+  top: 570px
+  left: 25px
+  width: 62px
+  height: 62px
+  border-radius: 50%
+  background-color: #8DBC5E
+  border: none
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1)
+  &:hover
+    box-shadow: 0 8px 15px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)
+    cursor: pointer
+  &:focus
+    outline: none
+  p
+    font-size: 40px
+    color: #fff
+    position: relative
+    top: -4px
+    left: 0px
+
+
+.col-lg-5
+  left: -7px
+  padding-left: 0
+  padding-right: 15px
+
+  .overview
+    border-bottom: 1px solid $border-color
+    padding: 7px 0 10px 10px
+    left: -20px
+    height: 208px
+
+
+
+    .overviewImg
+      float: left
+      display: block
+      width: 250px
+      height: 200px
+      .houseImage
+        height: 190px
+        width: 250px
+
+
+    .overviewStatus
+      margin-top: 75px
+      margin-left: 285px
+      left: 500px
+      display: block
+
+
+      .bad
+        width: 50px
+        float: left
+        display: block
+        padding-top: 5px
+
+      p
+        font-size: 30px
+        padding-left: 75px
+        color: $text-color
+
+  .overviewName
+    border-bottom: 1px solid $border-color
+    padding: 11px 0 12px 22px
+
+    h2, p
+      margin-bottom: 0
+      font-size: 15px
+      color: #808080
+
+  .overviewText
+    border-bottom: 1px solid $border-color
+    padding: 11px 0 12px 22px
+    color: $text-color
+    p
+      margin-bottom: 0
+
+  .overviewButtons
+    padding: 11px 0 12px 22px
+    .houseGistList
+      width: 420px
+      height: 48px
+      background-color: $btn-color
+      color: #fff
+      border: none
+      margin-bottom: 12px
+      &:hover
+        background-color: $primary-color
+        cursor: pointer
+
+    .houseControls
+      padding: 12px 0
+      margin-bottom: 28px
+      select, input
+        width: 70px
+        margin: 0 35px 0 35px
+        float: left
+        display: block
+        font-size: 16px
+        border: none
+
+    .houseAddPerson
+      margin-top: 12px
+      width: 420px
+      height: 48px
+      border: solid 1px green
+      background-color: #fff
+      cursor: pointer
+
+
+
+.edit
+  display: none
+
+
+
+
+.overviewControls
+  margin-bottom: 10px
+  &>button
+    background-color: #fff
+    border: none
+    color: #808080
+    &:focus
+      outline: none
+    &:hover
+      cursor: pointer
+  .gistEdit
+    float: left
+    margin-left: 125px
+  .gistDel
+    float: right
+    margin-right: 125px
+
+
+
+
+.addPhoto
+  height: 170px
+  border-bottom: 1px solid $border-color
+  &>img
+    margin-left: 165px
+    width: 130px
+  .uploadPhoto
+    position: relative
+    display: block
+    position: relative
+    overflow: hidden
+    margin: 10px auto 10px auto
+    background-color: #fff
+    border: none
+    color: #fff
+    height: 150px
+    width: 200px
+    font-size: 15px
+    font-weight: 500
+
+
+
+    p
+      margin-bottom: 0
+    &:hover
+      cursor: pointer
+
+.addText
+  border-bottom: 1px solid $border-color
+  height: 65px
+  padding: 18px 15px 0 15px
+.addTitle, .addAddress
+  input
+    border: none
+    width: 100%
+    &:focus
+      outline: none
+
+.addRoom
+  color: $text-color
+  .addRoomLeft
+    width: 150px
+    float: left
+    &>.room
+      float: left
+
+  .addRoomRight
+    margin-left: 240px
+    height: 20px
+    input
+      width: 20px
+      float: left
+      border: none
+      margin: -2px 10px
+      text-align: right
+      font-size: 20px
+      &:focus
+        outline: none
+    button
+      float: left
+      background-color: #fff
+      border: none
+      cursor: pointer
+      &:focus
+        outline: none
+    p
+      width: 50px
+      float: left
+      margin: 3px 0 0 15px
+
+.addRoomBtn
+  padding: 0
+  button
+    width: 430px
+    margin: 10px 0px 10px 15px
+    background-color: $primary-color
+    color: #fff
+    border: none
+    padding: 10px 0
+    cursor: pointer
+
+.addDiscription
+  min-height: 65px
+  border-bottom: 1px solid $border-color
+  textarea
+    margin: 10px 15px 10px 15px
+    overflow: hidden
+    width: 430px
+    height: 200px
+    border: none
+
+.addButtons
+  button
+    width: 430px
+    margin: 10px 0px 0 15px
+    padding: 10px 0
+    color: #fff
+    border: none
+    &:focus
+      outline: none
+    &:hover
+      cursor: pointer
+
+  .addSave
+    background-color: #8DBC5E
+    &:hover
+      background-color: #A1D46E
+  .addCancel
+    background-color: #FF7722
+    &:hover
+      background-color: #FD8D47
+
+  .editSave
+    background-color: #8DBC5E
+    &:hover
+      background-color: #A1D46E
+  .editCancel
+    background-color: #FF7722
+    &:hover
+      background-color: #FD8D47
+
+
+
+.place
+  display: none
+
+.placeOpen
+  width: 420px
+  height: 48px
+  padding: 10px 0
+  margin-bottom: 12px
+  color: #fff
+  border: none
+  background-color: #8DBC5E
+  &:focus
+    outline: none
+  &:hover
+    cursor: pointer
+    background-color: #A1D46E
+
+
+.addPhoto
+  position: relative
+  input
+    margin: 30px 50px 30px 150px
+    position: absolute
+    left: 0
+    top: 0
+    width: 160px
+    height: 80px
+    transform: scale(20)
+    letter-spacing: 10em
+    -ms-transform: scale(20)
+    opacity: 0
+    cursor: pointer
+
+
+input[type=number]::-webkit-inner-spin-button
+  display: none
+
+.greenPerson
+  background-color: #8DBC5E
+  border: none
+  cursor: pointer
+  &:hover
+    background-color: #A1D46E

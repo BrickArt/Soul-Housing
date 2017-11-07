@@ -1,0 +1,495 @@
+@import url("https://fonts.googleapis.com/css?family=Ubuntu:300,400");
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, em, img, strong, sub, sup, b, u, i, dl, dt, dd, ol, ul, li, fieldset, form, label, table, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  vertical-align: baseline;
+  background: transparent;
+  font-size: 100%; }
+
+a {
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+  outline: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+td, td img {
+  vertical-align: top; }
+
+input, select, button, textarea {
+  margin: 0;
+  font-size: 100%;
+  outline: none; }
+
+input[type="text"], input[type="password"], textarea {
+  padding: 0; }
+
+input[type="checkbox"] {
+  vertical-align: bottom; }
+
+input[type="radio"] {
+  vertical-align: text-bottom; }
+
+sub {
+  vertical-align: sub;
+  font-size: smaller; }
+
+sup {
+  vertical-align: super;
+  font-size: smaller; }
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+nav ul {
+  list-style: none; }
+
+html {
+  min-height: 100%; }
+
+body {
+  color: #7e7f84;
+  text-align: left;
+  font-size: 1em;
+  min-height: 100%;
+    min-height-font-family: 'Roboto', sans-serif; }
+
+a, a:visited {
+  color: #f45a40;
+  text-decoration: underline; }
+
+a:hover {
+  color: #f45a40;
+  text-decoration: none; }
+
+a:focus, a:active {
+  color: #f45a40;
+  text-decoration: underline; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal; }
+
+img {
+  max-width: 100%; }
+
+.clr {
+  clear: both; }
+
+.clearfix:after {
+  clear: both;
+  display: table; }
+
+body {
+  margin: 0;
+  padding: 0; }
+
+.header {
+  background-color: #358DE0;
+  width: 100%;
+  height: 60px; }
+
+.navBlock {
+  width: 315px;
+  margin: 0 auto; }
+
+.nav {
+  width: 60px;
+  height: 50px;
+  float: left;
+  margin-left: 25px;
+  margin-top: 5px;
+  background-color: #358DE0;
+  border: none; }
+  .nav:first-child {
+    margin-left: 0; }
+  .nav:hover {
+    cursor: pointer; }
+  .nav:focus {
+    outline: none; }
+  .nav > h1 {
+    font-size: 12px;
+    text-align: center;
+    color: #fff;
+    margin: 0 auto; }
+  .nav .navImg1 {
+    width: 34px;
+    margin: 0 auto; }
+  .nav .navImg2 {
+    width: 35px;
+    margin: 0 auto; }
+  .nav .navImg3 {
+    width: 38px;
+    margin: 0 auto; }
+  .nav .navImg4 {
+    width: 27px;
+    margin: 0 auto; }
+
+.scrollParent {
+  overflow: hidden;
+  margin-right: -7px; }
+
+.scroll {
+  overflow: auto;
+  height: 91vh; }
+  .scroll::-webkit-scrollbar {
+    width: 7px;
+    border-radius: 10px; }
+  .scroll::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0.08); }
+  .scroll::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.15); }
+    .scroll::-webkit-scrollbar-thumb:hover {
+      background-color: rgba(0, 0, 0, 0.4); }
+
+.article {
+  border-bottom: 1px solid #EDEDED;
+  height: 75px; }
+  .article:hover {
+    background-color: #EDEDED; }
+  .article button {
+    width: 100%;
+    height: 75px;
+    background-color: transparent;
+    border: none; }
+    .article button:hover {
+      cursor: pointer; }
+    .article button:focus {
+      outline: none; }
+  .article .gist {
+    float: left;
+    display: block; }
+    .article .gist h2, .article .gist p {
+      font-size: 14px;
+      margin: 12px 0 0 15px;
+      text-align: left; }
+    .article .gist p {
+      color: #656565;
+      margin-top: 5px; }
+  .article .gistStatus {
+    float: right;
+    height: 75px;
+    margin: 0 30px 0 0;
+    padding-left: 30px; }
+    .article .gistStatus .Activity {
+      float: left;
+      margin-top: 10px; }
+      .article .gistStatus .Activity .active {
+        color: #8DBC5E;
+        margin-top: 10px;
+        font-size: 14px;
+        text-align: right; }
+    .article .gistStatus .Activity > p {
+      margin: 3px 0 0 0;
+      font-size: 14px;
+      color: #656565;
+      text-align: right; }
+    .article .gistStatus .moreDetails {
+      margin: 30px 0 0 30px;
+      width: 13px;
+      float: right; }
+
+.add {
+  display: none; }
+
+.inactive {
+  text-align: right;
+  font-size: 14px;
+  color: #F5A3A3;
+  margin-top: 10px; }
+
+.col-lg-5 {
+  left: -7px;
+  padding-left: 0;
+  padding-right: 15px; }
+  .col-lg-5 .overview {
+    border-bottom: 1px solid #EDEDED;
+    padding: 7px 0 10px 10px;
+    left: -20px;
+    height: 130px; }
+    .col-lg-5 .overview .overviewImg {
+      float: left;
+      display: block;
+      width: 107px;
+      height: 107px;
+      border-radius: 50%;
+      background: url("../img/upload/gist.png");
+      background-size: auto 107px; }
+      .col-lg-5 .overview .overviewImg > img {
+        width: 156px;
+        height: 156px;
+        border-radius: 50%; }
+    .col-lg-5 .overview .overviewStatus {
+      margin: 0 0 0 80px;
+      height: 100px;
+      width: 165px;
+      float: left; }
+      .col-lg-5 .overview .overviewStatus .overviewStatusName {
+        height: 50px; }
+      .col-lg-5 .overview .overviewStatus .overviewStatusName > h2 {
+        font-size: 20px; }
+      .col-lg-5 .overview .overviewStatus .overviewStatusBalance > h3 {
+        font-size: 18px;
+        float: left;
+        margin: 9px 0 0 0; }
+      .col-lg-5 .overview .overviewStatus .overviewStatusBalance > p {
+        font-size: 24px;
+        font-weight: bold;
+        margin: 0 0 0 70px; }
+      .col-lg-5 .overview .overviewStatus .overviewStatusLast {
+        margin-top: 5px; }
+      .col-lg-5 .overview .overviewStatus .overviewStatusLast > h3 {
+        font-size: 14px;
+        float: left;
+        margin: 3px 5px 0 0; }
+      .col-lg-5 .overview .overviewStatus .overviewStatusLast > p {
+        font-size: 14px; }
+    .col-lg-5 .overview .overviewExcel {
+      margin: 0 0 0 405px; }
+      .col-lg-5 .overview .overviewExcel > button {
+        background-color: #fff;
+        border: none; }
+        .col-lg-5 .overview .overviewExcel > button:focus {
+          outline: none; }
+        .col-lg-5 .overview .overviewExcel > button:hover {
+          cursor: pointer; }
+        .col-lg-5 .overview .overviewExcel > button > img {
+          width: 30px; }
+  .col-lg-5 .payment {
+    height: 75px;
+    border-bottom: 1px solid #EDEDED;
+    padding: 15px 0 12px 22px; }
+    .col-lg-5 .payment .paymentData {
+      padding: 0 0 0 18px;
+      float: left; }
+      .col-lg-5 .payment .paymentData > p {
+        font-size: 14px;
+        margin: 0; }
+      .col-lg-5 .payment .paymentData > h3 {
+        font-size: 18px;
+        margin: 0;
+        color: #8DBC5E;
+        text-align: center; }
+    .col-lg-5 .payment .paymentDiscription {
+      margin: -3px 0 0 175px;
+      color: #3B3B3B; }
+      .col-lg-5 .payment .paymentDiscription > p {
+        font-size: 18px;
+        margin: 0; }
+      .col-lg-5 .payment .paymentDiscription > h3 {
+        font-size: 20px;
+        margin: 0; }
+  .col-lg-5 .overviewButtons {
+    padding: 11px 0 12px 10px; }
+    .col-lg-5 .overviewButtons .paymentBtn {
+      width: 430px;
+      height: 48px;
+      color: #fff;
+      border: none;
+      margin-bottom: 0;
+      margin-left: 0; }
+      .col-lg-5 .overviewButtons .paymentBtn:focus {
+        outline: none; }
+    .col-lg-5 .overviewButtons .gistPlace {
+      background-color: #8DBC5E; }
+      .col-lg-5 .overviewButtons .gistPlace:hover {
+        background-color: #A6D875;
+        cursor: pointer; }
+    .col-lg-5 .overviewButtons .gistPaymentsHistory {
+      background-color: #5E82BC; }
+      .col-lg-5 .overviewButtons .gistPaymentsHistory:hover {
+        background-color: #358DE0;
+        cursor: pointer; }
+    .col-lg-5 .overviewButtons .gistShelterHistory {
+      background-color: #FF7777; }
+      .col-lg-5 .overviewButtons .gistShelterHistory:hover {
+        background-color: #FA8787;
+        cursor: pointer; }
+    .col-lg-5 .overviewButtons .overviewControls {
+      margin-bottom: 10px; }
+      .col-lg-5 .overviewButtons .overviewControls > button {
+        background-color: #fff;
+        border: none;
+        color: #808080; }
+        .col-lg-5 .overviewButtons .overviewControls > button:focus {
+          outline: none; }
+        .col-lg-5 .overviewButtons .overviewControls > button:hover {
+          cursor: pointer; }
+      .col-lg-5 .overviewButtons .overviewControls .gistEdit {
+        float: left;
+        margin-left: 125px; }
+      .col-lg-5 .overviewButtons .overviewControls .gistDel {
+        float: right;
+        margin-right: 125px; }
+
+.overviewStatusBalance {
+  height: 35px;
+  width: 300px; }
+
+.red {
+  color: #F5A3A3; }
+
+.green {
+  color: #8DBC5E; }
+
+.statusHeader {
+  height: 75px;
+  width: 250px; }
+  .statusHeader h2 {
+    font-size: 20px;
+    width: 100; }
+  .statusHeader p {
+    float: right;
+    font-weight: bold;
+    color: #F5A3A3;
+    margin-top: -30px; }
+
+.statusFoter {
+  height: 75px;
+  width: 260px; }
+  .statusFoter .active {
+    font-weight: bold;
+    color: #8DBC5E;
+    font-size: 16px;
+    float: left;
+    margin: 5px 0 0 0; }
+  .statusFoter p {
+    float: left;
+    font-size: 14px;
+    color: #95989A;
+    margin: 4px 0 0 5px; }
+  .statusFoter img {
+    float: right; }
+
+.overviewName {
+  border-bottom: 1px solid #EDEDED;
+  padding: 11px 0 12px 22px; }
+  .overviewName h2 {
+    text-transform: uppercase; }
+  .overviewName h2, .overviewName p {
+    margin-bottom: 0;
+    font-size: 15px;
+    color: #808080; }
+
+.overviewText {
+  border-bottom: 1px solid #EDEDED;
+  padding: 11px 0 12px 22px;
+  color: #95989A; }
+  .overviewText p {
+    margin-bottom: 0; }
+
+.addPhoto {
+  position: relative; }
+  .addPhoto input {
+    margin-left: 5px;
+    position: absolute;
+    left: 175px;
+    top: 20px;
+    width: 100px;
+    height: 100px;
+    letter-spacing: 10em;
+    opacity: 0;
+    cursor: pointer; }
+
+.addPhoto {
+  height: 140px;
+  border-bottom: 1px solid #EDEDED; }
+  .addPhoto .uploadPhoto {
+    background-color: #fff;
+    border: none;
+    margin: 30px 0 0 175px;
+    color: #358DE0; }
+    .addPhoto .uploadPhoto:hover {
+      cursor: pointer; }
+
+.addText {
+  border-bottom: 1px solid #EDEDED;
+  height: 65px;
+  padding: 18px 15px 0 15px; }
+
+.addDate input {
+  border: none;
+  width: 100%; }
+  .addDate input:focus {
+    outline: none; }
+
+.addCash p {
+  margin-top: 2px;
+  color: #808080;
+  float: left; }
+
+.addCash input {
+  float: left;
+  border: none;
+  margin: 0 5px 0 50px;
+  width: 50px;
+  text-align: right; }
+
+.addType {
+  border: none;
+  color: #808080; }
+
+.addButtons button {
+  width: 430px;
+  margin: 10px 0px 0 15px;
+  padding: 10px 0;
+  color: #fff;
+  border: none; }
+  .addButtons button:focus {
+    outline: none; }
+  .addButtons button:hover {
+    cursor: pointer; }
+
+.addButtons .addSave {
+  background-color: #8DBC5E; }
+  .addButtons .addSave:hover {
+    background-color: #A1D46E; }
+
+.addButtons .addCancel {
+  background-color: #FF7722; }
+  .addButtons .addCancel:hover {
+    background-color: #FD8D47; }
+
+.overviewButtons .paymentBtn {
+  width: 430px;
+  margin: 10px 0px 0 15px; }
+
+.overviewButtons button {
+  width: 430px;
+  margin: 10px 0px 0 15px;
+  padding: 10px 0;
+  color: #fff;
+  border: none;
+  background-color: #FF7722; }
+  .overviewButtons button:focus {
+    outline: none; }
+  .overviewButtons button:hover {
+    cursor: pointer;
+    background-color: #FD8D47; }
+
+.overviewControls {
+  margin-bottom: 10px; }
+  .overviewControls > button {
+    width: 100px;
+    background-color: #fff;
+    border: none;
+    color: #808080; }
+    .overviewControls > button:focus {
+      outline: none; }
+    .overviewControls > button:hover {
+      cursor: pointer; }
+  .overviewControls .gistEdit {
+    float: left;
+    margin-left: 125px; }
+  .overviewControls .gistDel {
+    float: right;
+    margin-right: 125px; }
+
+/*# sourceMappingURL=payments.css.map */

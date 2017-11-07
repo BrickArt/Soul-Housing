@@ -1,0 +1,423 @@
+extends layout
+
+block script
+  link(rel='stylesheet', href='/stylesheets/users.css')
+  
+block content
+  .mainBlock
+    .row
+      .col-lg-7
+        .scrollParent
+          .scroll
+            .houseBlock
+              -if (gists)
+                each gist in gists
+                  .article(id= gist._id)
+                    button.userBtn(value= gist._id)
+                      .gist
+                        h2= gist.name + ' ' + gist.lastname
+                        -if (gist.residence)
+                          -each residence in residences
+                            -if(gist.residence == residence._id)
+                              -each house1 in houses
+                                -if (residence.houseID == house1._id)
+                                  p= house1.address
+                      .gistStatus
+                        .Activity
+                          p= gist.program
+                          -if (!gist.status)
+                            h3.inactive.inactiveL Inactive
+                          -else
+                            h3.active.activeL Active
+                        img.moreDetails(src='img/svg/join.svg', alt='join')
+
+        button.addBtn
+          p +
+
+      .col-lg-5
+        .scrollParent
+          .scroll
+            .right
+              -if (guestID)
+                each gist in gists
+                  -if (gist._id == guestID)
+                    .openGist
+                      .overview
+                        -if (gist.image)
+                          .overviewImg(style="background: url(img/upload/guest/#{gist.image}); background-size: auto 240px; background-position: center; background-repeat: no-repeat")
+                        -else 
+                          .overviewImg(style="background: url(img/upload/gist.png); background-size: auto 156px; background-position: center")
+                        .overviewStatus
+                          .statusHeader
+                            h2= gist.name + ' ' + gist.lastname
+                            p= gist.program
+                          .statusFoter
+                            -if (!gist.status)
+                              h3.inactive.inactiveR Inactive
+                            -else
+                              h3.active.activeR Active
+                              -if(house)
+                                p (#{house.name})
+                              -else 
+                                p house is not found
+                              
+                            
+                            -if (!gist.status)
+                              img(src='img/svg/checkbox.svg', alt='Toggle')
+                            -else
+                              img(src='img/png/toggle.png', alt='Toggle')
+                      .history
+                        -if (gist.residence)
+                          -each residence in residences
+                            -if (residence.userID == gist._id)
+                              .historyItem
+                                .historyLeft
+                                  -each house in houses
+                                    -if (house._id == residence.houseID)
+                                      p.historyName= house.name
+                                  p.historyRoom Room #{residence.room}
+                                .historyRight
+                                  -var startD = residence.startDate.getDate();
+                                  -var startM = residence.startDate.getMonth() + 1;
+                                  -var startY = residence.startDate.getFullYear();
+                                  -if (startD < 10) startD = '0' + startD
+                                  -if (startM < 10) startM = '0' + startM
+                                  p.historyStart in #{startM}.#{startD}.#{startY}
+                                  
+                                  -if (residence.endDate)
+                                    -var endD = residence.endDate.getDate();
+                                    -var endM = residence.endDate.getMonth() + 1;
+                                    -var endY = residence.endDate.getFullYear();
+                                    -if (endD < 10) endD = '0' + endD
+                                    -if (endM < 10) endM = '0' + endM
+                                    p.historyEnd out #{endM}.#{endD}.#{endY}
+                                  -else
+                                    p.historyEnd out TBM
+                        .overviewButtons      
+                          button.gistShelterHistory.gistBtn.historyCancel Back
+                              
+                        
+                                  
+                      .ocerviewContent
+                        .overviewBith.overviewName
+                          -var date = new Date(gist.dateOfBirth)
+                          -var d = date.getDate();
+                          -var m = date.getMonth() + 1;
+                          -var y = date.getFullYear();
+                          -if (d < 10) d = '0' + d
+                          -if (m < 10) m = '0' + m
+                          p #{m}.#{d}.#{y}
+                        -if(gist.gender)
+                          .overviewSex.overviewName
+                            p= gist.gender
+                        -if (gist.residence)
+                          -each residence in residences
+                            -if(gist.residence == residence._id)
+                              -each house1 in houses
+                                -if (residence.houseID == house1._id)
+                                  .overviewBith.overviewName
+                                    p= house1.address
+                        -if(gist.phone)
+                          .overviewSex.overviewName
+                            p= gist.phone
+                        -if(gist.description)
+                          .overviewText
+                            p= gist.description
+                        .overviewButtons
+                          .overviewControls
+                            button.gistEdit(value= gist._id)
+                              img(src='img/png/edit.png', alt='Edit')
+                              p Edit
+                            button.userDel(value= gist._id)
+                              img(src='img/png/del.png', alt='Del')
+                              p Del
+                          -if (gist.status)
+                            button.gistReplace.gistBtn.replace(value= gist.residence) Replace
+                          -else
+                            button.gistPlace.gistBtn.place(value= gist._id) Place
+                          button.gistPaymentsHistory.gistBtn.pay(value= gist._id) Payments History
+                          button.gistShelterHistory.gistBtn.historyBtn(value= gist._id) Shelter History
+                          
+                    form.add(enctype="multipart/form-data")
+                      fieldset
+                        .addHeader
+                          .addPhoto
+                            button(type="button").uploadPhoto
+                              img(src='img/svg/addUserPhoto.svg', alt='Add photo')
+                            input(type='file', encType="multipart/form-data", accept='image/jpg, image/jpeg, image/png, image/gif')
+                          .addName
+                            .addNameTitle
+                              input.name(type="text", placeholder="Name", name='name')
+                              input.lastname(type="text", placeholder="Last", name='lastname')
+                            .addNameStatus
+                              p Status
+                              img(src='img/svg/checkbox.svg', alt='Checkbox')
+                        .addText.addDate
+                          -var date = new Date()
+                          -var now = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2)
+                          input(type="date", placeholder="Date of birth", name='dateOfBirth', max= now)
+                        .addText.addSex
+                          select(class="", name='gender')
+                            option(disabled selected) Sex
+                            option Male
+                            option Female
+
+                        .addText.addPhone
+                          input(type="text", placeholder="Phone number", name='phone')
+                        .addText.addProgram
+                          select(class="", name='program')
+                            option(disabled selected) Select program
+                            -each prog in programs
+                              option= prog.abbr
+                        .addDiscription
+                          textarea(placeholder="Notes", name='description')
+                        .addButtons
+                          button.saveUser Save
+                          button.cancelUser Cancel
+                          
+                    form.edit
+                      fieldset
+                        .addHeader
+                          .addPhoto
+                            button.uploadPhoto(type="button", style="background: url(img/upload/guest/#{gist.image}); background-size: auto 110px; background-position: center")
+                              -if (gist.image)
+                                .whiter
+                                img(src='img/png/addPhoto.png', alt='Add photo')
+                              -else 
+                                img(src='img/svg/addUserPhoto.svg', alt='Add photo')
+                            input(type='file', encType="multipart/form-data", accept='image/jpg, image/jpeg, image/png, image/gif')
+                          .addName
+                            .addNameTitle
+                              input.name(type="text", placeholder="Name", name='name', value= gist.name)
+                              input.lastname(type="text", placeholder="Last", name='lastname', value= gist.lastname)
+                            .addNameStatus
+                              p Status
+                              -if (!gist.status)
+                                img(src='img/svg/checkbox.svg', alt='Toggle')
+                              -else
+                                img(src='img/png/toggle.png', alt='Toggle')
+                        .addText.addDate
+                          -var date = new Date()
+                          -var now = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2)
+                          input(type="date", placeholder="Date of birth", name='dateOfBirth', value= gist.dateOfBirth, max= now)
+                        .addText.addSex
+                          select(class="", name='gender')
+                            option(disabled) Sex
+                            -if (gist.gender === 'Male')
+                              option(selected) Male
+                            -else
+                              option Male
+                            -if (gist.gender === 'Female')
+                              option(selected) Female
+                            -else
+                              option Female 
+
+                        .addText.addPhone
+                          input(type="text", placeholder="Phone number", name='phone', value= gist.phone)
+                        .addText.addProgram
+                          select(class="", name='program')
+                            option(disabled) Select program
+                            -each prog in programs
+                              option= prog.abbr
+                        .addDiscription
+                          textarea(placeholder="Notes", name='description', value= gist.description)= gist.description
+                        .addButtons
+                          button.editSave(value= gist._id) Save
+                          button.editCancel Cancel
+
+
+
+              -else
+                -if (gists)
+                  -if (gists[0])
+                    .openGist
+                      .overview
+                        -if (gists[0].image)
+                          .overviewImg(style="background: url(img/upload/guest/#{gists[0].image}); background-size: auto 240px; background-position: center; background-repeat: none")
+                        -else 
+                          .overviewImg(style="background: url(img/upload/gist.png); background-size: auto 156px; background-position: center")
+                        .overviewStatus
+                          .statusHeader
+                            h2= gists[0].name + ' ' + gists[0].lastname
+                            p= gists[0].program
+                          .statusFoter
+                            -if (!gists[0].status)
+                              h3.inactive.inactiveR Inactive
+                            -else
+                              h3.active.activeR Active
+                              -if(house)
+                                p (#{house.name})
+                              -else 
+                                p house is not found
+                            
+                            -if (!gists[0].status)
+                              img(src='img/svg/checkbox.svg', alt='Toggle')
+                            -else
+                              img(src='img/png/toggle.png', alt='Toggle')
+                      .history
+                        -if (residences)
+                          -each residence in residences
+                            -if(residence.userID == gists[0]._id)
+                              .historyItem
+                                .historyLeft
+                                  -each house in houses
+                                    -if (house._id == residence.houseID)
+                                      p.historyName= house.name
+                                  p.historyRoom Room #{residence.room}
+                                .historyRight
+                                  -var startD = residence.startDate.getDate();
+                                  -var startM = residence.startDate.getMonth();
+                                  -var startY = residence.startDate.getFullYear();
+                                  -if (startD < 10) startD = '0' + startD
+                                  -if (startM < 10) startM = '0' + startM
+                                  p.historyStart in #{startM}.#{startD}.#{startY}
+                                  
+                                  -if (residence.endDate)
+                                    -var endD = residence.endDate.getDate();
+                                    -var endM = residence.endDate.getMonth();
+                                    -var endY = residence.endDate.getFullYear();
+                                    -if (endD < 10) endD = '0' + endD
+                                    -if (endM < 10) endM = '0' + endM
+                                    p.historyEnd out #{endM}.#{endD}.#{endY}
+                                  -else
+                                    p.historyEnd out TBM
+                        .overviewButtons      
+                          button.gistShelterHistory.gistBtn.historyCancel Back
+                          
+                          
+                      .ocerviewContent
+                        .overviewBith.overviewName
+                          -var date = new Date(gists[0].dateOfBirth)
+                          -var d = date.getDate();
+                          -var m = date.getMonth() + 1;
+                          -var y = date.getFullYear();
+                          -if (d < 10) d = '0' + d
+                          -if (m < 10) m = '0' + m
+                          p #{m}.#{d}.#{y}
+                        -if (gists[0].gender)
+                          .overviewSex.overviewName
+                            p= gists[0].gender
+                        -if (gists[0].residence)
+                          -each residence in residences
+                            -if(gists[0].residence == residence._id)
+                              -each house1 in houses
+                                -if (residence.houseID == house1._id)
+                                  .overviewBith.overviewName
+                                    p= house1.address
+                        -if(gists[0].phone)
+                          .overviewSex.overviewName
+                            p= gists[0].phone
+                        -if(gists[0].description)
+                          .overviewText
+                            p= gists[0].description
+                        .overviewButtons
+                          .overviewControls
+                            button.gistEdit(value= gists[0]._id)
+                              img(src='img/png/edit.png', alt='Edit')
+                              p Edit
+                            button.userDel(value= gists[0]._id)
+                              img(src='img/png/del.png', alt='Del')
+                              p Del
+                          -if (gists[0].status)
+                            button.gistReplace.gistBtn.replace(value= gists[0].residence) Replace
+                          -else
+                            button.gistPlace.gistBtn.place(value= gists[0]._id) Place
+                          button.gistPaymentsHistory.gistBtn.pay(value= gists[0]._id) Payments History
+                          button.gistShelterHistory.gistBtn.historyBtn(value= gists[0]._id) Shelter History
+                          
+                    form.edit
+                      fieldset
+                        .addHeader
+                          .addPhoto
+                            button.uploadPhoto(type="button", style="background: url(img/upload/guest/#{gists[0].image}); background-size: auto 110px; background-position: center")
+                              -if (gists[0].image)
+                                .whiter
+                                img(src='img/png/addPhoto.png', alt='Add photo')
+                              -else 
+                                img(src='img/svg/addUserPhoto.svg', alt='Add photo')
+                            input(type='file', encType="multipart/form-data", accept='image/jpg, image/jpeg, image/png, image/gif')
+                          .addName
+                            .addNameTitle
+                              input.name(type="text", placeholder="Name", name='name', value= gists[0].name)
+                              input.lastname(type="text", placeholder="Last", name='lastname', value= gists[0].lastname)
+                            .addNameStatus
+                              p Status
+                              -if (!gists[0].status)
+                                img(src='img/svg/checkbox.svg', alt='Toggle')
+                              -else
+                                img(src='img/png/toggle.png', alt='Toggle')
+                        .addText.addDate
+                          -var date = new Date()
+                          -var now = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2)
+                          input(type="date", placeholder="Date of birth", name='dateOfBirth', value= gists[0].dateOfBirth, max= now)
+                        .addText.addSex
+                          select(class="", name='gender')
+                            option(disabled) Sex
+                            -if (gists[0].gender === 'Male')
+                              option(selected) Male
+                            -else
+                              option Male
+                            -if (gists[0].gender === 'Female')
+                              option(selected) Female
+                            -else
+                              option Female 
+                    
+                        .addText.addAddress
+                          input(type="text", placeholder="Address", name='address', value= gists[0].address)
+                        .addText.addPhone
+                          input(type="text", placeholder="Phone number", name='phone', value= gists[0].phone)
+                        .addText.addProgram
+                          select(class="", name='program')
+                            option(disabled) Select program
+                            -each prog in programs
+                              option= prog.abbr 
+                        .addDiscription
+                          textarea(placeholder="Notes", name='description', value= gists[0].description)= gists[0].description
+                        .addButtons
+                          button.editSave(value= gists[0]._id) Save
+                          button.editCancel Cancel
+                          
+                form.add(enctype="multipart/form-data")
+                  fieldset
+                    .addHeader
+                      .addPhoto
+                        button(type="button").uploadPhoto
+                          img(src='img/svg/addUserPhoto.svg', alt='Add photo')
+                        input(type='file', encType="multipart/form-data", accept='image/jpg, image/jpeg, image/png, image/gif')
+                      .addName
+                        .addNameTitle
+                          input.name(type="text", placeholder="Name", name='name')
+                          input.lastname(type="text", placeholder="Last", name='lastname')
+                        .addNameStatus
+                          p Status
+                          img(src='img/svg/checkbox.svg', alt='Checkbox')
+                    .addText.addDate
+                      -var date = new Date()
+                      -var now = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2)
+                      input(type="date", placeholder="Date of birth", name='dateOfBirth', max= now)
+                    .addText.addSex
+                      select(class="", name='gender')
+                        option(disabled selected) Sex
+                        option Male
+                        option Female
+                    .addText.addAddress
+                      input(type="text", placeholder="Address", name='address')
+                    .addText.addPhone
+                      input(type="text", placeholder="Phone number", name='phone')
+                    .addText.addProgram
+                      select(class="", name='program')
+                        option(disabled selected) Select program
+                        -each prog in programs
+                          option= prog.abbr
+                    .addDiscription
+                      textarea(placeholder="Notes", name='description')
+                    .addButtons
+                      button.saveUser Save
+                      button.cancelUser Cancel
+                      
+                  
+
+
+  
+block footer
+  script(src='js/users.js')

@@ -1,0 +1,42 @@
+form.edit(enctype="multipart/form-data")
+  fieldset
+    .addPhoto
+      .uploadPhoto
+        -if (house.image)
+          button.uploadPhoto(style="background: url(img/upload/house/#{house.image}); background-size: auto 200px; background-position: center")
+            img(src='img/png/cloud.png', alt='Cloud')
+            p Upload photo
+        -else
+          button.uploadPhoto
+            img(src='img/png/cloud.png', alt='Cloud')
+            p Upload photo
+        input(type='file').updateInput
+    .addText.addTitle
+      input(type="text", placeholder="Title", name='name', value= name)
+    .addText.addAddress
+      input(type="text", placeholder="Address", name='address', value= address)
+    -if (house.rooms)
+      -var i = 0;
+      each room in house.rooms
+        -var num = rooms.indexOf(room);
+        .addText.addRoom()
+          .addRoomLeft
+            p.room Room #
+            p.roomNum= room.num
+          .addRoomRight
+            button.bedsLeft
+              img(src='img/png/left.png', alt='left')
+            input(type="text", placeholder="1", name="rooms[#{i}]", value= room.beds.length)
+            button.bedsRight
+              img(src='img/png/right.png', alt='right')
+            p Beds
+            button.roomDel(value= num)
+              img(src='img/png/del.png', alt='Del')
+    .rooms
+    .addText.addRoomBtn
+      button.roomAdd Add Room
+    .addDiscription
+      textarea(placeholder="Description", name='description', value= description)= description
+    .addButtons
+      button.editSave(type="submit", value= _id) Save changes
+      button.editCancel(type="button", value= _id) Cancel

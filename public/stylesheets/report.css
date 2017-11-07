@@ -1,0 +1,261 @@
+@import url("https://fonts.googleapis.com/css?family=Ubuntu:300,400");
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, em, img, strong, sub, sup, b, u, i, dl, dt, dd, ol, ul, li, fieldset, form, label, table, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  vertical-align: baseline;
+  background: transparent;
+  font-size: 100%; }
+
+a {
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+  outline: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+td, td img {
+  vertical-align: top; }
+
+input, select, button, textarea {
+  margin: 0;
+  font-size: 100%;
+  outline: none; }
+
+input[type="text"], input[type="password"], textarea {
+  padding: 0; }
+
+input[type="checkbox"] {
+  vertical-align: bottom; }
+
+input[type="radio"] {
+  vertical-align: text-bottom; }
+
+sub {
+  vertical-align: sub;
+  font-size: smaller; }
+
+sup {
+  vertical-align: super;
+  font-size: smaller; }
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+nav ul {
+  list-style: none; }
+
+html {
+  min-height: 100%; }
+
+body {
+  color: #7e7f84;
+  text-align: left;
+  font-size: 1em;
+  min-height: 100%;
+    min-height-font-family: 'Roboto', sans-serif; }
+
+a, a:visited {
+  color: #f45a40;
+  text-decoration: underline; }
+
+a:hover {
+  color: #f45a40;
+  text-decoration: none; }
+
+a:focus, a:active {
+  color: #f45a40;
+  text-decoration: underline; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal; }
+
+img {
+  max-width: 100%; }
+
+.clr {
+  clear: both; }
+
+.clearfix:after {
+  clear: both;
+  display: table; }
+
+body {
+  margin: 0;
+  padding: 0; }
+
+.header {
+  background-color: #358DE0;
+  width: 100%;
+  height: 60px; }
+
+.navBlock {
+  width: 315px;
+  margin: 0 auto; }
+
+.nav {
+  width: 60px;
+  height: 50px;
+  float: left;
+  margin-left: 25px;
+  margin-top: 5px;
+  background-color: #358DE0;
+  border: none; }
+  .nav:first-child {
+    margin-left: 0; }
+  .nav:hover {
+    cursor: pointer; }
+  .nav:focus {
+    outline: none; }
+  .nav > h1 {
+    font-size: 12px;
+    text-align: center;
+    color: #fff;
+    margin: 0 auto; }
+  .nav .navImg1 {
+    width: 34px;
+    margin: 0 auto; }
+  .nav .navImg2 {
+    width: 35px;
+    margin: 0 auto; }
+  .nav .navImg3 {
+    width: 38px;
+    margin: 0 auto; }
+  .nav .navImg4 {
+    width: 27px;
+    margin: 0 auto; }
+
+.row {
+  margin: 10px 0 0 0;
+  width: 100%; }
+  .row .col-lg-3 {
+    margin: 0 auto; }
+  .row button {
+    cursor: pointer;
+    width: 100%;
+    padding: 0;
+    border: none; }
+  .row .reportHeader {
+    height: 78px; }
+    .row .reportHeader .reportIcon {
+      float: left; }
+      .row .reportHeader .reportIcon > img {
+        width: auto;
+        height: 40px;
+        margin: 15px 0 0 10px; }
+    .row .reportHeader .reportStat {
+      text-align: right;
+      color: #fff;
+      margin-right: 10px; }
+      .row .reportHeader .reportStat > h2 {
+        font-size: 38px;
+        padding: 8px 0 0 0;
+        margin: 0; }
+      .row .reportHeader .reportStat > p {
+        font-size: 14px; }
+  .row .reportFooter {
+    height: 37px;
+    margin-top: 5px; }
+    .row .reportFooter .reportView {
+      margin: 0 0 0 17px; }
+      .row .reportFooter .reportView p {
+        font-size: 18px;
+        float: left;
+        font-weight: 600; }
+    .row .reportFooter .reportViewBtn img {
+      margin: 0 0 0 95px; }
+  .row .rooms {
+    height: 113px; }
+    .row .rooms .reportHeader {
+      background-color: #3c87be; }
+  .row .amount {
+    height: 113px; }
+    .row .amount .reportHeader {
+      background-color: #6DC070; }
+  .row .guests {
+    height: 113px; }
+    .row .guests .reportHeader {
+      background-color: #F2B960; }
+  .row .houses {
+    height: 113px; }
+    .row .houses .reportHeader {
+      background-color: #FD8263; }
+
+.charts {
+  margin: 20px 0 0 0; }
+  .charts img {
+    width: 100%; }
+
+.chartHeader {
+  width: 100%;
+  height: 70px;
+  box-sizing: inherit;
+  background-color: #3c87be;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 15px;
+  font-size: 18px; }
+  .chartHeader .chartIcon {
+    float: left;
+    height: 90%;
+    width: auto; }
+  .chartHeader .chartDescription {
+    margin: 5px;
+    display: inline-block;
+    color: #ffffff;
+    text-align: right;
+    height: 50px;
+    width: auto; }
+  .chartHeader .chartSelectpicker {
+    margin: 5px;
+    display: inline-block;
+    text-align: right;
+    height: 50px;
+    width: 140px; }
+
+.rooms {
+  background-color: #3c87be;
+  color: #FFF; }
+
+.amount {
+  background-color: #6DC070;
+  color: #FFF; }
+
+.guests {
+  background-color: #F2B960;
+  color: #FFF; }
+
+.houses {
+  background-color: #FD8263;
+  color: #FFF; }
+
+.chartLeft {
+  background-color: #F15E5E; }
+
+.chartRight {
+  background-color: #56AD8D; }
+
+#demo {
+  margin-left: 15px;
+  border: none;
+  background-color: #F15E5E;
+  color: #fff; }
+  #demo:hover {
+    cursor: pointer; }
+
+#sel1 {
+  margin-left: 80px;
+  border: none;
+  background-color: #F15E5E;
+  color: #fff; }
+  #sel1 option {
+    text-align: right; }
+
+/*# sourceMappingURL=report.css.map */

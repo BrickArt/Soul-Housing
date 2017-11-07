@@ -1,0 +1,127 @@
+extends layout
+
+block script
+  link(rel='stylesheet', href='/stylesheets/freeBeds.css')
+  
+block content
+  .mainBlock
+    .row
+      .col-lg-7
+        .scrollParent
+          .scroll
+            .houseBlock
+              each house in houses
+                .article(id= house._id)
+                  button.houseBtn(value= house._id)
+                    .house
+                      h2= house.name
+                      p= house.address
+                    .members
+                      -var capacity = 0;
+                      -var freeBeds = 0
+                      -each room in house.rooms
+                        -capacity += room.beds.length
+                        -each bed in room.beds
+                          -if (!bed.status)
+                            - ++freeBeds
+                      p #{freeBeds} free beds
+                      img.bow(src='img/svg/join.svg', alt='join')
+
+          
+      .col-lg-5
+        .scrollParent
+          .scroll
+            .right
+              
+              -if (houseID)
+                each house in houses
+                  -if (house._id == houseID)
+                    .openHouse
+                      .overview
+                        .overviewImg
+                          -if (house.image)
+                            .houseImage(style="background: url(img/upload/house/#{house.image}); background-size: auto 100%; background-position: center")
+                          -else 
+                            img(src='img/upload/house.png', alt='House')
+                        .overviewStatus
+                          .statusName
+                            -if (house.name)
+                              h2= house.name
+                          .statusAmount
+                            h2 $350
+                            p per mounth
+
+                      -if (house.address)
+                        .overviewName
+                          p= house.address
+                          
+                      .overviewName
+                        select.selectRoom Room
+                          option(disabled selected) Room
+                          -each room in house.rooms
+                            -var count = 0
+                            -each bed in room.beds
+                              -if(!bed.status) ++count
+                            -if (count>0)
+                              option(value= room.num) Room #{room.num} - (#{count} free beds)
+                      .overviewName
+                        select.selectBed Bed
+                          option(disabled selected) Bed
+                      .overviewName
+                        input(type="text", placeholder="Price")
+                          
+
+                      .overviewButtons
+
+                        button.houseAddPerson(value= house._id) Place
+                    
+
+                    
+                    
+              -else
+                -if (houses[0])
+                  .openHouse
+                    .overview
+                      .overviewImg
+                        -if (houses[0].image)
+                          .houseImage(style="background: url(img/upload/house/#{houses[0].image}); background-size: auto 100%; background-position: center")
+                        -else 
+                          img(src='img/upload/house.png', alt='House')
+                      .overviewStatus
+                        .statusName
+                          -if (houses[0].name)
+                            h2= houses[0].name
+                        .statusAmount
+                          h2 $350
+                          p per mounth
+                    
+                    -if (houses[0].address)
+                      .overviewName
+                        p= houses[0].address
+                    .overviewName
+                      select.selectRoom Room
+                        option(disabled selected) Room
+                        -each room in houses[0].rooms
+                          -var count = 0
+                          -each bed in room.beds
+                            -if(!bed.status) ++count
+                          -if (count>0)
+                            option(value= room.num ) Room #{room.num} - (#{count} free beds)
+                    .overviewName
+                      select.selectBed Bed
+                        option(disabled selected) Bed
+                    .overviewName
+                      input.selectPrice(type="text", placeholder="Price")
+
+                  
+                    .overviewButtons
+
+                      button.houseAddPerson(value= houses[0]._id) Place
+                        
+                        
+                        
+                
+
+
+block footer
+  script(src='js/freeBeds.js')

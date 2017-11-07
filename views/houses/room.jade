@@ -1,0 +1,13 @@
+.addText.addRoom(id="room_" + id)
+  .addRoomLeft
+    p.room Room #
+    p.roomNum= +id + 1
+  .addRoomRight
+    button.bedsLeft
+      img(src='img/png/left.png', alt='left')
+    input(type="number", max= '50', min='1' value= '1', name="rooms[#{id}]")
+    button.bedsRight
+      img(src='img/png/right.png', alt='right')
+    p Beds
+    button.roomDel(value= id)
+      img(src='img/png/del.png', alt='Del')

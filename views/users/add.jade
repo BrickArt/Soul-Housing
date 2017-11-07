@@ -1,0 +1,35 @@
+form.add(enctype="multipart/form-data")
+  fieldset
+    .addHeader
+      .addPhoto
+        button(type="button").uploadPhoto
+          img(src='img/svg/addUserPhoto.svg', alt='Add photo')
+        input(type='file', encType="multipart/form-data", accept='image/jpg, image/jpeg, image/png, image/gif')
+      .addName
+        .addNameTitle
+          input.name(type="text", placeholder="Name", name='name')
+          input.lastname(type="text", placeholder="Last name", name='lastname')
+        .addNameStatus
+          p Status
+          img(src='img/svg/checkbox.svg', alt='Checkbox')
+    .addText.addDate
+      input(type="date", placeholder="Date of birth", name='dateOfBirth')
+    .addText.addSex
+      select(class="", name='gender')
+        option(disabled selected) Sex
+        option Male
+        option Female
+    .addText.addAddress
+      input(type="text", placeholder="Address", name='address')
+    .addText.addPhone
+      input(type="text", placeholder="Phone number", name='phone')
+    .addText.addProgram
+      select(class="", name='program')
+        option(disabled selected) Select program
+        -each prog in programs
+          option= prog.abbr
+    .addDiscription
+      textarea(placeholder="Discription", name='discription')
+    .addButtons
+      button.saveUser(type="submit") Save
+      button.cancelUser(type="button") Cancel

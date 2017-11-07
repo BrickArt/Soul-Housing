@@ -1,0 +1,21 @@
+extends layout
+
+block script
+  link(rel='stylesheet', href='/stylesheets/users.css')
+
+block content
+  .container
+    .row
+      .col-md-4
+      .col-md-4
+        h1 Foto upload
+        form.upload
+          .form-group
+            input(type='file', encType="multipart/form-data", name='someFile')
+          .form-group
+            button.btn.btn-primary(type='submit') Upload Photo
+      .col-md-4
+
+
+block footer
+  script(src='js/test.js')

@@ -1,0 +1,26 @@
+doctype html
+html
+  head
+    title= title
+    script(src="https://code.jquery.com/jquery-3.2.1.js", integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=", crossorigin="anonymous")
+    link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous")
+    link(rel='stylesheet', href='/stylesheets/index.css')
+  body
+    .container
+      .row
+        .col
+        .col-lg-4.col-md-6.col-sm-10
+          .blockAuth
+            img.logo(src='img/png/logo.png', alt='Logo')
+            form
+              fieldset
+                .form-group.username
+                  img.authImg(src='img/svg/username.svg', alt='Username')
+                  input.authInput(type='email', name='username', placeholder="Enter email")
+                .form-group.password
+                  img.authImg(src='img/svg/password.svg', alt='Password')
+                  input.authInput(type='password', name='password' placeholder="Enter password")
+                .form-group
+                  button.btn.btn-light.authBtn(type='submit', data-loading-text='Loading...') LOG IN
+        .col
+    script(src='js/index.js')

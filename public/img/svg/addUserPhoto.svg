@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-3363 2579 96 96">
+  <defs>
+    <style>
+      .cls-1, .cls-4 {
+        fill: #fff;
+      }
+
+      .cls-2 {
+        fill: #bcbcbc;
+      }
+
+      .cls-3 {
+        clip-path: url(#clip-path);
+      }
+
+      .cls-4 {
+        font-size: 10px;
+        font-family: ArialMT, Arial;
+        letter-spacing: -0.008em;
+      }
+    </style>
+    <clipPath id="clip-path">
+      <path id="Path_184" data-name="Path 184" class="cls-1" d="M35,35H0V0H35Z"/>
+    </clipPath>
+  </defs>
+  <g id="Group_382" data-name="Group 382" transform="translate(-4304 2490)">
+    <circle id="avatar" class="cls-2" cx="48" cy="48" r="48" transform="translate(941 89)"/>
+    <g id="Group_381" data-name="Group 381" transform="translate(0.392 -6)">
+      <g id="ic_add_a_photo_black_24px" class="cls-3" transform="translate(970 119)">
+        <path id="Path_183" data-name="Path 183" class="cls-1" d="M4.375,5.375V1H7.292V5.375h4.375V8.292H7.292v4.375H4.375V8.292H0V5.375Zm4.375,8.75V9.75h4.375V5.375H23.333L26,8.292h4.623a2.925,2.925,0,0,1,2.917,2.917v17.5a2.925,2.925,0,0,1-2.917,2.917H7.292a2.925,2.925,0,0,1-2.917-2.917V14.125ZM18.958,27.25a7.292,7.292,0,1,0-7.292-7.292A7.294,7.294,0,0,0,18.958,27.25Zm-4.667-7.292a4.667,4.667,0,1,0,4.667-4.667,4.662,4.662,0,0,0-4.667,4.667Z" transform="translate(0 0.458)"/>
+      </g>
+      <text id="Upload_photo" data-name="Upload photo" class="cls-4" transform="translate(959.608 166)"><tspan x="0" y="0">Upload photo</tspan></text>
+    </g>
+  </g>
+</svg>

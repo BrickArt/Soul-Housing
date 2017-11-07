@@ -1,0 +1,283 @@
+
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, em, img, strong, sub, sup, b, u, i,  dl, dt, dd, ol, ul, li, fieldset, form, label, table, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video
+	margin: 0
+	padding: 0
+	border: 0
+	outline: 0
+	vertical-align: baseline
+	background: transparent
+	font-size: 100%
+
+a
+	margin: 0
+	padding: 0
+	font-size: 100%
+	vertical-align: baseline
+	background: transparent
+	outline: none
+
+table
+	border-collapse: collapse
+	border-spacing: 0
+
+td, td img
+	vertical-align: top
+
+input, select, button, textarea
+	margin: 0
+	font-size: 100%
+	outline: none
+
+input[type="text"], input[type="password"], textarea
+	padding: 0
+
+input[type="checkbox"]
+	vertical-align: bottom
+
+input[type="radio"]
+	vertical-align: text-bottom
+
+sub
+	vertical-align: sub
+	font-size: smaller
+
+sup
+	vertical-align: super
+	font-size: smaller
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section
+	display: block
+
+nav ul
+	 list-style: none
+
+html
+	min-height: 100%
+
+body
+	color: #7e7f84
+	text-align: left
+	font-size: 1em
+	min-height: 100%
+  font-family: 'Roboto', sans-serif
+
+
+a, a:visited
+	color: #f45a40
+	text-decoration: underline
+
+a:hover
+	color: #f45a40
+	text-decoration: none
+
+a:focus, a:active
+	color: #f45a40
+	text-decoration: underline
+
+h1, h2, h3, h4, h5, h6
+	font-weight: normal
+
+img
+
+	max-width: 100%
+
+.clr
+	clear: both
+
+.clearfix:after
+    clear: both
+    display: table
+
+
+
+$primary-color: #358DE0
+$secondary-color: #656565
+$border-color: #EDEDED
+$text-color: #95989A
+$btn-color: #5E82BC
+$white-color: #fff
+
+@import url('https://fonts.googleapis.com/css?family=Ubuntu:300,400')
+
+body
+  margin: 0
+  padding: 0
+
+.header
+  background-color: $primary-color
+  width: 100%
+  height: 60px
+
+.navBlock
+  width: 315px
+  margin: 0 auto
+
+.nav
+  width: 60px
+  height: 50px
+  float: left
+  margin-left: 25px
+  margin-top: 5px
+  background-color: $primary-color
+  border: none
+  &:first-child
+    margin-left: 0
+  &:hover
+    cursor: pointer
+  &:focus
+    outline: none
+  & > h1
+    font-size: 12px
+    text-align: center
+    color: #fff
+    margin: 0 auto
+  .navImg1
+    width: 34px
+    margin: 0 auto
+  .navImg2
+    width: 35px
+    margin: 0 auto
+  .navImg3
+    width: 38px
+    margin: 0 auto
+  .navImg4
+    width: 27px
+    margin: 0 auto
+
+
+
+.row
+  margin: 10px 0 0 0
+  width: 100%
+  .col-lg-3
+    margin: 0 auto
+
+  button
+    cursor: pointer
+    width: 100%
+
+    padding: 0
+    border: none
+
+
+  .reportHeader
+    height: 78px
+    .reportIcon
+      float: left
+      &>img
+        width: auto
+        height: 40px
+        margin: 15px 0 0 10px
+    .reportStat
+      text-align: right
+      color: $white-color
+      margin-right: 10px
+      &>h2
+        font-size: 38px
+        padding: 8px 0 0 0
+        margin: 0
+      &>p
+        font-size: 14px
+
+  .reportFooter
+    height: 37px
+    margin-top: 5px
+    .reportView
+      margin: 0 0 0 17px
+      p
+        font-size: 18px
+        float: left
+        font-weight: 600
+    .reportViewBtn
+      img
+        margin: 0 0 0 95px
+
+  .rooms
+    height: 113px
+    .reportHeader
+      background-color: #3c87be
+
+  .amount
+    height: 113px
+    .reportHeader
+      background-color: #6DC070
+    .reportFooter
+  .guests
+    height: 113px
+    .reportHeader
+      background-color: #F2B960
+    .reportFooter
+  .houses
+    height: 113px
+    .reportHeader
+      background-color: #FD8263
+    .reportFooter
+
+.charts
+  margin: 20px 0 0 0
+  img
+    width: 100%
+
+.chartHeader
+  width: 100%
+  height: 70px
+  box-sizing: inherit
+  background-color: #3c87be
+  display: block
+  margin-left: auto
+  margin-right: auto
+  padding: 15px
+  .chartIcon
+    float: left
+    height: 90%
+    width: auto
+  .chartDescription
+    margin: 5px
+    display: inline-block
+    color: #ffffff
+    text-align: right
+    height: 50px
+    width: auto
+		font-size: 18px
+  .chartSelectpicker
+    margin: 5px
+    display: inline-block
+    text-align: right
+    height: 50px
+    width: 140px
+
+.rooms
+	background-color: #3c87be
+	color: #FFF
+.amount
+	background-color: #6DC070
+	color: #FFF
+
+.guests
+	background-color: #F2B960
+	color: #FFF
+
+.houses
+	background-color: #FD8263
+	color: #FFF
+
+.chartLeft
+	background-color: #F15E5E
+.chartRight
+	background-color: #56AD8D
+
+#demo
+	margin-left: 15px
+	border: none
+	background-color: #F15E5E
+	color: #fff
+	&:hover
+		cursor: pointer
+
+#sel1
+	margin-left: 80px
+	border: none
+	background-color: #F15E5E
+	color: #fff
+	option
+		text-align: right

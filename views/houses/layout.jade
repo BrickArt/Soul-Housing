@@ -1,0 +1,23 @@
+head
+  title= title
+  script(src="https://code.jquery.com/jquery-3.2.1.js", integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=", crossorigin="anonymous")
+  link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous")
+  block script
+body
+  .container
+    .header
+      .navBlock
+        button.nav
+          img.navImg1(src='img/svg/header-1.svg', alt='Graphic', onClick='location.href="/report"')
+          h1 Report
+        button.nav
+          img.navImg2(src='img/svg/header-2.svg', alt='House', onClick='location.href="/houses"')
+          h1 Houses
+        button.nav
+          img.navImg3(src='img/svg/header-3.svg', alt='People', onClick='location.href="/users"')
+          h1 Users
+        button.nav
+          img.navImg4(src='img/svg/header-4.svg', alt='Dollar-coins', onClick='location.href="/payments"')
+          h1 Payments
+    block content
+block footer

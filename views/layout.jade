@@ -1,0 +1,31 @@
+doctype html
+html
+  head
+    title= title
+    script(src="https://code.jquery.com/jquery-3.2.1.js", integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=", crossorigin="anonymous")
+    script(src="js/sessvars.js")
+    script(src="js/jquery.session.js")
+    script(src="js/pdfmake.min.js")
+    script(src="js/vfs_fonts.js")
+    
+    
+    link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous")
+    block script
+  body
+    .container
+      .header
+        .navBlock
+          button.nav
+            img.navImg1.navBtn(src='img/svg/header-1.svg', alt='Graphic', value="/report")
+            h1 Report
+          button.nav
+            img.navImg2.navBtn(src='img/svg/header-2.svg', alt='House', value="/houses")
+            h1 Houses
+          button.nav
+            img.navImg3.navBtn(src='img/svg/header-3.svg', alt='People', value="/users")
+            h1 Users
+          button.nav
+            img.navImg4.navBtn(src='img/svg/header-4.svg', alt='Dollar-coins', value="/payments")
+            h1 Payments
+      block content
+  block footer

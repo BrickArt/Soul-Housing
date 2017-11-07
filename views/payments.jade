@@ -1,0 +1,184 @@
+extends layout
+
+block script
+  link(rel='stylesheet', href='/stylesheets/payments.css')
+  
+block content
+  .mainBlock
+    .row
+      .col-lg-7
+        .scrollParent
+          .scroll
+            .payBlock
+              each guest in guests
+                .article(id= guest._id)
+                  button.userBtn(value= guest._id)
+                    .gist
+                      h2= guest.name + ' ' + guest.lastname
+                      p= guest.address
+                    .gistStatus
+                      .Activity
+                        p= guest.program
+                        -if (!guest.status)
+                          h3.inactive.inactiveL Inactive
+                        -else
+                          h3.active.activeL Active
+                      img.moreDetails(src='img/svg/join.svg', alt='join')
+          
+      .col-lg-5
+        .scrollParent
+          .scroll
+            .right
+              -if (guestID)
+                each guest in guests
+                  -if (guest._id == guestID)
+                    .openGist
+                      .overview
+                        -if (guest.image)
+                          .overviewImg(style="background: url(img/upload/guest/#{guest.image}); background-size: auto 160px; background-position: center; background-repeat: no-repeat")
+                        -else 
+                          .overviewImg(style="background: url(img/upload/gist.png); background-size: auto 156px; background-position: center")
+                        .overviewStatus
+                          .overviewStatusName
+                            h2= guest.name + ' ' + guest.lastname
+                          .overviewStatusBalance
+                            h3 Balance
+                            -if (guest.balance < 0)
+                              p.red #{guest.balance} $
+                            -else
+                              p.green #{guest.balance} $
+                          .overviewStatusLast
+                            h3 Last payment
+                            -if (payments.length > 0 )
+                              -var date = payments[0].date
+                              -var d = date.getDate();
+                              -var m = date.getMonth()+ 1;
+                              -var y = date.getFullYear();
+                              -if (d < 10) d = '0' + d
+                              -if (m < 10) m = '0' + m
+                              p #{m}.#{d}.#{y}
+                            -else 
+                              p -
+                        .overviewExcel
+                          button
+                            img(src='img/svg/excel.svg', alt='Exel')
+                      -if (payments)      
+                        each payment in payments
+                          .payment
+                            .paymentData
+                              -var date = payment.date
+                              -var d = date.getDate();
+                              -var m = date.getMonth() + 1;
+                              -var y = date.getFullYear();
+                              -if (d<10) d = '0' + d
+                              -if (m<10) m = '0' + m
+                              p #{m}.#{d}.#{y}
+                              h3 #{payment.sum} $
+                            .paymentDiscription
+                              p Department of Social Protection
+                              h3 #{payment.type}
+                      .overviewButtons
+                        button.gistPaymentsHistory.paymentBtn(value= guest._id) Add Payment
+                        button.gistShelterHistory.paymentBtn(value= guest._id) User Information
+                        
+                    form.add
+                      .addPhoto
+                        button.uploadPhoto
+                          img(src='img/png/cloud.png', alt='Cloud')
+                          p Upload photo
+                        input(type='file', encType="multipart/form-data", accept='image/jpg, image/jpeg, image/png, image/gif')
+                      .addText.addDate
+                        -var date0 = new Date()
+                        -var now = date0.getFullYear() + '-' + ('0' + (date0.getMonth() + 1)).slice(-2) + '-' + ('0' + date0.getDate()).slice(-2)
+                        input(type="date", placeholder="Select date", name="date", required, max= now)
+                      .addText.addCash
+                        p Enrollment amount:
+                        
+                        input(type="text", placeholder="100", name="sum", required)
+                        p $
+                      .addText
+                        select(class="", name="type", required).addType
+                          option(disabled selected) Type of payment
+                          option CASH
+                          option Department
+                      .addButtons
+                        button.addSave(value= guestID) Save
+                        button.addCancel(value= guestID) Cancel
+
+                      
+                
+              -else
+                -if (guests[0])
+                  .openGist
+                    .overview
+                      -if (guests[0].image)
+                        .overviewImg(style="background: url(img/upload/guest/#{guests[0].image}); background-size: auto 160px; background-position: center; background-repeat: no-repeat")
+                      -else 
+                        .overviewImg(style="background: url(img/upload/gist.png); background-size: auto 156px; background-position: center")
+                      .overviewStatus
+                        .overviewStatusName
+                          h2= guests[0].name + ' ' + guests[0].lastname
+                        .overviewStatusBalance
+                          h3 Balance
+                          -if (guests[0].balance < 0)
+                            p.red #{guests[0].balance} $
+                          -else
+                            p.green #{guests[0].balance} $
+                        .overviewStatusLast
+                          h3 Last payment
+                          -if (payments.length > 0 )
+                            -var date = payments[0].date
+                            -var d = date.getDate();
+                            -var m = date.getMonth()+ 1;
+                            -var y = date.getFullYear();
+                            -if (d < 10) d = '0' + d
+                            -if (m < 10) m = '0' + m
+                            p #{m}.#{d}.#{y}
+                          
+                          -else 
+                            p -
+                      .overviewExcel
+                        button
+                          img(src='img/svg/excel.svg', alt='Exel')
+                    -if (payments)
+                      each payment in payments
+                        .payment
+                          .paymentData
+                            -var date = payment.date
+                            -var d = date.getDate();
+                            -var m = date.getMonth() + 1;
+                            -var y = date.getFullYear();
+                            -if (d<10) d = '0' + d
+                            -if (m<10) m = '0' + m
+                            p #{m}.#{d}.#{y}
+                            h3 #{payment.sum} $
+                          .paymentDiscription
+                            p Department of Social Protection
+                            h3 #{payment.type}
+                    .overviewButtons
+                      button.gistPaymentsHistory.paymentBtn(value= guests[0]._id) Add Payment
+                      button.gistShelterHistory.paymentBtn(value= guests[0]._id) User Information
+                      
+                form.add
+                  .addPhoto
+                    button.uploadPhoto
+                      img(src='img/png/cloud.png', alt='Cloud')
+                      p Upload photo
+                    input(type='file', encType="multipart/form-data", accept='image/jpg, image/jpeg, image/png, image/gif')
+                  .addText.addDate
+                    input(type="date", placeholder="Select date", name="date", required)
+                  .addText.addCash
+                    p Enrollment amount:
+                    input(type="text", placeholder="100", name="sum", required)
+                    p $
+                  .addText
+                    select(class="", name="type", required).addType
+                      option(disabled selected) Type of payment
+                      option CASH
+                      option Department
+                  .addButtons
+                    button.addSave(type="submit", value= guests[0]._id) Save
+                    button.addCancel(type="button", value= guests[0]._id) Cancel
+              
+block footer
+  script(src='js/payments.js')
