@@ -192,7 +192,7 @@ block content
                         -each room in houses[0].rooms
                           -capacity += room.beds.length
                           -each bed in room.beds
-                            -if (bed.statut === false)
+                            -if (bed.status)
                               - ++freeBeds
                         p #{freeBeds}/#{capacity}
                     -if (houses[0].name)
