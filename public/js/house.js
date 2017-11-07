@@ -379,10 +379,8 @@ function Controller(model, view){
         }
         if (i === model.house.rooms.length - 1) {
           if (count > 0) {
-            var u = confirm("Are you sure, because there are " + count + " guests in this house?");
-            if (u) {
-              delReplace(guests);
-            }
+            alert("Please replace users before deleting occupied beds, because there are " + count + " guests in this house!");
+
           } else {
             var u = confirm("Are you sure?");
             if (u) {
@@ -418,11 +416,12 @@ function Controller(model, view){
       var d = $('.gistDel').attr('value')
       $.ajax({
         method: "POST",
-        url: "/houses/delete" + d,
+        url: "/houses/delete/house_" + d,
         statusCode: {
           200: function() {
             right.html("House is deleted").addClass('alert-success');
-            view.delete(id);
+            view.delete(d);
+            window.location.href = "/houses"
           },
           403: function(jqXHR) {
             var error = JSON.parse(jqXHR.responseText);

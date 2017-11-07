@@ -203,85 +203,85 @@ router.post('/houses/place/house_:id?', function(req, res, next){
 
 
 
-//---------------------DEL REPLACE------------------------
-router.post('/houses/delReplase', function(req, res, next){
-  console.log(req.body);
-  for (var i = 0; i < req.body.users.length; i++) {
-    var id = req.body.users[i];
-    function guestRep(callback){
-      Gist.findById(id, function (err, doc){
-        if (err) {
-          console.error('Error, no entry found');
-        }
-        console.log(doc);
-        var resid = doc._id;
-        doc.status = false;
-        doc.residence = null;
-        doc.save();
-        return callback(resid);
-      });
-    }
-    function residenceRep(id, callback){
-      console.log(id + " odddd");
-      Residence.find({userID: id}).then(function (doc){
-
-        console.log(doc);
-
-        var time = new Date();
-        time.setTime(0,0,0,0)
-
-        var h = doc.houseID;
-        var r = doc.room;
-        var b = doc.bed;
-
-        doc.endDate = time;
-
-        return callback(h, r, b);
-      });
-    }
-    function houseRep(id, r, b){
-      House.findById(id, function (err, doc){
-        if (err) {
-          console.error('Error, no entry found');
-        }
-        console.log(doc);
-        for (var y = 0; y < doc.rooms.length; y++) {
-          if (doc.rooms[y].num === r) {
-            for (var z = 0; z < doc.rooms[i].beds.length; z++) {
-              if (doc.rooms[i].beds[z].num === b) {
-                doc.rooms[i].beds[z].status = false;
-                doc.rooms[i].beds[z].userID = null;
-                console.log('room clene');
-              }
-            }
-          }
-        }
-        return;
-      });
-    }
-
-    guestRep(function(){
-      console.log('gest ok');
-      residenceRep(id, function(){
-        console.log('oslolo');
-        houseRep(h, r, b);
-      });
-    });
-
-
-
-    if (i === req.body.users.length - 1) {
-      next()
-    }
-  }
-  console.log('house is keept');
-}, function(req, res, next){
-  res.sendStatus(200);
-});
+// //---------------------DEL REPLACE------------------------
+// router.post('/houses/delReplase', function(req, res, next){
+//   console.log(req.body);
+//   for (var i = 0; i < req.body.users.length; i++) {
+//     var id = req.body.users[i];
+//     function guestRep(callback){
+//       Gist.findById(id, function (err, doc){
+//         if (err) {
+//           console.error('Error, no entry found');
+//         }
+//         console.log(doc);
+//         var resid = doc._id;
+//         doc.status = false;
+//         doc.residence = null;
+//         doc.save();
+//         return callback(resid);
+//       });
+//     }
+//     function residenceRep(id, callback){
+//       console.log(id + " odddd");
+//       Residence.find({userID: id}).then(function (doc){
+//
+//         console.log(doc);
+//
+//         var time = new Date();
+//         time.setTime(0,0,0,0)
+//
+//         var h = doc.houseID;
+//         var r = doc.room;
+//         var b = doc.bed;
+//
+//         doc.endDate = time;
+//
+//         return callback(h, r, b);
+//       });
+//     }
+//     function houseRep(id, r, b){
+//       House.findById(id, function (err, doc){
+//         if (err) {
+//           console.error('Error, no entry found');
+//         }
+//         console.log(doc);
+//         for (var y = 0; y < doc.rooms.length; y++) {
+//           if (doc.rooms[y].num === r) {
+//             for (var z = 0; z < doc.rooms[i].beds.length; z++) {
+//               if (doc.rooms[i].beds[z].num === b) {
+//                 doc.rooms[i].beds[z].status = false;
+//                 doc.rooms[i].beds[z].userID = null;
+//                 console.log('room clene');
+//               }
+//             }
+//           }
+//         }
+//         return;
+//       });
+//     }
+//
+//     guestRep(function(){
+//       console.log('gest ok');
+//       residenceRep(id, function(){
+//         console.log('oslolo');
+//         houseRep(h, r, b);
+//       });
+//     });
+//
+//
+//
+//     if (i === req.body.users.length - 1) {
+//       next()
+//     }
+//   }
+//   console.log('house is keept');
+// }, function(req, res, next){
+//   res.sendStatus(200);
+// });
 
 
 //---------------------DELETE------------------------
-router.post('/houses/delete:id?', function(req, res, next){
+router.post('/houses/delete/house_:id?', function(req, res, next){
   var id = req.params.id
   console.log(req.body)
   House.findById(id, function(err, doc){
