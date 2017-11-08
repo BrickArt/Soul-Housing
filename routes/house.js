@@ -48,13 +48,11 @@ router.get('/houses/house_:id?', function(req, res, next){
 router.get('/houses:id?', function(req, res, next){
   House.find().sort({name: 1})
     .then(function(doc){
-      console.log(doc);
       next(doc);
       return;
     });
 }, function(doc, req, res, next){
   var id = req.params.id;
-  console.log(doc);
   res.render('houses', {houses: doc, houseID: id});
 });
 
@@ -97,107 +95,107 @@ router.post('/houses/add', upload.any(), function(req, res, next){
 });
 
 //-------------------Place--------------------
-router.post('/houses/place/house_:id?', function(req, res, next){
-  if (!req.session.placeH){
-    console.log('have no house');
-    console.log(req.session);
-    req.session.placeH = req.body;
-    res.sendStatus(200);
-  } else {
-    next();
-  }
-}, function(req, res, next){
-  var items = {
-    house: {}
-  }
-  var user = req.session.placeU;
-  var house = req.body;
-  var id = req.params.id;
-  console.log(house);
+// router.post('/houses/place/house_:id?', function(req, res, next){
+//   if (!req.session.placeH){
+//     console.log('have no house');
+//     console.log(req.session);
+//     req.session.placeH = req.body;
+//     res.sendStatus(200);
+//   } else {
+//     next();
+//   }
+// }, function(req, res, next){
+//   var items = {
+//     house: {}
+//   }
+//   var user = req.session.placeU;
+//   var house = req.body;
+//   var id = req.params.id;
+//   console.log(house);
 
-  House.findById(id, function(err, doc){
-    if (err) {
-      console.error('Image, no entry found');
-    }
-    for (var i = 0; i < doc.rooms.length; i++) {
-      if (doc.rooms[i].num == house.room){
-        for (var y = 0; y < doc.rooms[i].beds.length; y++) {
-          if (doc.rooms[i].beds[y].num == house.bed){
-            doc.rooms[i].beds[y].status = true;
-            doc.rooms[i].beds[y].userID = user;
-            console.log(doc.rooms[i].beds[y].num);
-          }
-          console.log(doc.rooms[i].num);
-        }
-      }
-      if (i === doc.rooms.length - 1) {
-        items.house.name = doc.name;
-        items.house.address = doc.address;
-        doc.save(function (err) {
-          if (err) {
-            console.log(err);
-            res.sendStatus(403);
-          } else {
-            next(items);
-          }
-        });
-      }
-    }
-  });
+//   House.findById(id, function(err, doc){
+//     if (err) {
+//       console.error('Image, no entry found');
+//     }
+//     for (var i = 0; i < doc.rooms.length; i++) {
+//       if (doc.rooms[i].num == house.room){
+//         for (var y = 0; y < doc.rooms[i].beds.length; y++) {
+//           if (doc.rooms[i].beds[y].num == house.bed){
+//             doc.rooms[i].beds[y].status = true;
+//             doc.rooms[i].beds[y].userID = user;
+//             console.log(doc.rooms[i].beds[y].num);
+//           }
+//           console.log(doc.rooms[i].num);
+//         }
+//       }
+//       if (i === doc.rooms.length - 1) {
+//         items.house.name = doc.name;
+//         items.house.address = doc.address;
+//         doc.save(function (err) {
+//           if (err) {
+//             console.log(err);
+//             res.sendStatus(403);
+//           } else {
+//             next(items);
+//           }
+//         });
+//       }
+//     }
+//   });
 
-}, function(items, req, res, next){
-  var id = req.params.id;
-  var user = req.session.placeU;
+// }, function(items, req, res, next){
+//   var id = req.params.id;
+//   var user = req.session.placeU;
 
-  var startDate = new Date;
-  startDate.setHours(0, 0, 0, 0);
-
-
-  var residence = new Residence();
-  residence.userID = user;
-  residence.houseID = house.houseID;
-  residence.room = house.room;
-  residence.bed = house.bed;
-  residence.price = house.price;
-  residence.startDate = startDate;
-  residence.save(function (err) {
-    if (err) {
-      console.log(err);
-      res.sendStatus(403);
-    } else {
-      items.residence = residence;
-      next(items)
-    }
-  });
-
-}, function(items, req, res, next){
-  var id = req.params.id;
-  var house = req.session.placeH;
+//   var startDate = new Date;
+//   startDate.setHours(0, 0, 0, 0);
 
 
-  Gist.findById(id, function(err, doc){
-    if (err) {
-      console.error('Image, no entry found');
-    }
-    doc.house.name = items.house.name;
-    doc.house.address = items.house.address;
-    doc.house.room = house.room;
-    doc.house.bed = house.bed;
+//   var residence = new Residence();
+//   residence.userID = user;
+//   residence.houseID = house.houseID;
+//   residence.room = house.room;
+//   residence.bed = house.bed;
+//   residence.price = house.price;
+//   residence.startDate = startDate;
+//   residence.save(function (err) {
+//     if (err) {
+//       console.log(err);
+//       res.sendStatus(403);
+//     } else {
+//       items.residence = residence;
+//       next(items)
+//     }
+//   });
 
-    doc.status = true;
-    doc.residence = items.residence._id;
-    doc.save(function (err) {
-      if (err) {
-        console.log(err);
-        res.sendStatus(403);
-      } else {
-        req.session.placeH = null;
-        req.session.placeU = null;
-        res.sendStatus(200);
-      }
-    });
-  });
-});
+// }, function(items, req, res, next){
+//   var id = req.params.id;
+//   var house = req.session.placeH;
+
+
+//   Gist.findById(id, function(err, doc){
+//     if (err) {
+//       console.error('Image, no entry found');
+//     }
+//     doc.house.name = items.house.name;
+//     doc.house.address = items.house.address;
+//     doc.house.room = house.room;
+//     doc.house.bed = house.bed;
+
+//     doc.status = true;
+//     doc.residence = items.residence._id;
+//     doc.save(function (err) {
+//       if (err) {
+//         console.log(err);
+//         res.sendStatus(403);
+//       } else {
+//         req.session.placeH = null;
+//         req.session.placeU = null;
+//         res.sendStatus(200);
+//       }
+//     });
+//   });
+// });
 
 
 
@@ -310,7 +308,8 @@ router.post('/houses/update:id?', upload.any(), function(req, res, next){
     b = [];
     for (var y = 0; y < room; y++) {
       b.push({
-        num: y+1
+        num: y+1,
+        status: false
       });
     };
     r.push({
@@ -343,17 +342,52 @@ router.post('/houses/update:id?', upload.any(), function(req, res, next){
     if (item.rooms){
       if (rooms.length >= doc.rooms.length) {
         if (rooms.length > doc.rooms.length) {
+          console.log('room is empty >>>>>')
           for (var i = 0; i < rooms.length; i++) {
             if (doc.rooms[i]) {
               if (rooms[i].beds.length != doc.rooms[i].beds.length) {
-                doc.rooms[i] = rooms[i]
+                doc.rooms[i].beds = rooms[i].beds;
+                console.log('---------------ok---------------------------')
               }
+              // console.log('room is empty >>>>> ROOM')
+              // var count = false;
+              // for (var c = 0; c < doc.rooms[i].beds.length; c++) {
+              //   var element = doc.rooms[i].beds[c];
+              //   if (doc.rooms[i].beds[c].status) {
+              //     console.log('room is empty >>>>> STATUS')
+              
+              //     count = true;
+              //   }
+              //   if (c === doc.rooms[i].beds.length - 1 && !count) {
+              //     console.log('room is empty >>>>> A')
+              //     console.log(doc.rooms[i])
+              //     doc.rooms[i] = rooms[i]
+              //     console.log(rooms[i])
+                  
+              //   }
+              // }
+              // if (rooms[i].beds.length != doc.rooms[i].beds.length) {
+              //   doc.rooms[i] = rooms[i]
+              // }
             } else {
               doc.rooms.push(rooms[i])
             }
           }
         } else {
-
+          for (var b = 0; b < doc.rooms.length; b++) {
+            var element = doc.rooms[b];
+            var count = false;
+            for (var v = 0; v < element.beds.length; v++) {
+              var element2 = element.beds[v];
+              if (element2.status) {
+                count = true;
+              }
+              if (v === element.beds.length - 1 && !count) {
+                doc.rooms[b] = rooms[b]
+              }
+              
+            }
+          }
         }
       } else {
         for (var y = 0; y < doc.rooms.length; y++) {
@@ -371,7 +405,7 @@ router.post('/houses/update:id?', upload.any(), function(req, res, next){
     if(req.files[0]){
       doc.image = req.files[0].filename;
     };
-
+    console.log('time out')
     doc.save(function (err) {
       if (err) {
         console.log(err);

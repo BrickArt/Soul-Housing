@@ -96,6 +96,10 @@ function Model(data){
     }
   }
 
+  self.addInit = function (){
+    self.rooms = [];
+  }
+
 
 };
 
@@ -297,7 +301,8 @@ function Controller(model, view){
   function add() {
     $('.openHouse').hide();
     $('.add').show();
-    model.rooms = []
+    model.rooms = [];
+    model.house.rooms= [];
   };
 
 //---------------SAVE-------------------
@@ -603,15 +608,11 @@ function Controller(model, view){
     for (var key in form){
       data.append(form[key].name, form[key].value)
     }
-    console.log('ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo');
-    console.log(data, "rooms")
 
 
     $.each( files, function( key, value ){
         data.append( key, value );
     });
-    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-    console.log(data.name)
 
 
 
@@ -626,8 +627,7 @@ function Controller(model, view){
         statusCode: {
           200: function() {
             formEvent.html("House is saved").addClass('alert-success');
-            window.location.href = "/houses";
-            console.log('bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb');
+            window.location.href = "/houses" + id;
           },
           403: function(jqXHR) {
             var error = JSON.parse(jqXHR.responseText);
