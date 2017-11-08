@@ -183,7 +183,7 @@ router.post('/houses/update:id?', upload.any(), function(req, res, next){
                 count = true;
               }
               if (v === element.beds.length - 1 && !count) {
-                doc.rooms[b] = rooms[b]
+                doc.rooms[b] = item.rooms[b]
               }
               
             }

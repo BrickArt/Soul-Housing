@@ -1,4 +1,4 @@
-var colors1 = ["rgb(255, 99, 132)", "rgb(255, 159, 64)", "rgb(255, 205, 86)", "rgb(75, 192, 192)", "rgb(54, 162, 235)", "rgb(201, 203, 207)"];
+var colors1 = ["rgb(255, 99, 132)", "rgb(255, 159, 64)", "rgb(255, 205, 86)", "rgb(75, 192, 192)", "rgb(54, 162, 235)", "rgb(201, 203, 207)", "rgb(65, 234, 212)", "rgb(255, 0, 34)", "rgb(1, 22, 39)", "rgb(253, 82, 0)"];
 
 
 var drawChartDonut = function() {
@@ -61,11 +61,11 @@ var drawChartDonut = function() {
                     "datasets": [{
                         "label": "Programs",
                         "data": yAxesValues,
-                        "backgroundColor": ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)", "rgb(255, 159, 64)", "rgb(75, 192, 192)", "rgb(201, 203, 207)"]
+                        "backgroundColor": ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)", "rgb(255, 159, 64)", "rgb(75, 192, 192)", "rgb(253, 82, 0)", "rgb(255, 0, 34)", "rgb(54, 162, 235)", "rgb(1, 22, 39)", "rgb(253, 82, 0)"]
                     }]
                 },
                 "options": {
-                    "showAllTooltips": true
+                    "showAllTooltips": false
                 }
             };
 
