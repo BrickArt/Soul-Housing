@@ -167,20 +167,33 @@ router.post('/houses/update:id?', upload.any(), function(req, res, next){
           for (var i = 0; i < item.rooms.length; i++) {
             if (doc.rooms[i]) {
               if (item.rooms[i].beds.length != doc.rooms[i].beds.length) {
-                doc.rooms[i] = item.rooms[i]
+                doc.rooms[i].beds = item.rooms[i].beds
               }
             } else {
               doc.rooms.push(item.rooms[i])
             }
           }
         } else {
-
+          for (var b = 0; b < doc.rooms.length; b++) {
+            var element = doc.rooms[b];
+            var count = false;
+            for (var v = 0; v < element.beds.length; v++) {
+              var element2 = element.beds[v];
+              if (element2.status) {
+                count = true;
+              }
+              if (v === element.beds.length - 1 && !count) {
+                doc.rooms[b] = rooms[b]
+              }
+              
+            }
+          }
         }
       } else {
         for (var y = 0; y < doc.rooms.length; y++) {
           if (item.rooms[y]) {
             if (item.rooms[y].beds.length != doc.rooms[y].beds.length) {
-              doc.rooms[y] = item.rooms[y]
+              doc.rooms[y].beds = item.rooms[y].beds
             }
           } else {
             doc.rooms.splice(y, 1);
