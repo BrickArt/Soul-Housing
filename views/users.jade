@@ -2,6 +2,11 @@ extends layout
 
 block script
   link(rel='stylesheet', href='/stylesheets/users.css')
+  link(rel='stylesheet', href='/stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+  script(src="/js/bootstrap.min.js")
+  script(src="/js/moment.js")
+  script(src="/js/daterangepickerSingle.js")
+  link(rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css")
   
 block content
   .mainBlock
@@ -153,9 +158,7 @@ block content
                               p Status
                               img(src='img/svg/checkbox.svg', alt='Checkbox')
                         .addText.addDate
-                          -var date = new Date()
-                          -var now = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2)
-                          input(type="date", placeholder="Date of birth", name='dateOfBirth', max= now)
+                          input.demo(type="text", placeholder="Select date", name="date")
                         .addText.addSex
                           select(class="", name='gender')
                             option(disabled selected) Sex
@@ -197,9 +200,12 @@ block content
                               -else
                                 img(src='img/png/toggle.png', alt='Toggle')
                         .addText.addDate
-                          -var date = new Date()
-                          -var now = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2)
-                          input(type="date", placeholder="Date of birth", name='dateOfBirth', value= gist.dateOfBirth, max= now)
+                          -var birth = new Date(gist.dateOfBirth)
+                          -var d = birth.getDate();
+                          -var m = birth.getMonth() + 1;
+                          -var y = birth.getFullYear();
+                          -var yyy =  m + '/' + d + '/' + y
+                          input.demo(type="text", placeholder="Select date", name="date", value= yyy)
                         .addText.addSex
                           select(class="", name='gender')
                             option(disabled) Sex
@@ -347,9 +353,13 @@ block content
                               -else
                                 img(src='img/png/toggle.png', alt='Toggle')
                         .addText.addDate
-                          -var date = new Date()
-                          -var now = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2)
-                          input(type="date", placeholder="Date of birth", name='dateOfBirth', value= gists[0].dateOfBirth, max= now)
+                          -var birth = new Date(gists[0].dateOfBirth)
+                          -var d = birth.getDate();
+                          -var m = birth.getMonth() + 1;
+                          -var y = birth.getFullYear();
+                          -var yyy =  m + '/' + d + '/' + y
+                          input.demo(type="text", placeholder="Select date", name="date", value= yyy)
+                          
                         .addText.addSex
                           select(class="", name='gender')
                             option(disabled) Sex
@@ -392,9 +402,7 @@ block content
                           p Status
                           img(src='img/svg/checkbox.svg', alt='Checkbox')
                     .addText.addDate
-                      -var date = new Date()
-                      -var now = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2)
-                      input(type="date", placeholder="Date of birth", name='dateOfBirth', max= now)
+                      input.demo(type="text", placeholder="Select date", name="date")
                     .addText.addSex
                       select(class="", name='gender')
                         option(disabled selected) Sex
@@ -421,3 +429,4 @@ block content
   
 block footer
   script(src='js/users.js')
+  script(src="js/onloadHandler2.js")

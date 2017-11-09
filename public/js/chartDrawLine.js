@@ -62,7 +62,7 @@ var drawChart = function(program, start, end) {
                 var date = new Date([payment._id.year, payment._id.month, payment._id.day].join("-"));
 
                 yAxesValues.push(payment.totalSum);
-                //xAxesValues.push(moment(date).format('MMM D'));
+                // xAxesValues.push(moment(date).format('MMM D'));
                 xAxesValues.push(date);
             });
             console.log(xAxesValues);

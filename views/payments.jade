@@ -2,6 +2,11 @@ extends layout
 
 block script
   link(rel='stylesheet', href='/stylesheets/payments.css')
+  link(rel='stylesheet', href='/stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+  script(src="/js/bootstrap.min.js")
+  script(src="/js/moment.js")
+  script(src="/js/daterangepickerSingle.js")
+  link(rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css")
   
 block content
   .mainBlock
@@ -87,9 +92,8 @@ block content
                           p Upload photo
                         input(type='file', encType="multipart/form-data", accept='image/jpg, image/jpeg, image/png, image/gif')
                       .addText.addDate
-                        -var date0 = new Date()
-                        -var now = date0.getFullYear() + '-' + ('0' + (date0.getMonth() + 1)).slice(-2) + '-' + ('0' + date0.getDate()).slice(-2)
-                        input(type="date", placeholder="Select date", name="date", required, max= now)
+                        input#demo(type="text", placeholder="Select date", name="date")
+                      
                       .addText.addCash
                         p Enrollment amount:
                         
@@ -164,7 +168,7 @@ block content
                       p Upload photo
                     input(type='file', encType="multipart/form-data", accept='image/jpg, image/jpeg, image/png, image/gif')
                   .addText.addDate
-                    input(type="date", placeholder="Select date", name="date", required)
+                    input#demo(type="text", placeholder="Select date", name="date")
                   .addText.addCash
                     p Enrollment amount:
                     input(type="text", placeholder="100", name="sum", required)
@@ -180,3 +184,4 @@ block content
               
 block footer
   script(src='js/payments.js')
+  script(src="js/onloadHandler2.js")
