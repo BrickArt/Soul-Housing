@@ -520,4 +520,7 @@ body {
 .history {
   display: none; }
 
+.demo:hover {
+  cursor: pointer; }
+
 /*# sourceMappingURL=users.css.map */
