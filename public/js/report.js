@@ -23,7 +23,7 @@ function View(model){
   self.init = function(items){
     self.elements.freeBeds.html(items.freeBeds);
     self.elements.users.html(items.users);
-    self.elements.money.html(items.money);
+    self.elements.money.html(Math.round(items.money));
     self.elements.houses.html(items.houses);
     console.log(items);
     return;

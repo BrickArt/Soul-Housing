@@ -492,4 +492,7 @@ body {
     float: right;
     margin-right: 125px; }
 
+.demo:hover {
+  cursor: pointer; }
+
 /*# sourceMappingURL=payments.css.map */

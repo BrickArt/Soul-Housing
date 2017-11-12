@@ -452,7 +452,7 @@ function getPages(items){
           if (items.houses[i].rooms[e].beds[y].status === true) {
             var user = items.houses[i].rooms[e].beds[y].user;
             var bed = {
-              text: user.name + ' ' + user.lastname + ' ' + user.program + ' ' + user.balance + ' $'
+              text: user.name + ' ' + user.lastname + '      ' + user.program + '      ' + user.balance + ' $'
             }
             if (y%2===0) {
               room.columns[1].table.body[0][0] = bed;
@@ -665,7 +665,7 @@ function getPage(result){
         if (result.rooms[i].beds[y].status === true) {
           var user = result.rooms[i].beds[y].user;
           var bed = {
-            text: user.name + ' ' + user.lastname + ' ' + user.program + ' ' + user.balance + ' $'
+            text: user.name + ' ' + user.lastname + '      ' + user.program + '      ' + user.balance + ' $'
           }
           if (y%2===0) {
             room.columns[1].table.body[0][0] = bed;
