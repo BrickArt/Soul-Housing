@@ -3,20 +3,14 @@ var router = express.Router();
 var fs = require('fs');
 var path = require('path');
 var multer = require('multer');
-var google = require('googleapis');
-var gDrive = require('multer-gdrive');
 
 
 var checkAuth = require('../middleware/checkAuth');
 
-var jwtClient = new google.auth.JWT({googleId: "1bbFVJXRkIbGollLP6f11m7hk9RDU38QA"});
-// https://drive.google.com/open?id=1bbFVJXRkIbGollLP6f11m7hk9RDU38QA
-// 1bbFVJXRkIbGollLP6f11m7hk9RDU38QA
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, './public/img/upload/payments')
-    // cb(null, gDrive(jwtClient))
   },
   filename: function (req, file, cb) {
     cb(null, 'payment_' + Date.now() + '.' + file.mimetype.split('/')[1])
@@ -24,7 +18,6 @@ var storage = multer.diskStorage({
 })
 
 var upload = multer({ storage: storage });
-// var upload = multer({ storage: gDrive(jwtClient) });
 
 
 //===========================================
