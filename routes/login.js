@@ -2,9 +2,6 @@ var async = require('async');
 var User = require('../models/user').User;
 
 exports.post = function(req, res, next) {
-  console.log(req.body)
-  console.log(req.body.username)
-  console.log(req.body.password)
   async.waterfall([
     function(callback) {
       User.findOne({ username: req.body.username }).exec(callback);

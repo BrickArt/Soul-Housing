@@ -4,9 +4,7 @@ var fs = require('fs');
 var path = require('path');
 var multer = require('multer');
 
-
 var checkAuth = require('../middleware/checkAuth');
-
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -37,18 +35,6 @@ var Payment = require('../models/payment').Payment;
 //===========================================
 
 //------------------GET--------------------
-// router.get('/users/user_:id', function(req, res, next){
-//   var id = req.params.id;
-//   Gist.findById(id, function(err, doc){
-//     if (err) throw err;
-//     next(doc);
-//     return;
-//   });
-// }, function(guest, req, res, next){
-//   res.send(guest)
-// });
-
-//------------------USERS--------------------
 router.get('/payments:id?', function(req, res, next){
   Gist.find().sort({name: 1})
     .then(function(doc){
@@ -90,12 +76,7 @@ router.post('/payments/add:id?', upload.any(), function(req, res, next){
     }
     program = doc.program;
     doc.balance += +req.body.sum;
-    // var item = req.body;
-    // if(req.files[0]){
-    //   item.image = req.files[0].filename;
-    // };
-    // console.log(req.body);
-    // doc.payments.push(item);
+
     doc.save();
     next(program);
     return;
@@ -108,6 +89,7 @@ router.post('/payments/add:id?', upload.any(), function(req, res, next){
   };
   item.sum = req.body.sum;
   item.date = req.body.date;
+  item.type = req.body.type;
   item.userID = req.params.id;
   item.program = program;
   next(item);
@@ -123,18 +105,6 @@ router.post('/payments/add:id?', upload.any(), function(req, res, next){
     }
   });
 });
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
