@@ -251,10 +251,11 @@ body {
     cursor: pointer; }
 
 #sel1 {
-  margin-left: 80px;
+  margin-left: 60px;
   border: none;
   background-color: #F15E5E;
-  color: #fff; }
+  color: #fff;
+    color--webkit-appearance: none; }
   #sel1 option {
     text-align: right; }
 
