@@ -1,3 +1,4 @@
+
 var express = require('express');
 var router = express.Router();
 var fs = require('fs');
@@ -86,8 +87,9 @@ router.get('/report/data', function(req, res, next){
   });
 }, function(items, req, res, next){
   Payment.find().then(function(doc){
+    console.log(doc)
     for (var n = 0; n < doc.length; n++) {
-      items.money += doc[n].sum;
+      items.money += +doc[n].sum;
       if (n === doc.length - 1) {
         next(items);
       }
@@ -100,6 +102,7 @@ router.get('/report/data', function(req, res, next){
   })
 
 }, function(items, req, res, next){
+  console.log(items)
   res.send(items)
 });
 

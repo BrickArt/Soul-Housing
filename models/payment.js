@@ -6,7 +6,8 @@ var schema = new Schema({
     type: Date
   },
   sum: {
-    type: Number
+    type: Number,
+    default: 0
   },
   type: {
     type: String
