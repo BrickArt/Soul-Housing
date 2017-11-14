@@ -107,7 +107,7 @@ app.use('/api', apiResidence);
 app.use('/api', apiProgram);
 app.use('/api', apiReport);
 app.use('/api', api);
-app.use('/test', test);
+// app.use('/test', test);
 
 //------------------Static-------------------
 app.use(express.static(join(__dirname, 'public')));

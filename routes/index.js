@@ -51,15 +51,15 @@ router.post('/login', require('./login').post);
 //router.get('/houses:id?', require('./houses').get);
 //---------------------add
 //router.post('/houses', checkAuth, require('./houses').post);
-router.post('/houses/save', checkAuth, upload.any(), require('./houses').save);
-//---------------------del
-router.post('/houses/delete', checkAuth, require('./houses').delete);
-//---------------------edit
-router.post('/houses/edit', checkAuth, require('./houses').edit);
-router.post('/houses/update:id?', checkAuth, upload.any(), require('./houses').update);
-// //---------------------room
-router.post('/houses/room',  require('./houses').room);
-router.post('/houses/data:id?', require('./houses').data);
+// router.post('/houses/save', checkAuth, upload.any(), require('./houses').save);
+// //---------------------del
+// router.post('/houses/delete', checkAuth, require('./houses').delete);
+// //---------------------edit
+// router.post('/houses/edit', checkAuth, require('./houses').edit);
+// router.post('/houses/update:id?', checkAuth, upload.any(), require('./houses').update);
+// // //---------------------room
+// router.post('/houses/room',  require('./houses').room);
+// router.post('/houses/data:id?', require('./houses').data);
 //
 // router.post('/houses/place', checkAuth, require('./houses').place);
 // router.post('/houses/place/save', checkAuth, require('./houses').placeSave);

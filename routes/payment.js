@@ -3,12 +3,20 @@ var router = express.Router();
 var fs = require('fs');
 var path = require('path');
 var multer = require('multer');
+var google = require('googleapis');
+var gDrive = require('multer-gdrive');
+
 
 var checkAuth = require('../middleware/checkAuth');
+
+var jwtClient = new google.auth.JWT({googleId: "1bbFVJXRkIbGollLP6f11m7hk9RDU38QA"});
+// https://drive.google.com/open?id=1bbFVJXRkIbGollLP6f11m7hk9RDU38QA
+// 1bbFVJXRkIbGollLP6f11m7hk9RDU38QA
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, './public/img/upload/payments')
+    // cb(null, gDrive(jwtClient))
   },
   filename: function (req, file, cb) {
     cb(null, 'payment_' + Date.now() + '.' + file.mimetype.split('/')[1])
@@ -16,6 +24,7 @@ var storage = multer.diskStorage({
 })
 
 var upload = multer({ storage: storage });
+// var upload = multer({ storage: gDrive(jwtClient) });
 
 
 //===========================================
@@ -50,7 +59,7 @@ var Payment = require('../models/payment').Payment;
 router.get('/payments:id?', function(req, res, next){
   Gist.find().sort({name: 1})
     .then(function(doc){
-      console.log(doc);
+      // console.log(doc);
       var items = {
         users: doc
       };
@@ -67,12 +76,12 @@ router.get('/payments:id?', function(req, res, next){
   Payment.find({userID: id}).sort({date: -1})
     .then(function(doc){
         items.payments = doc;
-        console.log(doc);
+        // console.log(doc);
       next(items);
       return;
     });
 }, function(items, req, res, next){
-  console.log(items);
+  // console.log(items);
   res.render('payments', {guests: items.users, payments: items.payments, guestID: req.params.id})
 });
 
@@ -100,7 +109,7 @@ router.post('/payments/add:id?', upload.any(), function(req, res, next){
   });
 }, function(program, req, res, next){
   var item = {};
-  console.log(program);
+  // console.log(program);
   if(req.files[0]){
     item.image = req.files[0].filename;
   };
@@ -111,7 +120,7 @@ router.post('/payments/add:id?', upload.any(), function(req, res, next){
   next(item);
 }, function(item, req, res, next){
   var data = new Payment(item);
-  console.log(data);
+  // console.log(data);
   data.save(function (err) {
     if (err) {
       console.log(err);
