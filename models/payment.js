@@ -3,26 +3,31 @@ var mongoose = require('../lib/mongoose'),
 
 var schema = new Schema({
   date: {
-    type: Date
+    type: Date,
+    default: Date.now
   },
   sum: {
     type: Number,
     default: 0
   },
   type: {
-    type: String
+    type: String,
+    default: null
   },
   program: {
-    type: String
+    type: String,
+    default: null
   },
   image: {
     type: String
   },
   userID: {
-    type: String
+    type: String,
+    required: true
   },
-  description: {
-    type: String
+  status: {
+    type: String,
+    default: null
   },
   created: {
     type: Date,
