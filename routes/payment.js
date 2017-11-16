@@ -64,6 +64,20 @@ router.get('/payments:id?', function(req, res, next){
   res.render('payments', {guests: items.users, payments: items.payments, guestID: req.params.id})
 });
 
+router.get('/payments/payment_:id?', function(req, res, next){
+  var id = req.params.id;
+  Payment.findById(id).then(function(doc){
+    res.send({
+      _id: doc._id,
+      date: doc.date,
+      sum: doc.sum,
+      type: doc.type,
+      status: doc.status,
+      image: doc.image
+    })
+  });
+});
+
 //-------------------ADD--------------------
 router.post('/payments/add:id?', upload.any(), function(req, res, next){
   var id = req.params.id;
@@ -119,12 +133,14 @@ router.post('/payments/add:id?', upload.any(), function(req, res, next){
 //--------------------------edit-------------------------
 router.post('/payments/edit/payment_:id?', upload.any(), function(req, res, next){
   var id = req.params.id;
+  console.log(req.body)
   Payment.findById(id).then(function(doc){
-    if(req.files[0]){
+    console.log(doc)
+    if(req.files){
       doc.image = req.files[0].filename;
     };
     if(req.body.sum){
-      doc.sum = req.body.sum;
+      doc.sum = +req.body.sum;
     };
     if(req.body.date){
       doc.date = req.body.date;

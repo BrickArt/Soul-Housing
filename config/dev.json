@@ -5,7 +5,7 @@
         "useMongoClient": true
       }
     },
-    "port": 3000,
+    "port": 3001,
     "session": {
       "secret": "KillerIsJim",
       "maxAge": 14400000

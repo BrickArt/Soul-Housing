@@ -15,6 +15,15 @@ function View(model){
     right: $('.right'),
     addBtn: $('.addBtn'),
 
+    date: $('.demo'),
+    sum: $('.editSum'),
+    type: $('.editType'),
+    image: $('.editImage'),
+    save: $('.editSave'),
+
+    edit: $('.edit'),
+    openGuest: $('.openGist')
+
   };
 
 
@@ -71,6 +80,25 @@ function View(model){
     right.html(data);
   };
 
+  self.edit = function(doc) {
+    var date = new Date(doc.date);
+    var d = date.getDate();
+    var m = date.getMonth() + 1;
+    var y = date.getFullYear();
+    if(d<10) d = '0'+ d;
+    if(m<10) m = '0'+ m;
+    var result = m + '/' + d + '/' + y;
+    
+    self.elements.date.val(result);
+    self.elements.sum.val(doc.sum);
+    self.elements.type.val(doc.type);
+    self.elements.save.val(doc._id);
+    
+
+    self.elements.openGuest.hide();
+    self.elements.edit.show();
+  }
+
 
 
 };
@@ -83,6 +111,9 @@ function Controller(model, view){
 
   $(document).delegate( ".gistPaymentsHistory", "click", add);
   $(document).delegate( ".add", "submit", save);
+  
+  $(document).delegate( ".payment", "click", onEdit);
+  $(document).delegate( ".edit", "submit", update);
 
   $(document).delegate( ".userBtn", "click", open);
   $(document).delegate( ".addCancel", "click", cancel);
@@ -122,6 +153,7 @@ function Controller(model, view){
 //---------------CANCEL-------------------
   function cancel() {
     $('.add').hide();
+    view.elements.edit.hide();
     $('.openGist').show();
   };
 
@@ -180,6 +212,42 @@ function Controller(model, view){
     window.location.href = "/users"+id;
     return false;
   };
+
+  function onEdit() {
+    var id = $(this).val();
+    $.ajax({
+      url: '/payments/payment_' + id,
+      type: 'GET'
+    }).done(function(data){
+      console.log(data)
+      view.edit(data)
+    })
+  }
+
+  function update() {
+    var id = $('.editSave').val()
+    var item = {};
+    if (view.elements.date.val()) {
+      item.date = view.elements.date.val()
+    }
+    if (view.elements.sum.val()) {
+      item.sum = view.elements.sum.val()
+    }
+    if (view.elements.type.val()) {
+      item.type = view.elements.type.val()
+    }
+    if (view.elements.image.val()) {
+      item.image = view.elements.image.val()
+    }
+    $.ajax({
+      url: '/payments/edit/payment_' + id,
+      type: 'post',
+      data: item
+    }).done(function(data){
+      console.log(data)
+      view.edit(data)
+    })
+  }
 
 
 

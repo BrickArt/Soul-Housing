@@ -452,9 +452,9 @@ body {
   .addButtons button:hover {
     cursor: pointer; }
 
-.addButtons .addSave {
+.addButtons .addSave, .addButtons .editSave {
   background-color: #8DBC5E; }
-  .addButtons .addSave:hover {
+  .addButtons .addSave:hover, .addButtons .editSave:hover {
     background-color: #A1D46E; }
 
 .addButtons .addCancel {
@@ -499,5 +499,20 @@ body {
 
 .demo:hover {
   cursor: pointer; }
+
+.clock {
+  width: 20px;
+  float: left;
+  margin: 14px 0 14px 35px; }
+
+.payment {
+  border: none;
+  background-color: #fff; }
+  .payment:hover {
+    cursor: pointer;
+    background-color: #EDEDED; }
+
+.edit {
+  display: none; }
 
 /*# sourceMappingURL=payments.css.map */

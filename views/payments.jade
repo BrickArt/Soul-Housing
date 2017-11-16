@@ -68,7 +68,7 @@ block content
                           
                       -if (payments)      
                         each payment in payments
-                          .payment
+                          button.payment(type="button", value= payment._id)
                             .paymentData
                               -var date = payment.date
                               -var d = date.getDate();
@@ -78,6 +78,9 @@ block content
                               -if (m<10) m = '0' + m
                               p #{m}.#{d}.#{y}
                               h3 #{payment.sum} $
+                            .clock
+                              -if (payment.status === "pending")
+                                img(src='img/png/clock.png', alt='Clock')
                             .paymentDiscription
                               p Department of Social Protection
                               h3 #{payment.type}
@@ -107,6 +110,27 @@ block content
                       .addButtons
                         button.addSave(value= guestID) Save
                         button.addCancel(value= guestID) Cancel
+
+                    form.edit
+                      .addPhoto
+                        button.uploadPhoto
+                          img(src='img/png/cloud.png', alt='Cloud')
+                          p Upload photo
+                        input.editImage(type='file', encType="multipart/form-data", accept='image/jpg, image/jpeg, image/png, image/gif')
+                      .addText.addDate
+                        input.demo(type="text", placeholder="Select date", name="date")
+                      .addText.addCash
+                        p Enrollment amount:
+                        input.editSum(type="text", placeholder="100", name="sum", required)
+                        p $
+                      .addText
+                        select(class="", name="type", required).addType.editType
+                          option(disabled selected) Type of payment
+                          option CASH
+                          option Department
+                      .addButtons
+                        button.editSave(type="submit") Save
+                        button.addCancel(type="button", value= guests[0]._id) Cancel
 
                       
                 
@@ -154,6 +178,9 @@ block content
                             -if (m<10) m = '0' + m
                             p #{m}.#{d}.#{y}
                             h3 #{payment.sum} $
+                          .clock
+                              -if (payment.status === "pending")
+                                img(src='img/png/clock.png', alt='Clock')
                           .paymentDiscription
                             p Department of Social Protection
                             h3 #{payment.type}
@@ -166,7 +193,7 @@ block content
                     button.uploadPhoto
                       img(src='img/png/cloud.png', alt='Cloud')
                       p Upload photo
-                    input(type='file', encType="multipart/form-data", accept='image/jpg, image/jpeg, image/png, image/gif')
+                    input.editImage(type='file', encType="multipart/form-data", accept='image/jpg, image/jpeg, image/png, image/gif')
                   .addText.addDate
                     input.demo(type="text", placeholder="Select date", name="date")
                   .addText.addCash
@@ -174,12 +201,33 @@ block content
                     input(type="text", placeholder="100", name="sum", required)
                     p $
                   .addText
-                    select(class="", name="type", required).addType
+                    select(class="", name="type", required).addType.editType
                       option(disabled selected) Type of payment
                       option CASH
                       option Department
                   .addButtons
                     button.addSave(type="submit", value= guests[0]._id) Save
+                    button.addCancel(type="button", value= guests[0]._id) Cancel
+
+                form.edit
+                  .addPhoto
+                    button.uploadPhoto
+                      img(src='img/png/cloud.png', alt='Cloud')
+                      p Upload photo
+                    input(type='file', encType="multipart/form-data", accept='image/jpg, image/jpeg, image/png, image/gif')
+                  .addText.addDate
+                    input.demo(type="text", placeholder="Select date", name="date")
+                  .addText.addCash
+                    p Enrollment amount:
+                    input.editSum(type="text", placeholder="100", name="sum", required)
+                    p $
+                  .addText
+                    select(class="", name="type", required).addType
+                      option(disabled selected) Type of payment
+                      option CASH
+                      option Department
+                  .addButtons
+                    button.editSave(type="submit") Save
                     button.addCancel(type="button", value= guests[0]._id) Cancel
               
 block footer
