@@ -5,6 +5,6 @@ var ENV = process.env.NODE_ENV;
 
 nconf.argv()
   .env()
-  .file({ file: join(__dirname, 'config.json') });
+  .file({ file: join(__dirname, 'dev.json') });
 
 module.exports = nconf;

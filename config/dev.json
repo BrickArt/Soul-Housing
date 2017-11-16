@@ -1,0 +1,16 @@
+{
+    "mongoose": {
+      "uri": "mongodb://artemrebrik:mersedese280@ds042687.mlab.com:42687/soul-housing",
+      "options": {
+        "useMongoClient": true
+      }
+    },
+    "port": 3000,
+    "session": {
+      "secret": "KillerIsJim",
+      "maxAge": 14400000
+    },
+    "logger": {
+      "format": "default"
+    }
+  }
