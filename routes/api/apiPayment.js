@@ -75,7 +75,7 @@ router.post('/payments/add/user_:id?', upload.any(), function(req, res, next){
   now.setHours(0, 0, 0, 0);
   var status = 'done';
   if(date > now){
-    status = pending;
+    status = 'pending';
   }
   var item = {
     date: date,
