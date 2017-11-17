@@ -68,22 +68,23 @@ block content
                           
                       -if (payments)      
                         each payment in payments
-                          button.payment(type="button", value= payment._id)
-                            .paymentData
-                              -var date = payment.date
-                              -var d = date.getDate();
-                              -var m = date.getMonth() + 1;
-                              -var y = date.getFullYear();
-                              -if (d<10) d = '0' + d
-                              -if (m<10) m = '0' + m
-                              p #{m}.#{d}.#{y}
-                              h3 #{payment.sum} $
-                            .clock
-                              -if (payment.status === "pending")
-                                img(src='img/png/clock.png', alt='Clock')
-                            .paymentDiscription
-                              p Department of Social Protection
-                              h3 #{payment.type}
+                          -if (payment.sum >= 0)
+                            button.payment(type="button", value= payment._id)
+                              .paymentData
+                                -var date = payment.date
+                                -var d = date.getDate();
+                                -var m = date.getMonth() + 1;
+                                -var y = date.getFullYear();
+                                -if (d<10) d = '0' + d
+                                -if (m<10) m = '0' + m
+                                p #{m}.#{d}.#{y}
+                                h3 #{payment.sum} $
+                              .clock
+                                -if (payment.status === "pending")
+                                  img(src='img/png/clock.png', alt='Clock')
+                              .paymentDiscription
+                                p Department of Social Protection
+                                h3 #{payment.type}
                       .overviewButtons
                         button.gistPaymentsHistory.paymentBtn(value= guest._id) Add Payment
                         button.gistShelterHistory.paymentBtn(value= guest._id) User Information
@@ -170,25 +171,26 @@ block content
                         
                     -if (payments)
                       each payment in payments
-                        button.payment(type="button", value= payment._id)
-                          .paymentData
-                            -var date = payment.date
-                            -var d = date.getDate();
-                            -var m = date.getMonth() + 1;
-                            -var y = date.getFullYear();
-                            -if (d<10) d = '0' + d
-                            -if (m<10) m = '0' + m
-                            p #{m}.#{d}.#{y}
-                            -if(payment.sum < 0)
-                              h3.red #{-payment.sum} $
-                            -else
-                              h3 #{payment.sum} $
-                          .clock
-                              -if (payment.status === "pending")
-                                img(src='img/png/clock.png', alt='Clock')
-                          .paymentDiscription
-                            p Department of Social Protection
-                            h3 #{payment.type}
+                        -if (payment.sum >= 0)
+                          button.payment(type="button", value= payment._id)
+                            .paymentData
+                              -var date = payment.date
+                              -var d = date.getDate();
+                              -var m = date.getMonth() + 1;
+                              -var y = date.getFullYear();
+                              -if (d<10) d = '0' + d
+                              -if (m<10) m = '0' + m
+                              p #{m}.#{d}.#{y}
+                              -if(payment.sum < 0)
+                                h3.red #{-payment.sum} $
+                              -else
+                                h3 #{payment.sum} $
+                            .clock
+                                -if (payment.status === "pending")
+                                  img(src='img/png/clock.png', alt='Clock')
+                            .paymentDiscription
+                              p Department of Social Protection
+                              h3 #{payment.type}
                     .overviewButtons
                       button.gistPaymentsHistory.paymentBtn(value= guests[0]._id) Add Payment
                       button.gistShelterHistory.paymentBtn(value= guests[0]._id) User Information
