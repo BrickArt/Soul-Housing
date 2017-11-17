@@ -129,7 +129,9 @@ block content
                           option CASH
                           option Department
                       .addButtons
-                        button.editSave(type="submit") Save
+                        button.done(type="button", disabled) Done
+                        button.editSave(type="submit") Update
+                        button.delete(type="button") Delete 
                         button.addCancel(type="button", value= guests[0]._id) Cancel
 
                       
@@ -168,7 +170,7 @@ block content
                         
                     -if (payments)
                       each payment in payments
-                        .payment
+                        button.payment(type="button", value= payment._id)
                           .paymentData
                             -var date = payment.date
                             -var d = date.getDate();
@@ -227,7 +229,9 @@ block content
                       option CASH
                       option Department
                   .addButtons
-                    button.editSave(type="submit") Save
+                    button.done(type="button", disabled) Done
+                    button.editSave(type="submit") Update
+                    button.delete(type="button") Delete                    
                     button.addCancel(type="button", value= guests[0]._id) Cancel
               
 block footer

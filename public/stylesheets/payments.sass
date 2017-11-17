@@ -577,3 +577,20 @@ body
 
 .edit
   display: none
+
+.done
+  background-color: $btn-color
+  &:hover
+    background-color: $primary-color
+
+.done[disabled]
+  background-color: gray
+  &:hover
+    background-color: gray
+    cursor: not-allowed
+
+.delete
+  background-color: #FA5454
+  &:hover
+    background-color: #FA6565
+    cursor: pointer

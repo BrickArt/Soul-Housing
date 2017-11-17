@@ -1,6 +1,8 @@
 function Model(data){
   var self = this;
 
+  self.payment;
+
 
 
 };
@@ -20,6 +22,9 @@ function View(model){
     type: $('.editType'),
     image: $('.editImage'),
     save: $('.editSave'),
+
+    doneBtn: $('.done'),
+    delBtn: $('.delete'),
 
     edit: $('.edit'),
     openGuest: $('.openGist')
@@ -93,11 +98,23 @@ function View(model){
     self.elements.sum.val(doc.sum);
     self.elements.type.val(doc.type);
     self.elements.save.val(doc._id);
+    self.elements.delBtn.val(doc._id);
     
+    if(doc.status === 'pending') {
+      
+      self.elements.doneBtn.prop('disabled', false);
+      self.elements.doneBtn.val(doc._id);
+    }
 
     self.elements.openGuest.hide();
     self.elements.edit.show();
   }
+
+  self.done = function(data) {
+    self.elements.doneBtn.prop('disabled', true);
+    self.elements.doneBtn.val('');
+  };
+
 
 
 
@@ -114,6 +131,9 @@ function Controller(model, view){
   
   $(document).delegate( ".payment", "click", onEdit);
   $(document).delegate( ".edit", "submit", update);
+  $(document).delegate( ".done", "click", done);
+
+  $(document).delegate( ".delete", "click", del);
 
   $(document).delegate( ".userBtn", "click", open);
   $(document).delegate( ".addCancel", "click", cancel);
@@ -221,6 +241,7 @@ function Controller(model, view){
     }).done(function(data){
       console.log(data)
       view.edit(data)
+      model.payment = data;
     })
   }
 
@@ -246,6 +267,40 @@ function Controller(model, view){
     }).done(function(data){
       console.log(data)
       view.edit(data)
+    })
+  }
+
+  function done() {
+    $('body').css('cursor', 'wait')
+    var id = $('.editSave').val();
+    var now = new Date;
+    var item = {
+      date: now,
+      status: 'done'
+    }
+    $.ajax({
+      url: '/payments/edit/payment_' + id,
+      type: 'post',
+      data: item
+    }).done(function(data){
+      $('body').css('cursor', 'default')
+      console.log(data)
+      view.done(data)
+      window.location.href = '/payments' + data.userID;
+    })
+  }
+
+  function del() {
+    var id = model.payment._id;
+    var user = model.payment.userID;
+
+    $.ajax({
+      url: '/payments/delete/payment_' + id,
+      type: 'post'
+    }).done(function(data){
+      $('body').css('cursor', 'default')
+      console.log(data)
+      window.location.href = '/payments' + user;
     })
   }
 

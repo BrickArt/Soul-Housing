@@ -515,4 +515,21 @@ body {
 .edit {
   display: none; }
 
+.done {
+  background-color: #5E82BC; }
+  .done:hover {
+    background-color: #358DE0; }
+
+.done[disabled] {
+  background-color: gray; }
+  .done[disabled]:hover {
+    background-color: gray;
+    cursor: not-allowed; }
+
+.delete {
+  background-color: #FA5454; }
+  .delete:hover {
+    background-color: #FA6565;
+    cursor: pointer; }
+
 /*# sourceMappingURL=payments.css.map */

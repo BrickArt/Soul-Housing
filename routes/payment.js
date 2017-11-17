@@ -67,13 +67,15 @@ router.get('/payments:id?', function(req, res, next){
 router.get('/payments/payment_:id?', function(req, res, next){
   var id = req.params.id;
   Payment.findById(id).then(function(doc){
+    console.log(doc)
     res.send({
       _id: doc._id,
       date: doc.date,
       sum: doc.sum,
       type: doc.type,
       status: doc.status,
-      image: doc.image
+      image: doc.image,
+      userID: doc.userID
     })
   });
 });
@@ -162,7 +164,8 @@ router.post('/payments/edit/payment_:id?', upload.any(), function(req, res, next
           sum: doc.sum,
           type: doc.type,
           status: doc.status,
-          program: doc.program
+          program: doc.program,
+          userID: doc.userID
         });
       }
     });
