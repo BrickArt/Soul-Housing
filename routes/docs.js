@@ -199,7 +199,7 @@ router.get('/api/doc/houses', function(req, res, next){
     const pdfDoc = printer.createPdfKitDocument(pdfData);
 
     var date = new Date;
-    var h = date.getHours();
+    var h = date.getHours() + 2;
     var min = date.getMinutes();
     if(h < 10) h = '0' + h;
     if(min < 10) min = '0' + min;
@@ -344,7 +344,7 @@ router.get('/api/doc/houses/house_:id?', function(req, res, next){
 
 
   var date = new Date;
-  var h = date.getHours();
+  var h = date.getHours() + 2;
   var min = date.getMinutes();
   if(h < 10) h = '0' + h;
   if(min < 10) min = '0' + min;

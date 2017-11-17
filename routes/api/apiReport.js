@@ -243,7 +243,7 @@ router.get('/report/createReport', async (req, res, next) => {
     //res.download('ExcelFile.xlsx');
     // census_mm:hh_mm_dd_yyyy
     var date = new Date;
-    var h = date.getHours();
+    var h = date.getHours() + 2;
     var min = date.getMinutes();
     if(h < 10) h = '0' + h;
     if(min < 10) min = '0' + min;
