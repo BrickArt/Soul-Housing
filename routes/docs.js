@@ -197,7 +197,22 @@ router.get('/api/doc/houses', function(req, res, next){
 }, function(items, req, res, next){
     var pdfData = getPages(items);
     const pdfDoc = printer.createPdfKitDocument(pdfData);
-    res.set({"Content-Disposition" : 'attachment; filename="report.pdf"'});
+
+    var date = new Date;
+    var h = date.getHours();
+    var min = date.getMinutes();
+    if(h < 10) h = '0' + h;
+    if(min < 10) min = '0' + min;
+    var m = date.getMonth() + 1;
+    var d = date.getDate();
+    var y = date.getFullYear();
+    if(m < 10) m = '0' + m;
+    if(d < 10) d = '0' + d;
+    var fileName = 'houses_' + min + '_' + h + '_' + m + '_' + d + '_' + y + '.pdf'
+
+
+    res.set({
+      "Content-Disposition" : 'attachment; filename=' + fileName + ''});
     pdfDoc.pipe(res);
     pdfDoc.end();
 });
@@ -326,7 +341,22 @@ router.get('/api/doc/houses/house_:id?', function(req, res, next){
 
   var pdfData = getPage(result);
   const pdfDoc = printer.createPdfKitDocument(pdfData);
-  res.set({"Content-Disposition" : 'attachment; filename="report.pdf"'});
+
+
+  var date = new Date;
+  var h = date.getHours();
+  var min = date.getMinutes();
+  if(h < 10) h = '0' + h;
+  if(min < 10) min = '0' + min;
+  var m = date.getMonth() + 1;
+  var d = date.getDate();
+  var y = date.getFullYear();
+  if(m < 10) m = '0' + m;
+  if(d < 10) d = '0' + d;
+  var fileName = result.name + '_' + min + '_' + h + '_' + m + '_' + d + '_' + y + '.pdf'
+
+
+  res.set({"Content-Disposition" : 'attachment; filename=' + fileName + ''});
   pdfDoc.pipe(res);
   pdfDoc.end();
 
