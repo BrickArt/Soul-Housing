@@ -22,15 +22,14 @@ block content
                       h2= house.name
                       p= house.address
                     .members
-                      img.bad(src='img/svg/bad.svg', alt='Bad')
                       -var capacity = 0;
                       -var freeBeds = 0
                       -each room in house.rooms
                         -capacity += room.beds.length
                         -each bed in room.beds
-                          -if (bed.status)
+                          -if (!bed.status)
                             - ++freeBeds
-                      p #{freeBeds}/#{capacity}
+                      p #{freeBeds} free beds
                       img.bow(src='img/svg/join.svg', alt='join')
               .article
                 button#addBtn

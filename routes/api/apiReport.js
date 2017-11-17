@@ -149,7 +149,7 @@ router.get('/report/createReport', async (req, res, next) => {
         .catch(e => {
             return e
         });
-
+  
     if (!gistInfo || gistInfo.error) return res.status(500).json(gistInfo);
 
     let response = [];
@@ -253,6 +253,7 @@ router.get('/report/createReport', async (req, res, next) => {
     if(m < 10) m = '0' + m;
     if(d < 10) d = '0' + d;
     var fileName = 'census_' + h + '_' + min + '_' + m + '_' + d + '_' + y + '.xlsx'
+
     file.write(fileName, res);
 });
 
