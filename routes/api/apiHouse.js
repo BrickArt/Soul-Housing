@@ -25,6 +25,8 @@ var House = require('../../models/house').House;
 var Gist = require('../../models/gist').Gist;
 var Residence = require('../../models/residence').Residence;
 var Test = require('../../models/test').Test;
+var Payment = require('../../models/payment').Payment;
+
 
 
 
@@ -33,26 +35,258 @@ var Test = require('../../models/test').Test;
 //===========================================
 
 //------------------GET--------------------
-router.get('/houses:id?', function(req, res, next){
-  if (req.params.id){
-    var id = req.params.id
-    House.findById(id)
-    .then(function (doc){
-      doc.image = 'img/upload/house/' +  doc.image;
-      res.send(doc);
-      console.log(doc);
-    });
-    return;
-  }
-  House.find()
-  .then(function (doc){
+// router.get('/houses:id?', function(req, res, next){
+//   if (req.params.id){
+//     var id = req.params.id
+//     House.findById(id)
+//     .then(function (doc){
+//       doc.image = 'img/upload/house/' +  doc.image;
+//       res.send(doc);
+//       console.log(doc);
+//     });
+//     return;
+//   }
+//   House.find()
+//   .then(function (doc){
+//     for (var i = 0; i < doc.length; i++) {
+//       doc[i].image = 'img/upload/house/' +  doc[i].image;
+//     }
+//     res.send(doc);
+//     console.log(doc);
+//   });
+//   return;
+// });
+
+router.get('/houses', function(req, res, next){
+  var items = {
+    houses: [],
+    users: [],
+    payments: []
+  };
+  House.find().sort({name: 1}).then(function(doc){
+    var houses = [];
     for (var i = 0; i < doc.length; i++) {
-      doc[i].image = 'img/upload/house/' +  doc[i].image;
+      var house = {
+        _id: doc[i]._id,
+        name: doc[i].name,
+        address: doc[i].address,
+        description: doc[i].description,
+        image: 'img/upload/house/' +  doc[i].image,
+        rooms: doc[i].rooms,
+      }
+      houses.push(house)
     }
-    res.send(doc);
+    items.houses = houses;
+    next(items)
     console.log(doc);
   });
-  return;
+
+
+}, function(items, req, res, next){
+  Payment.find().then(function(doc){
+    var payments = [];
+    for (var i = 0; i < doc.length; i++) {
+      var payment = {
+        _id: doc[i]._id,
+        userID: doc[i].userID,
+        sum: doc[i].sum
+      };
+      payments.push(payment);
+    }
+    items.payments = payments;
+    next(items)
+    console.log(doc);
+  });
+
+
+
+}, function(items, req, res, next){
+  Gist.find({status: true}).then(function(doc){
+    var users = [];
+    for (var i = 0; i < doc.length; i++) {
+      var user = {
+        _id: doc[i]._id,
+        name: doc[i].name,
+        lastname: doc[i].lastname,
+        program: doc[i].program,
+        balance: doc[i].balance
+      };
+      // for (var n = 0; n < items.payments.length; n++) {
+      //   console.log('+');
+      //   if (items.payments[n].userID == doc[i]._id){
+      //     user.balance += items.payments[n].sum;
+      //   }
+      //   if (n === items.payments.length - 1) {
+      //   }
+      // }
+      users.push(user);
+    }
+    items.users = users;
+    next(items)
+    console.log(doc);
+  });
+
+
+}, function(items, req, res, next){
+  var results = [];
+  for (var u = 0; u < items.houses.length; u++) {
+    var result = {
+      _id: items.houses[u]._id,
+      name: items.houses[u].name,
+      address: items.houses[u].address,
+      description: items.houses[u].description,
+      image: items.houses[u].image,
+      rooms: [],
+    };
+
+    for (var i = 0; i < items.houses[u].rooms.length; i++) {
+      var room = {
+        num: items.houses[u].rooms[i].num,
+        beds: []
+      }
+      for (var y = 0; y < items.houses[u].rooms[i].beds.length; y++) {
+        var bed = {
+          num: items.houses[u].rooms[i].beds[y].num,
+          status: items.houses[u].rooms[i].beds[y].status,
+          user: {}
+        }
+        for (var z = 0; z < items.users.length; z++) {
+          if (items.users[z]._id == items.houses[u].rooms[i].beds[y].userID) {
+            bed.user = items.users[z]
+          }
+          if (z === items.users.length - 1) {
+            room.beds.push(bed);
+          }
+        }
+        if (y === items.houses[u].rooms[i].beds.length - 1) {
+          result.rooms.push(room);
+        }
+      }
+      if (i === items.houses[u].rooms.length - 1) {
+        results.push(result);
+      }
+    }
+    if (u === items.houses.length - 1) {
+      next(results)
+    }
+  }
+
+
+}, function(results, req, res, next){
+  res.send(results)
+});
+router.get('/houses:id?', function(req, res, next){
+  var id = req.params.id;
+  var items = {
+    house: [],
+    users: [],
+    payments: [],
+  };
+  House.findById(id)
+  .then(function(doc){
+
+    var house = {
+      _id: doc._id,
+      name: doc.name,
+      address: doc.address,
+      description: doc.description,
+      image: 'img/upload/house/' +  doc.image,
+      rooms: doc.rooms,
+    }
+    items.house = house;
+
+    next(items);
+  });
+
+
+}, function(items, req, res, next){
+  Payment.find().then(function(doc){
+    var payments = [];
+    for (var i = 0; i < doc.length; i++) {
+      var payment = {
+        _id: doc[i]._id,
+        userID: doc[i].userID,
+        sum: doc[i].sum
+      };
+      payments.push(payment);
+    }
+    items.payments = payments;
+    next(items)
+    console.log(doc);
+  });
+
+
+}, function(items, req, res, next){
+  Gist.find({status: true}).then(function(doc){
+    var users = [];
+    for (var i = 0; i < doc.length; i++) {
+      var user = {
+        _id: doc[i]._id,
+        name: doc[i].name,
+        lastname: doc[i].lastname,
+        program: doc[i].program,
+        balance: 0
+      };
+      for (var n = 0; n < items.payments.length; n++) {
+        console.log('+');
+        if (items.payments[n].userID == doc[i]._id){
+          user.balance += items.payments[n].sum;
+        }
+        if (n === items.payments.length - 1) {
+          users.push(user);
+        }
+      }
+    }
+    items.users = users;
+    next(items)
+    console.log(doc);
+  });
+
+
+
+}, function(items, req, res, next){
+  var result = {
+    _id: items.house._id,
+    name: items.house.name,
+    address: items.house.address,
+    description: items.house.description,
+    image: items.house.image,
+    rooms: [],
+  }
+
+  for (var i = 0; i < items.house.rooms.length; i++) {
+    var room = {
+      num: items.house.rooms[i].num,
+      beds: []
+    }
+    for (var y = 0; y < items.house.rooms[i].beds.length; y++) {
+      var bed = {
+        num: items.house.rooms[i].beds[y].num,
+        status: items.house.rooms[i].beds[y].status,
+        user: {}
+      }
+      console.log('ooooooooooook');
+      for (var z = 0; z < items.users.length; z++) {
+        console.log(items.house.rooms[i].beds[y].userID);
+        if (items.users[z]._id == items.house.rooms[i].beds[y].userID) {
+          bed.user = items.users[z]
+        }
+        if (z === items.users.length - 1) {
+          room.beds.push(bed);
+        }
+      }
+      if (y === items.house.rooms[i].beds.length - 1) {
+        result.rooms.push(room);
+      }
+    }
+    if (i === items.house.rooms.length - 1) {
+      next(result)
+    }
+  }
+
+}, function(result, req, res, next){
+  res.send(result);
+  
 });
 
 
