@@ -151,8 +151,10 @@ router.post('/payments/edit/payment_:id?', upload.any(), function(req, res, next
     if(req.body.type){
       doc.type = req.body.type;
     };
-    if(req.body.status){
-      doc.status = req.body.status;
+    var date1 = new Date(req.body.date)
+    var date2 = new Date().setHours(0, 0, 0, 0);
+    if(date1 > date2){
+      doc.status = "pending";
     };
     doc.save(function (err) {
       if (err) {

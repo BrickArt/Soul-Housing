@@ -104,6 +104,8 @@ function View(model){
       
       self.elements.doneBtn.prop('disabled', false);
       self.elements.doneBtn.val(doc._id);
+    } else {
+      self.elements.doneBtn.css('display', 'none');
     }
 
     self.elements.openGuest.hide();
@@ -240,8 +242,8 @@ function Controller(model, view){
       type: 'GET'
     }).done(function(data){
       console.log(data)
-      view.edit(data)
       model.payment = data;
+      view.edit(data)
     })
   }
 
