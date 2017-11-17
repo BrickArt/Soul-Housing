@@ -103,7 +103,7 @@ block content
                         input(type="text", placeholder="100", name="sum", required)
                         p $
                       .addText
-                        select(class="", name="type", required).addType
+                        select(class="", name="type").addType
                           option(disabled selected) Type of payment
                           option CASH
                           option Department
@@ -124,12 +124,12 @@ block content
                         input.editSum(type="text", placeholder="100", name="sum", required)
                         p $
                       .addText
-                        select(class="", name="type", required).addType.editType
+                        select(class="", name="type").addType.editType
                           option(disabled selected) Type of payment
                           option CASH
                           option Department
                       .addButtons
-                        button.done(type="button", disabled) Done
+                        button.done(type="button", disabled) Confirm
                         button.editSave(type="submit") Update
                         button.delete(type="button") Delete 
                         button.addCancel(type="button", value= guests[0]._id) Cancel
@@ -203,7 +203,7 @@ block content
                     input(type="text", placeholder="100", name="sum", required)
                     p $
                   .addText
-                    select(class="", name="type", required).addType.editType
+                    select(class="", name="type").addType.editType
                       option(disabled selected) Type of payment
                       option CASH
                       option Department
@@ -224,12 +224,12 @@ block content
                     input.editSum(type="text", placeholder="100", name="sum", required)
                     p $
                   .addText
-                    select(class="", name="type", required).addType
+                    select(class="", name="type").addType
                       option(disabled selected) Type of payment
                       option CASH
                       option Department
                   .addButtons
-                    button.done(type="button", disabled) Done
+                    button.done(type="button", disabled) Confirm
                     button.editSave(type="submit") Update
                     button.delete(type="button") Delete                    
                     button.addCancel(type="button", value= guests[0]._id) Cancel

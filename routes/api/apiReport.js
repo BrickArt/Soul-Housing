@@ -31,7 +31,7 @@ router.get('/report/data', function(req, res, next){
       freeBeds: 0,
       houses: 0,
       users: 0,
-      money: 0
+      unpaid: 0
     };
   
     House.find().then(function(doc){
@@ -54,7 +54,7 @@ router.get('/report/data', function(req, res, next){
     Payment.find().then(function(doc){
       console.log(doc)
       for (var n = 0; n < doc.length; n++) {
-        items.money += +doc[n].sum;
+        items.unpaid += +doc[n].sum;
         if (n === doc.length - 1) {
           next(items);
         }
