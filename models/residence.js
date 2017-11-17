@@ -32,6 +32,10 @@ var schema = new Schema({
     type: Date,
     default: null
   },
+  description: {
+    type: String,
+    default: null
+  },
   created: {
     type: Date,
     default: Date.now

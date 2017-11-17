@@ -227,6 +227,7 @@ router.post('/residence/replace:id?', function(req, res, next){
   Residence.findById(id).then(function(doc){
     item = doc;
     doc.endDate = endDate;
+    doc.description = req.body.description;
     console.log(doc);
     doc.save(function (err) {
       if (err) {
