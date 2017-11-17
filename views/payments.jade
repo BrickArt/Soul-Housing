@@ -179,7 +179,10 @@ block content
                             -if (d<10) d = '0' + d
                             -if (m<10) m = '0' + m
                             p #{m}.#{d}.#{y}
-                            h3 #{payment.sum} $
+                            -if(payment.sum < 0)
+                              h3.red #{-payment.sum} $
+                            -else
+                              h3 #{payment.sum} $
                           .clock
                               -if (payment.status === "pending")
                                 img(src='img/png/clock.png', alt='Clock')

@@ -282,6 +282,8 @@ body {
         margin: 0;
         color: #8DBC5E;
         text-align: center; }
+      .col-lg-5 .payment .paymentData > .red {
+        color: #F5A3A3; }
     .col-lg-5 .payment .paymentDiscription {
       margin: -3px 0 0 175px;
       color: #3B3B3B; }
