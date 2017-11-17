@@ -58,10 +58,12 @@ var Payment = require('../../models/payment').Payment;
 // });
 
 router.get('/houses', function(req, res, next){
+  var time = new Date();
   var items = {
     houses: [],
     users: [],
-    payments: []
+    payments: [],
+    time: +time
   };
   House.find().sort({name: 1}).then(function(doc){
     var houses = [];
@@ -78,7 +80,7 @@ router.get('/houses', function(req, res, next){
     }
     items.houses = houses;
     next(items)
-    console.log(doc);
+    // console.log(doc);
   });
 
 
@@ -95,7 +97,7 @@ router.get('/houses', function(req, res, next){
     }
     items.payments = payments;
     next(items)
-    console.log(doc);
+    // console.log(doc);
   });
 
 
@@ -123,7 +125,7 @@ router.get('/houses', function(req, res, next){
     }
     items.users = users;
     next(items)
-    console.log(doc);
+    // console.log(doc);
   });
 
 
@@ -168,13 +170,18 @@ router.get('/houses', function(req, res, next){
     }
     if (u === items.houses.length - 1) {
       next(results)
+      var now = new Date
+      var a = +now - items.time;
+      console.log(a)
     }
   }
-
-
+  
 }, function(results, req, res, next){
   res.send(results)
 });
+
+
+
 router.get('/houses:id?', function(req, res, next){
   var id = req.params.id;
   var items = {

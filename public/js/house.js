@@ -226,7 +226,7 @@ function Controller(model, view){
 //===========================================
   $(document).delegate( ".houseBtn", "click", open);
 
-  $(document).delegate( ".addBtn", "click", add);
+  $(document).delegate( "#addBtn", "click", add);
   $(document).delegate( ".addSave", "click", save);
   $(document).delegate( ".addCancel", "click", cancel);
   $(document).delegate( ".gistDel", "click", del);

@@ -200,27 +200,24 @@ body {
       width: 10px;
       margin-top: 28px; }
 
-.addBtn {
-  position: absolute;
-  top: 570px;
-  left: 25px;
-  width: 62px;
-  height: 62px;
-  border-radius: 50%;
-  background-color: #8DBC5E;
+#addBtn {
+  width: 97%;
+  height: 55px;
+  margin: 10px;
+  background-color: #358DE0;
   border: none;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
-  .addBtn:hover {
+  #addBtn:hover {
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
     cursor: pointer; }
-  .addBtn:focus {
+  #addBtn:focus {
     outline: none; }
-  .addBtn p {
-    font-size: 40px;
+  #addBtn p {
+    font-size: 20px;
     color: #fff;
     position: relative;
-    top: -4px;
+    top: 0px;
     left: 0px; }
 
 .col-lg-5 {
