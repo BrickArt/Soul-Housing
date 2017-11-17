@@ -4,7 +4,7 @@ var join = require('path').join;
 var ENV = process.env.NODE_ENV;
 
 if (!ENV){
-  ENV = 'dev'
+  ENV = 'prod'
 }
 
 nconf.argv()
