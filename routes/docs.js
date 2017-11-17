@@ -208,7 +208,7 @@ router.get('/api/doc/houses', function(req, res, next){
     var y = date.getFullYear();
     if(m < 10) m = '0' + m;
     if(d < 10) d = '0' + d;
-    var fileName = 'houses_' + min + '_' + h + '_' + m + '_' + d + '_' + y + '.pdf'
+    var fileName = 'houses_' + h + '_' + min + '_' + m + '_' + d + '_' + y + '.pdf'
 
 
     res.set({
@@ -353,7 +353,7 @@ router.get('/api/doc/houses/house_:id?', function(req, res, next){
   var y = date.getFullYear();
   if(m < 10) m = '0' + m;
   if(d < 10) d = '0' + d;
-  var fileName = result.name + '_' + min + '_' + h + '_' + m + '_' + d + '_' + y + '.pdf'
+  var fileName = result.name + '_' + h + '_' + min + '_' + m + '_' + d + '_' + y + '.pdf'
 
 
   res.set({"Content-Disposition" : 'attachment; filename=' + fileName + ''});

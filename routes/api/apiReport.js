@@ -252,7 +252,7 @@ router.get('/report/createReport', async (req, res, next) => {
     var y = date.getFullYear();
     if(m < 10) m = '0' + m;
     if(d < 10) d = '0' + d;
-    var fileName = 'census_' + min + '_' + h + '_' + m + '_' + d + '_' + y + '.xlsx'
+    var fileName = 'census_' + h + '_' + min + '_' + m + '_' + d + '_' + y + '.xlsx'
     file.write(fileName, res);
 });
 
