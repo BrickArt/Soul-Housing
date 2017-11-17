@@ -130,7 +130,7 @@ function Controller(model, view){
   $(document).delegate( ".add", "submit", save);
   
   $(document).delegate( ".payment", "click", onEdit);
-  $(document).delegate( ".edit", "submit", update);
+  $(document).delegate( ".editSave", "click", update);
   $(document).delegate( ".done", "click", done);
 
   $(document).delegate( ".delete", "click", del);
@@ -246,27 +246,52 @@ function Controller(model, view){
   }
 
   function update() {
+    event.stopPropagation(); // Остановка происходящего
+    event.preventDefault();  // Полная остановка происходящего
     var id = $('.editSave').val()
-    var item = {};
-    if (view.elements.date.val()) {
-      item.date = view.elements.date.val()
+    var formEvent = $(this);
+    // Создадим данные формы и добавим в них данные файлов из files
+    var form = $('.edit').serializeArray();
+
+    var data = new FormData();
+
+    for (var key in form){
+      data.append(form[key].name, form[key].value)
     }
-    if (view.elements.sum.val()) {
-      item.sum = view.elements.sum.val()
+
+    console.log(form)
+    console.log(data)
+    if (files){
+      $.each( files, function( key, value ){
+        data.append( key, value );
+      });
     }
-    if (view.elements.type.val()) {
-      item.type = view.elements.type.val()
-    }
-    if (view.elements.image.val()) {
-      item.image = view.elements.image.val()
-    }
+
+    
+    
     $.ajax({
       url: '/payments/edit/payment_' + id,
       type: 'post',
-      data: item
+      data: data,
+      cache: false,
+      dataType: 'json',
+      processData: false, // Не обрабатываем файлы (Don't process the files)
+      contentType: false, // Так jQuery скажет серверу что это строковой запрос
+      statusCode: {
+        200: function() {
+          formEvent.html("Payment is saved").addClass('alert-success');
+          window.location.href = '/payments' + model.payment.userID;
+        },
+        403: function(jqXHR) {
+          var error = JSON.parse(jqXHR.responseText);
+          $('.error', formEvent).html(error.message);
+        }
+      },
+      error: function( jqXHR, textStatus, errorThrown ){
+          console.log('ОШИБКИ AJAX запроса: ' + textStatus );
+      }
     }).done(function(data){
       console.log(data)
-      view.edit(data)
     })
   }
 

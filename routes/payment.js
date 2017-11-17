@@ -138,14 +138,15 @@ router.post('/payments/edit/payment_:id?', upload.any(), function(req, res, next
   console.log(req.body)
   Payment.findById(id).then(function(doc){
     console.log(doc)
-    if(req.files){
+    if(req.files[0]){
       doc.image = req.files[0].filename;
     };
     if(req.body.sum){
       doc.sum = +req.body.sum;
     };
     if(req.body.date){
-      doc.date = req.body.date;
+      var date = new Date(req.body.date)
+      doc.date = date;
     };
     if(req.body.type){
       doc.type = req.body.type;
