@@ -528,4 +528,35 @@ body {
 .demo:hover {
   cursor: pointer; }
 
+.instruments {
+  border-bottom: solid 1px #EDEDED;
+  height: 45px;
+  padding: 10px; }
+  .instruments > img {
+    width: 25px;
+    opacity: 0.3;
+    margin-right: 10px;
+    float: left;
+    box-sizing: border-box; }
+  .instruments > input {
+    margin-top: -10px;
+    border: none;
+    border-bottom: solid 1px #EDEDED;
+    width: 33%;
+    margin-right: 11%; }
+  .instruments > select {
+    width: 15%;
+    border: none;
+    border-bottom: solid 1px #EDEDED;
+    margin-right: 2%; }
+  .instruments > button {
+    width: 15%;
+    background: none;
+    border-bottom: solid 1px #EDEDED;
+    border: none; }
+    .instruments > button:hover {
+      cursor: pointer; }
+  .instruments > .nameSort {
+    margin-right: 2%; }
+
 /*# sourceMappingURL=users.css.map */
