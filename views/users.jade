@@ -66,11 +66,6 @@ block content
                               -else 
                                 p house is not found
                               
-                            
-                            -if (!gist.status)
-                              img(src='img/svg/checkbox.svg', alt='Toggle')
-                            -else
-                              img(src='img/png/toggle.png', alt='Toggle')
                       .history
                         -if (gist.residence)
                           -each residence in residences
@@ -153,10 +148,10 @@ block content
                           .addName
                             .addNameTitle
                               input.name(type="text", placeholder="Name", name='name')
-                              input.lastname(type="text", placeholder="Last", name='lastname')
+                              input.lastname(type="text", placeholder="Last name", name='lastname')
                             .addNameStatus
                               p Status
-                              img(src='img/svg/checkbox.svg', alt='Checkbox')
+                              
                         .addText.addDate
                           input.demo(type="text", placeholder="Select date", name="date")
                         .addText.addSex
@@ -192,13 +187,10 @@ block content
                           .addName
                             .addNameTitle
                               input.name(type="text", placeholder="Name", name='name', value= gist.name)
-                              input.lastname(type="text", placeholder="Last", name='lastname', value= gist.lastname)
+                              input.lastname(type="text", placeholder="Last name", name='lastname', value= gist.lastname)
                             .addNameStatus
                               p Status
-                              -if (!gist.status)
-                                img(src='img/svg/checkbox.svg', alt='Toggle')
-                              -else
-                                img(src='img/png/toggle.png', alt='Toggle')
+                              
                         .addText.addDate
                           -var birth = new Date(gist.dateOfBirth)
                           -var d = birth.getDate();
@@ -256,10 +248,7 @@ block content
                               -else 
                                 p house is not found
                             
-                            -if (!gists[0].status)
-                              img(src='img/svg/checkbox.svg', alt='Toggle')
-                            -else
-                              img(src='img/png/toggle.png', alt='Toggle')
+                            
                       .history
                         -if (residences)
                           -each residence in residences
@@ -345,13 +334,10 @@ block content
                           .addName
                             .addNameTitle
                               input.name(type="text", placeholder="Name", name='name', value= gists[0].name)
-                              input.lastname(type="text", placeholder="Last", name='lastname', value= gists[0].lastname)
+                              input.lastname(type="text", placeholder="Last name", name='lastname', value= gists[0].lastname)
                             .addNameStatus
                               p Status
-                              -if (!gists[0].status)
-                                img(src='img/svg/checkbox.svg', alt='Toggle')
-                              -else
-                                img(src='img/png/toggle.png', alt='Toggle')
+                              
                         .addText.addDate
                           -var birth = new Date(gists[0].dateOfBirth)
                           -var d = birth.getDate();
@@ -397,10 +383,10 @@ block content
                       .addName
                         .addNameTitle
                           input.name(type="text", placeholder="Name", name='name')
-                          input.lastname(type="text", placeholder="Last", name='lastname')
+                          input.lastname(type="text", placeholder="Last name", name='lastname')
                         .addNameStatus
                           p Status
-                          img(src='img/svg/checkbox.svg', alt='Checkbox')
+                         
                     .addText.addDate
                       input.demo(type="text", placeholder="Select date", name="date")
                     .addText.addSex

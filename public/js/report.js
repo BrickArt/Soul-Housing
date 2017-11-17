@@ -80,7 +80,7 @@ function Controller(model, view){
   };
 
   function freeBeds(){
-    window.location.href = '/freeBeds'
+    window.location.href = '/houses'
   }
 
 

@@ -26,6 +26,55 @@ const exel = require('../../lib/exelCreate');
 //===========================================
 
 //------------------GET--------------------
+router.get('/report/data', function(req, res, next){
+    var items = {
+      freeBeds: 0,
+      houses: 0,
+      users: 0,
+      money: 0
+    };
+  
+    House.find().then(function(doc){
+      for (var i = 0; i < doc.length; i++) {
+        for (var x = 0; x < doc[i].rooms.length; x++) {
+          for (var y = 0; y < doc[i].rooms[x].beds.length; y++) {
+            if (doc[i].rooms[x].beds[y].status === false) {
+              ++items.freeBeds;
+            }
+            doc[i].rooms[x].beds[y].status
+          }
+        }
+        if (i === doc.length - 1) {
+          items.houses = doc.length
+          next(items);
+        }
+      }
+    });
+  }, function(items, req, res, next){
+    Payment.find().then(function(doc){
+      console.log(doc)
+      for (var n = 0; n < doc.length; n++) {
+        items.money += +doc[n].sum;
+        if (n === doc.length - 1) {
+          next(items);
+        }
+      }
+    })
+  }, function(items, req, res, next){
+    Gist.find().then(function(doc){
+      items.users = doc.length;
+      next(items);
+    })
+  
+  }, function(items, req, res, next){
+    console.log(items)
+    res.send(items)
+  });
+
+
+
+
+
 //------------------Users By program--------------------
 router.post('/report/users', async (req, res, next) => {
     const current = await Gist.aggregate([
@@ -194,6 +243,8 @@ router.get('/report/createReport', async (req, res, next) => {
     //res.download('ExcelFile.xlsx');
     file.write('ExcelFile.xlsx', res);
 });
+
+
 
 
 
