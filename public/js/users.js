@@ -1,13 +1,79 @@
 function Model(data){
   var self = this;
 
+  self.users;
+
   self.user;
 
 
 
+  self.searchUser = function (text) {
+    var users2 = [];
+    for (let i = 0; i < self.users.length; i++) {
+      const user = self.users[i];
+      if (~user.name.indexOf(text) || ~user.lastname.indexOf(text)) {
+        users2.push(user);
+      }
+      if (i === self.users.length - 1) {
+        return users2;
+      }
+    }
+    
+  }
+
+
+  self.filterUser = function (status) {
+    var users2 = [];
+    for (let i = 0; i < self.users.length; i++) {
+      const user = self.users[i];
+      if (status) {
+        if (user.status) {
+          users2.push(user);
+        }
+      } else {
+        if (!user.status) {
+          users2.push(user);
+        }
+      }
+      if (i === self.users.length - 1) {
+        return users2;
+      }
+    }
+  }
+
+//------------------------------!!!!!!!!!!!!!!!-------------------------------------------------
+  self.sortUser = function (rule) {
+    var users2 = self.users;
+    console.log(rule)
+    if (rule == 'name'){
+      console.log(users2.sort({name: 1}))
+      return users2.sort({name: 1})
+    }
+    if (rule == 'lastname'){
+      console.log(users2.sort({lastname: 1}))
+      
+      return users2.sort({lastname: 1})      
+    }
+  }
+
+  self.userArticle = function(user) {
+    var result =  '<div id="' + user._id + '" class="article">'+
+              '<button value="' + user._id + '" class="userBtn">'+
+                '<div class="gist">'+
+                  '<h2>' + gist.name + ' ' + gist.lastname + '</h2>'+
+                  '<p>' + user.address + '</p>'+
+                '</div>'+
+                '<div class="gistStatus">'+
+                  '<div class="Activity">'+
+                  '<p>' + user.program + '</p>'+
+                    '<h3 class="inactive inactiveL">Inactive</h3>'+
+                    '<h3 class="active activeL">Active</h3>'+
+                  '</div><img src="img/svg/join.svg" alt="join" class="moreDetails"/>'+
+                '</div></button></div>';
+    return result;
+  };
+
 };
-
-
 
 function View(model){
   var self = this;
@@ -17,7 +83,8 @@ function View(model){
     right: $('.right'),
     addBtn: $('.addBtn'),
     openGist: $('.openGist'),
-    ocerviewContent: $('.ocerviewContent')
+    ocerviewContent: $('.ocerviewContent'),
+    usersBlock: $('.houseBlock')
   };
 
 
@@ -67,6 +134,60 @@ function View(model){
     rightContent.html(data);
   };
 
+  self.init = function(users) {
+    self.elements.usersBlock.html('');
+    var users2 = users;
+    
+    for (var i = 0; i < users2.length; i++) {
+      const user = users2[i];
+
+
+      if(!user.address){
+        user.address = '';
+      }
+      if(!user.program){
+        user.program = '';
+      }
+
+
+      var activity;
+
+      if(user.status){
+        activity = '<h3 class="active activeL">Active</h3>';
+      } else {
+        activity = '<h3 class="inactive inactiveL">Inactive</h3>';
+      };
+
+
+      var result =  '<div id="' + user._id + '" class="article">'+
+      '<button value="' + user._id + '" class="userBtn">'+
+      '<div class="gist">'+
+      '<h2>' + user.name + ' ' + user.lastname + '</h2>'+
+      '<p>' + user.address + '</p>'+
+      '</div>'+
+      '<div class="gistStatus">'+
+      '<div class="Activity">'+
+      '<p>' + user.program + '</p>'+
+      activity +
+      '</div><img src="img/svg/join.svg" alt="join" class="moreDetails"/>'+
+      '</div></button></div>';
+
+
+      self.elements.usersBlock.append(result);
+    }
+  }
+
+  self.initUsers = function(users) {
+    if (users) {
+      for (var i = 0; i < users.length; i++) {
+        const user = users[i];
+        self.usersBlock.append(model.userArticle(user))
+
+        
+      }
+    }
+  }
+
 
 
 };
@@ -106,7 +227,12 @@ function Controller(model, view){
   });
 
   $(document).delegate( ".navBtn", "click", nav);
-
+//---------------------------------------!!!!!!!!-------------------
+  $(document).delegate( ".searchInput", "keyup", instSearch);
+  $(document).delegate( ".filterInput", "change", instFilter);
+  $(document).delegate( ".sortInput", "change", instSort);
+  
+  
 
 //===========================================
 //---------------Functions-------------------
@@ -123,11 +249,65 @@ function init(){
       console.log(model.user);
     });
   }else{
-    return;
   }
+  $.ajax({
+    url: '/api/users',
+    method: 'GET',
+    dataType: 'json'
+  }).done(function (data){
+    model.users = data;
+    console.log(model.users);
+    view.init(model.users)
+  });
 
 };
 init();
+
+//----------------------instruments------------------------------------------
+function instSearch(key) {
+  console.log('search')
+  var text = $('.searchInput').val()
+  $('.defFilter').prop('selected', true);
+  $('.defSort').prop('selected', true);
+  
+  
+  var users = model.searchUser(text)
+  view.init(users);
+}
+
+
+function instFilter() {
+  console.log('filter')
+  var text = $('.filterInput').val()
+  var users;
+  if (text === 'active'){
+    users = model.filterUser(true)
+  } else {
+    users = model.filterUser(false)
+  }
+  view.init(users);
+}
+
+
+function instSort() {
+  console.log('sort')
+  var text = $('.sortInput').val();
+  var users;
+  if (text === 'name') {
+    user = model.sortUserName();
+    
+  } else {
+    user = model.sortUser(text);
+    
+  }
+  view.init(users)
+  
+}
+
+
+
+
+
 
 function nav(){
   var a = $(this).attr('value');

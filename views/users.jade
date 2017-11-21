@@ -15,38 +15,37 @@ block content
         .scrollParent
           .instruments
             img(src='img/png/search.png', alt='Search')
-            input(type="text")
-            select
-              option(selected) Filter
-              option Active
-              option Inactive
-            select
-              option(selected) Sort
-              option Name
-              option Last Name
+            input.searchInput(type="text")
+            select.filterInput
+              option.defFilter(selected, disabled) Activity
+              option(value="active") Active
+              option(value="inactive") Inactive
+            select.sortInput
+              option.defSort(value="name", selected) Name
+              option(value="lastname") Last
           .scroll
             .houseBlock
               
-              -if (gists)
-                each gist in gists
-                  .article(id= gist._id)
-                    button.userBtn(value= gist._id)
-                      .gist
-                        h2= gist.name + ' ' + gist.lastname
-                        -if (gist.residence)
-                          -each residence in residences
-                            -if(gist.residence == residence._id)
-                              -each house1 in houses
-                                -if (residence.houseID == house1._id)
-                                  p= house1.address
-                      .gistStatus
-                        .Activity
-                          p= gist.program
-                          -if (!gist.status)
-                            h3.inactive.inactiveL Inactive
-                          -else
-                            h3.active.activeL Active
-                        img.moreDetails(src='img/svg/join.svg', alt='join')
+              //- -if (gists)
+              //-   each gist in gists
+              //-     .article(id= gist._id)
+              //-       button.userBtn(value= gist._id)
+              //-         .gist
+              //-           h2= gist.name + ' ' + gist.lastname
+              //-           -if (gist.residence)
+              //-             -each residence in residences
+              //-               -if(gist.residence == residence._id)
+              //-                 -each house1 in houses
+              //-                   -if (residence.houseID == house1._id)
+              //-                     p= house1.address
+              //-         .gistStatus
+              //-           .Activity
+              //-             p= gist.program
+              //-             -if (!gist.status)
+              //-               h3.inactive.inactiveL Inactive
+              //-             -else
+              //-               h3.active.activeL Active
+              //-           img.moreDetails(src='img/svg/join.svg', alt='join')
 
         button.addBtn
           p +
