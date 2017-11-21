@@ -45,14 +45,17 @@ function Model(data){
   self.sortUser = function (rule) {
     var users2 = self.users;
     console.log(rule)
-    if (rule == 'name'){
-      console.log(users2.sort({name: 1}))
-      return users2.sort({name: 1})
-    }
-    if (rule == 'lastname'){
-      console.log(users2.sort({lastname: 1}))
+    if (rule === 'name'){
+      return users2.sort(function (a, b) {
+        return a.name.localeCompare(b.name)
+      });
       
-      return users2.sort({lastname: 1})      
+    }
+    if (rule === 'lastname'){
+      console.log(users2.sort({lastname: 1}))
+      return users2.sort(function (a, b) {
+        return a.lastname.localeCompare(b.lastname)
+      });   
     }
   }
 
@@ -137,43 +140,46 @@ function View(model){
   self.init = function(users) {
     self.elements.usersBlock.html('');
     var users2 = users;
-    
-    for (var i = 0; i < users2.length; i++) {
-      const user = users2[i];
-
-
-      if(!user.address){
-        user.address = '';
+    if (users2){
+      for (var i = 0; i < users2.length; i++) {
+        const user = users2[i];
+  
+  
+        if(!user.address){
+          user.address = '';
+        }
+        if(!user.program){
+          user.program = '';
+        }
+  
+  
+        var activity;
+  
+        if(user.status){
+          activity = '<h3 class="active activeL">Active</h3>';
+        } else {
+          activity = '<h3 class="inactive inactiveL">Inactive</h3>';
+        };
+  
+  
+        var result =  '<div id="' + user._id + '" class="article">'+
+        '<button value="' + user._id + '" class="userBtn">'+
+        '<div class="gist">'+
+        '<h2>' + user.name + ' ' + user.lastname + '</h2>'+
+        '<p>' + user.address + '</p>'+
+        '</div>'+
+        '<div class="gistStatus">'+
+        '<div class="Activity">'+
+        '<p>' + user.program + '</p>'+
+        activity +
+        '</div><img src="img/svg/join.svg" alt="join" class="moreDetails"/>'+
+        '</div></button></div>';
+  
+  
+        self.elements.usersBlock.append(result);
       }
-      if(!user.program){
-        user.program = '';
-      }
 
 
-      var activity;
-
-      if(user.status){
-        activity = '<h3 class="active activeL">Active</h3>';
-      } else {
-        activity = '<h3 class="inactive inactiveL">Inactive</h3>';
-      };
-
-
-      var result =  '<div id="' + user._id + '" class="article">'+
-      '<button value="' + user._id + '" class="userBtn">'+
-      '<div class="gist">'+
-      '<h2>' + user.name + ' ' + user.lastname + '</h2>'+
-      '<p>' + user.address + '</p>'+
-      '</div>'+
-      '<div class="gistStatus">'+
-      '<div class="Activity">'+
-      '<p>' + user.program + '</p>'+
-      activity +
-      '</div><img src="img/svg/join.svg" alt="join" class="moreDetails"/>'+
-      '</div></button></div>';
-
-
-      self.elements.usersBlock.append(result);
     }
   }
 
@@ -292,16 +298,9 @@ function instFilter() {
 function instSort() {
   console.log('sort')
   var text = $('.sortInput').val();
-  var users;
-  if (text === 'name') {
-    user = model.sortUserName();
-    
-  } else {
-    user = model.sortUser(text);
-    
-  }
+  var users = model.sortUser(text)
   view.init(users)
-  
+
 }
 
 
