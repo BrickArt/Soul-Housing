@@ -11,7 +11,8 @@ function Model(data){
     var users2 = [];
     for (let i = 0; i < self.users.length; i++) {
       const user = self.users[i];
-      if (~user.name.indexOf(text) || ~user.lastname.indexOf(text)) {
+      var name = user.name + ' ' + user.lastname;
+      if (~name.toLowerCase().indexOf(text.toLowerCase())) {
         users2.push(user);
       }
       if (i === self.users.length - 1) {
