@@ -70,6 +70,8 @@ router.get('/payments/user_:id?', function(req, res, next){
 //-------------------ADD--------------------
 router.post('/payments/add/user_:id?', upload.any(), function(req, res, next){
   var id = req.params.id;
+  var s = req.body.sum;
+  req.body.sum = Math.round(s * 100) / 100;
   var date = new Date(req.body.date)
   var now = new Date;
   now.setHours(0, 0, 0, 0);
@@ -109,6 +111,8 @@ router.post('/payments/edit/payment_:id?', upload.any(), function(req, res, next
       doc.image = req.files[0].filename;
     };
     if(req.body.sum){
+      var s = req.body.sum;
+      req.body.sum = Math.round(s * 100) / 100;
       doc.sum = req.body.sum;
     };
     if(req.body.date){

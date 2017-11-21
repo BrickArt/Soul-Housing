@@ -87,10 +87,8 @@ block content
                                 img(src='img/png/clock.png', alt='Clock')
                             .paymentDiscription
                               p Department of Social Protection
-                              -if (payment.sum >= 0)
-                                h3 #{payment.type}
-                              -else
-                                h3.red #{-payment.type}
+                              h3 #{payment.type}
+                              
                       .overviewButtons
                         button.gistPaymentsHistory.paymentBtn(value= guest._id) Add Payment
                         button.gistShelterHistory.paymentBtn(value= guest._id) User Information

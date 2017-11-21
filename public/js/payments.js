@@ -104,6 +104,8 @@ function View(model){
       
       self.elements.doneBtn.prop('disabled', false);
       self.elements.doneBtn.val(doc._id);
+      self.elements.doneBtn.css('display', 'inherit');
+      
     } else {
       self.elements.doneBtn.css('display', 'none');
     }

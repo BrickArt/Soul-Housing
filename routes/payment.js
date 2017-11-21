@@ -85,7 +85,7 @@ router.post('/payments/add:id?', upload.any(), function(req, res, next){
   var id = req.params.id;
   var program;
   var s = req.body.sum;
-  req.body.sum = Math.round(s * 100) / 100;
+  req.body.sum = -(Math.round(s * 100) / 100);
   Gist.findById(id, function(err, doc){
     if (err) {
       console.error('Error, no entry found');
@@ -135,6 +135,8 @@ router.post('/payments/add:id?', upload.any(), function(req, res, next){
 //--------------------------edit-------------------------
 router.post('/payments/edit/payment_:id?', upload.any(), function(req, res, next){
   var id = req.params.id;
+  var s = req.body.sum;
+  req.body.sum = -(Math.round(s * 100) / 100);
   console.log(req.body)
   Payment.findById(id).then(function(doc){
     console.log(doc)

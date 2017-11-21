@@ -105,7 +105,9 @@ router.get('/residence/user_:id?', function(req, res, next){
       }
       items.houses.push(house)
     }
+    console.log('aaaaa   ' + items)
     next(items);
+
   });
 
 
@@ -114,9 +116,8 @@ router.get('/residence/user_:id?', function(req, res, next){
   for (var i = 0; i < items.residences.length; i++) {
     for (var y = 0; y < items.houses.length; y++) {
       if (items.houses[y]._id == items.residences[i].houseID) {
-        if(!item.residences[i].description){
-          item.residences[i].description = null;
-        }
+        console.log('1')
+        
         var residence = {
           _id: items.residences[i]._id,
           userID: items.residences[i].userID,
@@ -127,14 +128,19 @@ router.get('/residence/user_:id?', function(req, res, next){
           bed: items.residences[i].bed,
           price: items.residences[i].price,
           startDate: items.residences[i].startDate,
-          endDate: items.residences[i].endDate,
-          description: item.residences[i].description
+          endDate: items.residences[i].endDate
+        }
+        if (items.residences[i].description) {
+          residence.description = items.residences[i].description;
+        } else {
+          residence.description = null;
         }
         result.push(residence);
       }
 
     }
     if (i === items.residences.length - 1) {
+      console.log(items)
       next(result)
     }
   }
@@ -142,7 +148,7 @@ router.get('/residence/user_:id?', function(req, res, next){
 
 }, function(result, req, res, next){
 
-  res.send(result);
+  res.status(200).send(result);
 });
 
 
@@ -279,6 +285,9 @@ router.post('/residence/replace:id?', function(req, res, next){
         console.log(err);
         res.sendStatus(403);
       } else {
+        if(!item.description){
+          item.description = null;
+        }
         res.status(200).send({
           _id: item._id,
           userID: item.userID,

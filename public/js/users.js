@@ -289,7 +289,11 @@ function instFilter() {
   if (text === 'active'){
     users = model.filterUser(true)
   } else {
-    users = model.filterUser(false)
+    if (text === 'inactive') {
+      users = model.filterUser(false)
+    } else {
+      users = model.users;
+    }
   }
   view.init(users);
 }
