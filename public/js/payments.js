@@ -17,7 +17,7 @@ function View(model){
     right: $('.right'),
     addBtn: $('.addBtn'),
 
-    date: $('.demo'),
+    date: $('.editDate'),
     sum: $('.editSum'),
     type: $('.editType'),
     image: $('.editImage'),

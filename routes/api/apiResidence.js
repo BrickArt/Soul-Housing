@@ -114,6 +114,9 @@ router.get('/residence/user_:id?', function(req, res, next){
   for (var i = 0; i < items.residences.length; i++) {
     for (var y = 0; y < items.houses.length; y++) {
       if (items.houses[y]._id == items.residences[i].houseID) {
+        if(!item.residences[i].description){
+          item.residences[i].description = null;
+        }
         var residence = {
           _id: items.residences[i]._id,
           userID: items.residences[i].userID,
@@ -124,7 +127,8 @@ router.get('/residence/user_:id?', function(req, res, next){
           bed: items.residences[i].bed,
           price: items.residences[i].price,
           startDate: items.residences[i].startDate,
-          endDate: items.residences[i].endDate
+          endDate: items.residences[i].endDate,
+          description: item.residences[i].description
         }
         result.push(residence);
       }
@@ -225,9 +229,11 @@ router.post('/residence/replace:id?', function(req, res, next){
   var endDate = new Date;
   endDate.setHours(0, 0, 0, 0);
   Residence.findById(id).then(function(doc){
-    item = doc;
+    console.log(req.body);
+    
     doc.endDate = endDate;
     doc.description = req.body.description;
+    item = doc;
     console.log(doc);
     doc.save(function (err) {
       if (err) {
@@ -236,7 +242,6 @@ router.post('/residence/replace:id?', function(req, res, next){
       } else {
         console.log('next');
         next(item);
-        return;
       }
     });
   })
@@ -244,7 +249,6 @@ router.post('/residence/replace:id?', function(req, res, next){
 }, function(item, req, res, next){
   console.log(item);
   House.findById(item.houseID).then(function(doc){
-    console.log(doc);
     for (var i = 0; i < doc.rooms.length; i++) {
       if (doc.rooms[i].num == item.room) {
         for (var y = 0; y < doc.rooms[i].beds.length; y++) {
@@ -256,14 +260,12 @@ router.post('/residence/replace:id?', function(req, res, next){
         }
       }
     }
-    console.log(doc);
     doc.save(function(err){
       if (err) {
         console.log(err);
         res.sendStatus(403);
       } else {
         next(item);
-        return;
       }
     })
   });
@@ -277,8 +279,15 @@ router.post('/residence/replace:id?', function(req, res, next){
         console.log(err);
         res.sendStatus(403);
       } else {
-        res.send(200, 'Place is created!')
-        return;
+        res.status(200).send({
+          _id: item._id,
+          userID: item.userID,
+          houseID: item.houseID,
+          room: item.room,
+          bed: item.bed,
+          price: item.price,
+          description: item.description
+        })
       }
     })
 
