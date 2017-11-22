@@ -177,10 +177,12 @@ function Controller(model, view){
 
 
   function checkInp() {
-    var cash = $(this).val()
+    var cash = $('.addInp').val()
     console.log('ok')
     view.addBthCheck(+cash)
   }
+
+  checkInp();
 
   function nav(){
     var a = $(this).attr('value');

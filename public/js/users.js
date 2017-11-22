@@ -39,6 +39,7 @@ function Model(data){
         }
       }
       if (i === self.users.length - 1) {
+        self.users2 = users2;
         return users2;
       }
     }

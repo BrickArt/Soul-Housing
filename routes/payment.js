@@ -135,15 +135,18 @@ router.post('/payments/add:id?', upload.any(), function(req, res, next){
 //--------------------------edit-------------------------
 router.post('/payments/edit/payment_:id?', upload.any(), function(req, res, next){
   var id = req.params.id;
-  var s = req.body.sum;
-  req.body.sum = -(Math.round(s * 100) / 100);
+  
   console.log(req.body)
   Payment.findById(id).then(function(doc){
     console.log(doc)
-    if(req.files[0]){
-      doc.image = req.files[0].filename;
-    };
+    if (req.files) {
+      if(req.files[0]){
+        doc.image = req.files[0].filename;
+      };
+    }
     if(req.body.sum){
+      var s = req.body.sum;
+      req.body.sum = -(Math.round(s * 100) / 100);
       doc.sum = +req.body.sum;
     };
     if(req.body.date){
@@ -158,6 +161,10 @@ router.post('/payments/edit/payment_:id?', upload.any(), function(req, res, next
     if(date1 > date2){
       doc.status = "pending";
     };
+    if(req.body.status){
+      doc.status = req.body.status;
+      
+    }
     doc.save(function (err) {
       if (err) {
         console.log(err);

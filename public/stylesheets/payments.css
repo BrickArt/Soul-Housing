@@ -464,6 +464,8 @@ body {
     background-color: #A1D46E; }
   .addButtons .addSave[disabled], .addButtons .editSave[disabled] {
     opacity: 0.3; }
+    .addButtons .addSave[disabled]:hover, .addButtons .editSave[disabled]:hover {
+      cursor: not-allowed; }
 
 .addButtons .addCancel {
   background-color: #FF7722; }

@@ -105,7 +105,7 @@ block content
                       .addText.addCash
                         p Enrollment amount:
                         
-                        input.addInp(type="text", placeholder="Sum", name="sum", required)
+                        input.addInp(type="number", placeholder="Sum", name="sum", required, min='0')
                         p $
                       .addText
                         select(class="", name="type").addType
@@ -126,7 +126,7 @@ block content
                         input.demo.editDate(type="text", placeholder="Select date", name="date")
                       .addText.addCash
                         p Enrollment amount:
-                        input.editSum(type="text", placeholder="100", name="sum", required)
+                        input.editSum.addInp(type="numder", placeholder="100", name="sum", required, min='0')
                         p $
                       .addText
                         select(class="", name="type").addType.editType
@@ -135,7 +135,7 @@ block content
                           option Department
                       .addButtons
                         button.done(type="button", disabled) Confirm
-                        button.editSave(type="button") Update
+                        button.editSave.payCheck(type="button", value= guests[0]._id) Update
                         button.delete(type="button") Delete 
                         button.addCancel(type="button", value= guests[0]._id) Cancel
 
@@ -208,7 +208,7 @@ block content
                     input.demo(type="text", placeholder="Select date", name="date")
                   .addText.addCash
                     p Enrollment amount:
-                    input.addInp(type="text", placeholder="Sum", name="sum", required)
+                    input.addInp(type="number", placeholder="Sum", name="sum", required, min='0')
                     p $
                   .addText
                     select(class="", name="type").addType.editType
@@ -229,7 +229,7 @@ block content
                     input.demo.editDate(type="text", placeholder="Select date", name="date")
                   .addText.addCash
                     p Enrollment amount:
-                    input.editSum(type="text", placeholder="100", name="sum", required)
+                    input.editSum.addInp(type="number", placeholder="100", name="sum", required, min='0')
                     p $
                   .addText
                     select(class="", name="type").addType
@@ -238,7 +238,7 @@ block content
                       option Department
                   .addButtons
                     button.done(type="button", disabled) Confirm
-                    button.editSave(type="button") Update
+                    button.editSave.payCheck(type="button", value= guests[0]._id) Update
                     button.delete(type="button") Delete                    
                     button.addCancel(type="button", value= guests[0]._id) Cancel
               
