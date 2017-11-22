@@ -214,15 +214,15 @@ function View(model){
     for (let i = 0; i < rooms.length; i++) {
       const room = rooms[i];
       var bedsAticles = '';
-      for (let y = 0; y < room.beds.length; y++) {
-        const bed = room.beds[y];
-        if (bed.user) {
-          var room = '<div class="viewBed"><p>'+ bed.num +'</p>' + bedsAticles + '</div>'
-        } else {
+      // for (let y = 0; y < room.beds.length; y++) {
+      //   const bed = room.beds[y];
+      //   if (bed.user) {
+      //     var room = '<div class="viewBed"><p>'+ bed.num +'</p>'  + '</div>'
+      //   } else {
           
-        }
+      //   }
         
-      }
+      // }
       var roomArticle = '<div class="viewRoom"><h2>Room '+ room.num +'</h2>' + bedsAticles + '</div>'
       $('.overviewRooms').append(roomArticle)
       
