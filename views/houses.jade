@@ -13,8 +13,21 @@ block popup
     .notificationHouse
     .superPlaceWindow
       button.closeNotif X
-      .popupImg(style="background: url(img/upload/house.png); background-size: auto 100%; background-position: center")
-      h1 Hello i'm popup window  
+      -if(houseID)
+        -each house in houses 
+          -if(house._id == houseID)
+            .popupImg(style="background: url(img/upload/house/#{house.image}); background-size: auto 100%; background-position: center")
+      -else
+        .popupImg(style="background: url(img/upload/house/#{houses[0].image}); background-size: auto 100%; background-position: center")
+      .popInfo
+        p House Name
+        h1 Room: 123
+        h2 Bed: 345
+      .popPrice
+        p Price 
+        input.placerInput(type="text")
+        p $
+        button.placerBtn(disabled) PLACE
 
 block content
   

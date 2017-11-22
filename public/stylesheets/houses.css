@@ -555,10 +555,10 @@ input[type=number]::-webkit-inner-spin-button {
 .superPlaceWindow {
   position: fixed;
   background-color: #fff;
-  top: 30%;
+  top: 32.5%;
   left: 25%;
   width: 50%;
-  height: 40%;
+  height: 35%;
   opacity: 1;
   z-index: 20;
   padding: 30px; }
@@ -593,7 +593,57 @@ input[type=number]::-webkit-inner-spin-button {
       cursor: pointer; }
 
 .popupImg {
-  width: 50px;
-  height: 50px; }
+  width: 120px;
+  height: 120px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  border-radius: 50%;
+  float: left;
+  display: block; }
+
+.popInfo {
+  font-size: 30px;
+  color: #656565;
+  margin-left: 25%;
+  border-bottom: solid 1px #EDEDED;
+  padding-bottom: 20px; }
+  .popInfo p {
+    color: #95989A; }
+  .popInfo h1 {
+    width: 40%;
+    float: left;
+    display: block; }
+
+.popPrice {
+  padding: 20px 20px 20px 0;
+  margin-left: 25%; }
+  .popPrice p {
+    float: left;
+    margin-right: 15px;
+    color: #656565; }
+  .popPrice input {
+    border: none;
+    border-bottom: solid 1px #656565;
+    width: 80px;
+    text-align: right;
+    float: left;
+    margin-right: 7px; }
+  .popPrice button {
+    border: none;
+    color: white;
+    background-color: #358DE0;
+    letter-spacing: 1px;
+    padding: 7px 30px;
+    margin: -10px 0 0 100px;
+    float: right; }
+    .popPrice button:hover {
+      cursor: pointer;
+      opacity: 0.8; }
+    .popPrice button[disabled] {
+      background-color: #EDEDED;
+      color: #000000;
+      cursor: not-allowed; }
 
 /*# sourceMappingURL=houses.css.map */

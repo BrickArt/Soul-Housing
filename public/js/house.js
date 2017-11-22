@@ -6,6 +6,7 @@ function Model(data){
   self.placeData;
   self.placeHouse;
   self.houseWith;
+  self.placer = {};
 
   self.roomDel = function(i){
     self.rooms[i] = null;
@@ -240,12 +241,25 @@ function View(model){
 
 
   self.openPlacer = function() {
+
+    $('.popInfo > p').text(model.house.name);
+    $('.popInfo > h1').text('Room: ' + model.placer.room);
+    $('.popInfo > h2').text('Bed: ' + model.placer.bed);
+    $('.placerInput').val('');
     $('.superPuperHousePlace').show();
   }
 
 
   self.closePlacer = function (){
     $('.superPuperHousePlace').hide();
+  }
+
+  self.placerBtn = function(r) {
+    if (r) {
+      $('.placerBtn').prop('disabled', false);
+    } else {
+      $('.placerBtn').prop('disabled', true);      
+    }
   }
 
 
@@ -308,12 +322,13 @@ function Controller(model, view){
   $(document).delegate( ".overPlace", "click", superPlace);
   
 
-  // $(document).delegate( ".", "click", openPlacer);
   $(document).delegate( ".notificationHouse", "click", closePlacer);
   $(document).delegate( ".closeNotif", "click", closePlacer);
   
+  $(document).delegate( ".placerInput", "keyup", placerChange);
+  $(document).delegate( ".placerBtn", "click", placerPlace);
   
-
+  
 //===========================================
 //---------------Functions-------------------
 //===========================================
@@ -850,6 +865,8 @@ function superPlace(){
   var room = aaa[0];
   var bed = aaa[1];
   console.log(room, data)
+  model.placer.room = room 
+  model.placer.bed = bed 
   view.openPlacer()
 
 
@@ -863,7 +880,76 @@ function closePlacer() {
   view.closePlacer();
 }
 
+function placerChange() {
+  var price = $(this).val();
+  if (price) {
+    view.placerBtn(true)
+  } else {
+    view.placerBtn(false)
+  }
+}
 
+function placerPlace() {
+  var house = model.house._id;
+  var room = model.placer.room;
+  var bed = model.placer.bed;
+  var price = $('.placerInput').val();
+
+
+  var house = {
+    houseID: house,
+    room: room,
+    bed: bed,
+    price: price,
+  }
+
+  $.session.set('houseID', house.houseID);
+  $.session.set('room', house.room);
+  $.session.set('bed', house.bed);
+  $.session.set('price', house.price);
+
+  var user = $.session.get('userID');
+  console.log();
+  if (user) {
+    //place
+    $.ajax({
+      url: '/api/residence/place',
+      method: 'POST',
+      data: {
+        userID: user,
+        houseID: house.houseID,
+        room: house.room,
+        bed: house.bed,
+        price: house.price
+      },
+      statusCode: {
+        200: function() {
+          console.log('ok' );
+          var user =   $.session.get('userID')
+          $.session.remove('houseID');
+          $.session.remove('userID');
+          $.session.remove('room');
+          $.session.remove('bed');
+          $.session.remove('price');
+          // sessvars.house = null;
+          // sessvars.user = null;
+          window.location.href = '/users'+ user;
+        },
+        403: function(jqXHR) {
+          var error = JSON.parse(jqXHR.responseText);
+          $('.error', formEvent).html(error.message);
+        }
+      },
+      error: function( jqXHR, textStatus, errorThrown ){
+        console.log('ОШИБКИ AJAX запроса: ' + textStatus );
+      }
+    });
+  } else {
+    window.location.href = '/users';
+  }
+
+
+}
 
 
 
