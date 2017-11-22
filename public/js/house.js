@@ -210,19 +210,28 @@ function View(model){
 
 
   self.initHouse = function(){
-    var rooms = self.houseWith.rooms;
+    var rooms = model.houseWith.rooms;
+    console.log(model.houseWith)
+    
+    
     for (let i = 0; i < rooms.length; i++) {
       const room = rooms[i];
       var bedsAticles = '';
-      // for (let y = 0; y < room.beds.length; y++) {
-      //   const bed = room.beds[y];
-      //   if (bed.user) {
-      //     var room = '<div class="viewBed"><p>'+ bed.num +'</p>'  + '</div>'
-      //   } else {
-          
-      //   }
+      for (let y = 0; y < room.beds.length; y++) {
+        const bed = room.beds[y];
+        if (bed.user) {
+          var guest = ''
+          if (bed.status) {
+            guest = '<button class="guestOpen" value="' + bed.user._id + '">' + bed.user.name + ' ' + bed.user.lastname + '</button><p>' + bed.user.program + '</p><p>' + bed.user.balance + ' $</p>'
+          } else {
+            guest = '<p>EMPTY</p><button class="overPlace" value="' + room.num + '/' + bed.num + '">PLACE</button>'
+          }
+          var room12 = '<div class="viewBed"><p>'+ bed.num +'</p>' + guest + '</div>'
+          bedsAticles += room12
+
+        }
         
-      // }
+      }
       var roomArticle = '<div class="viewRoom"><h2>Room '+ room.num +'</h2>' + bedsAticles + '</div>'
       $('.overviewRooms').append(roomArticle)
       
@@ -285,13 +294,30 @@ function Controller(model, view){
 
   $(document).delegate( ".houseGistList", "click", guestsList);
 
-
+  $(document).delegate( ".guestOpen", "click", guestOpen);
+  $(document).delegate( ".overPlace", "click", superPlace);
+  
+  
+  
 
 //===========================================
 //---------------Functions-------------------
 //===========================================
   function init(){
     var id = $('.gistEdit').val();
+    console.log('init')
+
+    $.ajax({
+      url: 'api/houses' + id,
+      method: 'GET',
+      dataType: 'json'
+    }).done(function (data){
+      model.houseWith = data;
+      view.initHouse();
+      console.log(model.house);
+    });
+
+
     if (id) {
       $.ajax({
         url: '/houses/house_' + id,
@@ -303,15 +329,7 @@ function Controller(model, view){
         console.log(model.house);
       });
 
-      $.ajax({
-        url: 'api/houses/house_' + id,
-        method: 'GET',
-        dataType: 'json'
-      }).done(function (data){
-        model.houseWith = data;
-        view.initHouse();
-        console.log(model.house);
-      });
+      
     }else{
       return;
     }
@@ -804,6 +822,23 @@ function Controller(model, view){
 function guestsList (){
   var id = $(this).attr('value');
   window.location.href = '/api/doc/houses/house_' + id;
+}
+
+
+function guestOpen() {
+  var id = $(this).attr('value');
+  window.location.href = '/users' + id;
+}
+
+function superPlace(){
+  var data = $(this).attr('value');
+  var aaa = data.split('/');
+  var room = aaa[0];
+  var bed = aaa[1];
+  console.log(room, data)
+
+
+  // window.location.href = '/users';
 }
 
 
