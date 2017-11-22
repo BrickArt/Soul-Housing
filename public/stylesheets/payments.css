@@ -436,8 +436,12 @@ body {
   float: left;
   border: none;
   margin: 0 5px 0 50px;
-  width: 50px;
-  text-align: right; }
+  width: 70px;
+  text-align: right;
+  border-bottom: solid 1px #EDEDED; }
+
+.addCash .warn {
+  border: solid 2px #F5A3A3; }
 
 .addType {
   border: none;
@@ -458,6 +462,8 @@ body {
   background-color: #8DBC5E; }
   .addButtons .addSave:hover, .addButtons .editSave:hover {
     background-color: #A1D46E; }
+  .addButtons .addSave[disabled], .addButtons .editSave[disabled] {
+    opacity: 0.3; }
 
 .addButtons .addCancel {
   background-color: #FF7722; }

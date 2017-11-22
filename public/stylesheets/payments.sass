@@ -491,8 +491,11 @@ body
     float: left
     border: none
     margin: 0 5px 0 50px
-    width: 50px
+    width: 70px
     text-align: right
+    border-bottom: solid 1px $border-color
+  .warn
+    border: solid 2px $red-color
 .addType
   border: none
   color: #808080
@@ -514,6 +517,8 @@ body
     background-color: #8DBC5E
     &:hover
       background-color: #A1D46E
+    &[disabled]
+      opacity: 0.3
   .addCancel
     background-color: #FF7722
     &:hover
@@ -596,3 +601,7 @@ body
   &:hover
     background-color: #FA6565
     cursor: pointer
+
+
+
+  

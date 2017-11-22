@@ -119,6 +119,21 @@ function View(model){
     self.elements.doneBtn.val('');
   };
 
+  self.addBthCheck = function(a) {
+    console.log('222')
+    if (a > 0) {
+      $('.payCheck').prop('disabled', false); 
+      $('.addInp').removeClass('warn');
+      console.log('lf')
+      
+    } else {
+      $('.payCheck').prop('disabled', true)
+      $('.addInp').addClass('warn');
+    console.log('else')
+    
+    }
+  }
+
 
 
 
@@ -149,6 +164,9 @@ function Controller(model, view){
 
   });
 
+  $(document).delegate( ".addInp", "keyup", checkInp);
+  
+
   $(document).delegate( ".navBtn", "click", nav);
 
   function open (){
@@ -157,6 +175,12 @@ function Controller(model, view){
     return false;
   };
 
+
+  function checkInp() {
+    var cash = $(this).val()
+    console.log('ok')
+    view.addBthCheck(+cash)
+  }
 
   function nav(){
     var a = $(this).attr('value');
