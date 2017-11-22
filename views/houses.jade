@@ -53,6 +53,9 @@ block content
                           -else 
                             img(src='img/upload/house.png', alt='House')
                         .overviewStatus
+                          .houseName
+                            -if (house.name)
+                              h2= house.name
                           img.bad(src='img/svg/bad.svg', alt='Bad')
                           -var capacity = 0;
                           -var freeBeds = 0
@@ -62,23 +65,57 @@ block content
                               -if (bed.status)
                                 - ++freeBeds
                           p #{freeBeds}/#{capacity}
-                      -if (house.name)
-                        .overviewName
-                          h2= house.name
+                          .houseInst
+                            button.gistEdit(value= house._id, disabled)
+                              img(src='img/png/edit.png', alt='Edit')
+                            button.gistDel(value= house._id, disabled)
+                              img(src='img/png/del.png', alt='Del')
+
                       -if (house.address)
                         .overviewName
                           p= house.address
                       -if (house.description)
                         .overviewText
                           p= house.description
+                      .overviewRooms
+                        .viewRoom
+                          h2 Room 1
+                          .viewBed
+                            p 1
+
+                            button PEDRO GARCIA
+                            p CASH
+                            p 1564 $
+                          .viewBed
+                            p 2
+                            p EMPTY
+                            button.overPlace PLACE
+                          .viewBed
+                            p 3
+                            button PEDRO GARCIA
+                            p CASH
+                            p 1564 $
+                        .viewRoom
+                          h2 Room 2
+                          .viewBed
+                            p 1
+                            button PEDRO GARCIA
+                            p CASH
+                            p 1564 $
+                          .viewBed
+                            p 2
+                            button PEDRO GARCIA
+                            p CASH
+                            p 1564 $
+                          .viewBed
+                            p 3
+                            button PEDRO GARCIA
+                            p CASH
+                            p 1564 $
+
+
                       .overviewButtons
-                        .overviewControls
-                          button.gistEdit(value= house._id, disabled)
-                            img(src='img/png/edit.png', alt='Edit')
-                            p Edit
-                          button.gistDel(value= house._id, disabled)
-                            img(src='img/png/del.png', alt='Del')
-                            p Del
+                        
                         button.houseGistList(value= house._id) View guest list
                         form.place
                           fieldset
@@ -192,6 +229,9 @@ block content
                         -else 
                           img(src='img/upload/house.png', alt='House')
                       .overviewStatus
+                        .houseName
+                          -if (houses[0].name)
+                            h2= houses[0].name
                         img.bad(src='img/svg/bad.svg', alt='Bad')
                         -var capacity = 0;
                         -var freeBeds = 0
@@ -201,24 +241,56 @@ block content
                             -if (bed.status)
                               - ++freeBeds
                         p #{freeBeds}/#{capacity}
-                    -if (houses[0].name)
-                      .overviewName
-                        h2= houses[0].name
+                        .houseInst
+                          button.gistEdit(value= houses[0]._id, disabled)
+                            img(src='img/png/edit.png', alt='Edit')
+                          button.gistDel(value= houses[0]._id, disabled)
+                            img(src='img/png/del.png', alt='Del')
+                    
                     -if (houses[0].address)
                       .overviewName
                         p= houses[0].address
                     -if (houses[0].description)
                       .overviewText
                         p= houses[0].description
+                    .overviewRooms
+                        .viewRoom
+                          h2 Room 1
+                          .viewBed
+                            p 1
+
+                            button PEDRO GARCIA
+                            p CASH
+                            p 1564 $
+                          .viewBed
+                            p 2
+                            p EMPTY
+                            button.overPlace PLACE
+                          .viewBed
+                            p 3
+                            button PEDRO GARCIA
+                            p CASH
+                            p 1564 $
+                        .viewRoom
+                          h2 Room 2
+                          .viewBed
+                            p 1
+                            button PEDRO GARCIA
+                            p CASH
+                            p 1564 $
+                          .viewBed
+                            p 2
+                            button PEDRO GARCIA
+                            p CASH
+                            p 1564 $
+                          .viewBed
+                            p 3
+                            button PEDRO GARCIA
+                            p CASH
+                            p 1564 $
                   
                     .overviewButtons
-                      .overviewControls
-                        button.gistEdit(value= houses[0]._id, disabled)
-                          img(src='img/png/edit.png', alt='Edit')
-                          p Edit
-                        button.gistDel(value= houses[0]._id, disabled)
-                          img(src='img/png/del.png', alt='Del')
-                          p Del
+                      
                       button.houseGistList(value= houses[0]._id) View guest list
                       form.place
                         .houseControls

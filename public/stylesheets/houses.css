@@ -238,10 +238,32 @@ body {
         height: 190px;
         width: 250px; }
     .col-lg-5 .overview .overviewStatus {
-      margin-top: 75px;
+      margin-top: 0px;
       margin-left: 285px;
       left: 500px;
       display: block; }
+      .col-lg-5 .overview .overviewStatus .houseName {
+        font-size: 24px;
+        margin-bottom: 20px;
+        height: 30px;
+        width: 100%; }
+      .col-lg-5 .overview .overviewStatus .houseInst {
+        width: 100%;
+        margin-top: 30px; }
+        .col-lg-5 .overview .overviewStatus .houseInst button {
+          wigth: 15px; }
+          .col-lg-5 .overview .overviewStatus .houseInst button p {
+            font-size: 15px;
+            width: 60px; }
+        .col-lg-5 .overview .overviewStatus .houseInst .gistEdit, .col-lg-5 .overview .overviewStatus .houseInst .gistDel {
+          width: 50px;
+          height: 50px;
+          background: none;
+          border: none; }
+          .col-lg-5 .overview .overviewStatus .houseInst .gistEdit:hover, .col-lg-5 .overview .overviewStatus .houseInst .gistDel:hover {
+            cursor: pointer; }
+        .col-lg-5 .overview .overviewStatus .houseInst .gistDel {
+          margin-left: 25%; }
       .col-lg-5 .overview .overviewStatus .bad {
         width: 50px;
         float: left;
@@ -313,6 +335,48 @@ body {
   .overviewControls .gistDel {
     float: right;
     margin-right: 125px; }
+
+.overviewRooms {
+  padding: 20px;
+  border-bottom: solid 1px #EDEDED;
+  height: inherit; }
+  .overviewRooms .viewRoom {
+    border-bottom: solid 1px #EDEDED;
+    padding: 5px; }
+    .overviewRooms .viewRoom h2 {
+      font-weight: bold; }
+    .overviewRooms .viewRoom .viewBed {
+      margin-left: 20px;
+      padding: 5px;
+      box-sizing: border-box;
+      height: 35px;
+      border-bottom: solid 1px #EDEDED; }
+      .overviewRooms .viewRoom .viewBed:last-child {
+        border: none; }
+      .overviewRooms .viewRoom .viewBed p, .overviewRooms .viewRoom .viewBed button {
+        float: left;
+        margin-right: 8%;
+        color: #656565; }
+      .overviewRooms .viewRoom .viewBed button {
+        padding: 0;
+        border: none;
+        background: none; }
+        .overviewRooms .viewRoom .viewBed button:hover {
+          cursor: pointer;
+          opacity: 0.6; }
+      .overviewRooms .viewRoom .viewBed .overPlace {
+        height: 25px;
+        font-size: 12px;
+        margin: 0;
+        border: none;
+        padding: 0 30px;
+        margin-left: 30%;
+        color: #ffffff;
+        font-weight: bold;
+        letter-spacing: 2px;
+        background-color: #358DE0; }
+        .overviewRooms .viewRoom .viewBed .overPlace:hover {
+          cursor: pointer; }
 
 .addPhoto {
   height: 170px;

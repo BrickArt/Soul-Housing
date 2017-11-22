@@ -280,10 +280,35 @@ body
 
 
     .overviewStatus
-      margin-top: 75px
+      margin-top: 0px
       margin-left: 285px
       left: 500px
       display: block
+
+      .houseName
+        font-size: 24px
+        margin-bottom: 20px
+        height: 30px
+        width: 100%
+
+      .houseInst
+        width: 100%
+        margin-top: 30px
+
+        button
+          wigth: 15px
+          p
+            font-size: 15px
+            width: 60px
+        .gistEdit, .gistDel
+          width: 50px
+          height: 50px
+          background: none
+          border: none
+          &:hover
+            cursor: pointer
+        .gistDel
+          margin-left: 25%
 
 
       .bad
@@ -369,6 +394,51 @@ body
   .gistDel
     float: right
     margin-right: 125px
+
+
+.overviewRooms
+  padding: 20px
+  border-bottom: solid 1px $border-color
+  height: inherit
+  .viewRoom
+    border-bottom: solid 1px $border-color
+    padding: 5px
+    h2 
+      font-weight: bold
+    .viewBed
+      margin-left: 20px
+      padding: 5px
+      box-sizing: border-box
+      height: 35px
+      border-bottom: solid 1px $border-color
+      &:last-child
+        border: none
+      p, button
+        float: left
+        margin-right: 8%
+        color: $secondary-color
+      button
+        padding: 0
+        border: none
+        background: none
+        &:hover
+          cursor: pointer
+          opacity: 0.6
+      .overPlace
+        height: 25px
+        font-size: 12px
+        margin: 0
+        border: none
+        padding: 0 30px
+        margin-left: 30%
+        color: #ffffff
+        font-weight: bold
+        letter-spacing: 2px
+        background-color: $primary-color
+        &:hover
+          cursor: pointer
+
+
 
 
 

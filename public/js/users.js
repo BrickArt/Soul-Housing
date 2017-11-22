@@ -2,6 +2,7 @@ function Model(data){
   var self = this;
 
   self.users;
+  self.users2;
 
   self.user;
 
@@ -24,6 +25,7 @@ function Model(data){
 
 
   self.filterUser = function (status) {
+    
     var users2 = [];
     for (let i = 0; i < self.users.length; i++) {
       const user = self.users[i];
@@ -44,7 +46,12 @@ function Model(data){
 
 //------------------------------!!!!!!!!!!!!!!!-------------------------------------------------
   self.sortUser = function (rule) {
-    var users2 = self.users;
+    var users2;
+    if(self.users2){
+      users2 = self.users2;
+    } else {
+      users2 = self.users;
+    }
     console.log(rule)
     if (rule === 'name'){
       return users2.sort(function (a, b) {
@@ -60,22 +67,6 @@ function Model(data){
     }
   }
 
-  self.userArticle = function(user) {
-    var result =  '<div id="' + user._id + '" class="article">'+
-              '<button value="' + user._id + '" class="userBtn">'+
-                '<div class="gist">'+
-                  '<h2>' + gist.name + ' ' + gist.lastname + '</h2>'+
-                  '<p>' + user.address + '</p>'+
-                '</div>'+
-                '<div class="gistStatus">'+
-                  '<div class="Activity">'+
-                  '<p>' + user.program + '</p>'+
-                    '<h3 class="inactive inactiveL">Inactive</h3>'+
-                    '<h3 class="active activeL">Active</h3>'+
-                  '</div><img src="img/svg/join.svg" alt="join" class="moreDetails"/>'+
-                '</div></button></div>';
-    return result;
-  };
 
 };
 

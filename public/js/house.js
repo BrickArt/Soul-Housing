@@ -5,6 +5,7 @@ function Model(data){
   self.rooms = [];
   self.placeData;
   self.placeHouse;
+  self.houseWith;
 
   self.roomDel = function(i){
     self.rooms[i] = null;
@@ -208,6 +209,27 @@ function View(model){
   }
 
 
+  self.initHouse = function(){
+    var rooms = self.houseWith.rooms;
+    for (let i = 0; i < rooms.length; i++) {
+      const room = rooms[i];
+      var bedsAticles = '';
+      for (let y = 0; y < room.beds.length; y++) {
+        const bed = room.beds[y];
+        if (bed.user) {
+          var room = '<div class="viewBed"><p>'+ bed.num +'</p>' + bedsAticles + '</div>'
+        } else {
+          
+        }
+        
+      }
+      var roomArticle = '<div class="viewRoom"><h2>Room '+ room.num +'</h2>' + bedsAticles + '</div>'
+      $('.overviewRooms').append(roomArticle)
+      
+    }
+  }
+
+
 
 
 };
@@ -278,6 +300,16 @@ function Controller(model, view){
       }).done(function (data){
         model.house = data;
         view.btnUnlock();
+        console.log(model.house);
+      });
+
+      $.ajax({
+        url: 'api/houses/house_' + id,
+        method: 'GET',
+        dataType: 'json'
+      }).done(function (data){
+        model.houseWith = data;
+        view.initHouse();
         console.log(model.house);
       });
     }else{
