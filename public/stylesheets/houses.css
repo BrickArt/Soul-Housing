@@ -592,4 +592,8 @@ input[type=number]::-webkit-inner-spin-button {
     .superPlaceWindow .closeNotif:hover {
       cursor: pointer; }
 
+.popupImg {
+  width: 50px;
+  height: 50px; }
+
 /*# sourceMappingURL=houses.css.map */
