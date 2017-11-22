@@ -239,6 +239,16 @@ function View(model){
   }
 
 
+  self.openPlacer = function() {
+    $('.superPuperHousePlace').show();
+  }
+
+
+  self.closePlacer = function (){
+    $('.superPuperHousePlace').hide();
+  }
+
+
 
 
 };
@@ -297,6 +307,10 @@ function Controller(model, view){
   $(document).delegate( ".guestOpen", "click", guestOpen);
   $(document).delegate( ".overPlace", "click", superPlace);
   
+
+  // $(document).delegate( ".", "click", openPlacer);
+  $(document).delegate( ".notificationHouse", "click", closePlacer);
+  $(document).delegate( ".closeNotif", "click", closePlacer);
   
   
 
@@ -836,11 +850,18 @@ function superPlace(){
   var room = aaa[0];
   var bed = aaa[1];
   console.log(room, data)
+  view.openPlacer()
 
 
   // window.location.href = '/users';
 }
 
+
+
+//-----------------------placer-----------------
+function closePlacer() {
+  view.closePlacer();
+}
 
 
 
