@@ -93,6 +93,8 @@ function View(model){
     if(d<10) d = '0'+ d;
     if(m<10) m = '0'+ m;
     var result = m + '/' + d + '/' + y;
+
+    if(+doc.sum < 0) doc.sum = -doc.sum
     
     self.elements.date.val(result);
     self.elements.sum.val(doc.sum);
@@ -165,6 +167,7 @@ function Controller(model, view){
   });
 
   $(document).delegate( ".addInp", "keyup", checkInp);
+  $(document).delegate( ".checkInpEdit", "keyup", checkInpEdit);
   
 
   $(document).delegate( ".navBtn", "click", nav);
@@ -181,8 +184,14 @@ function Controller(model, view){
     console.log('ok')
     view.addBthCheck(+cash)
   }
+  function checkInpEdit() {
+    var cash = $('.checkInpEdit').val()
+    console.log('ok')
+    view.addBthCheck(+cash)
+  }
 
   checkInp();
+  
 
   function nav(){
     var a = $(this).attr('value');
@@ -272,6 +281,7 @@ function Controller(model, view){
       console.log(data)
       model.payment = data;
       view.edit(data)
+      checkInpEdit();
     })
   }
 
