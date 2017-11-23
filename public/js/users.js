@@ -189,6 +189,29 @@ function View(model){
 
 
 
+
+  self.openPlacer = function() {
+    
+        
+        $('.placerInput').val('');
+        $('.superPuperHousePlace').show();
+      }
+
+  self.closePlacer = function (){
+    $('.superPuperHousePlace').hide();
+  }
+
+  self.placerBtn = function(r) {
+    if (r) {
+      $('.placerBtn').prop('disabled', false);
+    } else {
+      $('.placerBtn').prop('disabled', true);      
+    }
+  }
+
+
+
+
 };
 
 
@@ -230,9 +253,59 @@ function Controller(model, view){
   $(document).delegate( ".searchInput", "keyup", instSearch);
   $(document).delegate( ".filterInput", "change", instFilter);
   $(document).delegate( ".sortInput", "change", instSort);
+
+
+
+  $(document).delegate( ".notificationHouse", "click", closePlacer);
+  $(document).delegate( ".closeNotif", "click", closePlacer);
+  
+  $(document).delegate( ".placerInput", "keyup", placerChange);
+  $(document).delegate( ".placerBtn", "click", placerPlace);
   
   
 
+
+
+
+
+  function closePlacer() {
+    view.closePlacer();
+  }
+  
+  function placerChange() {
+    var text = $(this).val();
+    if (text) {
+      view.placerBtn(true)
+    } else {
+      view.placerBtn(false)
+    }
+  }
+
+  function placerPlace() {
+    var id = model.user.residence
+    var text = $('.placerInput').val()
+    console.log('place');
+    $.ajax({
+      url: "/api/residence/replace" + id,
+      type: 'POST',
+      data: {
+        description: text,
+        date: new Date().toString()
+      },
+      statusCode: {
+        200: function() {
+          window.location.href = "/users" + model.user._id;
+        },
+        403: function(jqXHR) {
+          var error = JSON.parse(jqXHR.responseText);
+          $('.error', formEvent).html(error.message);
+        }
+      },
+      error: function( jqXHR, textStatus, errorThrown ){
+             console.log('ОШИБКИ AJAX запроса: ' + textStatus );
+      }
+    })
+  }
 //===========================================
 //---------------Functions-------------------
 //===========================================
@@ -541,24 +614,8 @@ function nav(){
 
 //---------------------replace---------------------------
   function replace(){
-    var id = $(this).val()
-    console.log('place');
-    $.ajax({
-      url: "/users/replace/user_" + id,
-      type: 'POST',
-      statusCode: {
-        200: function() {
-          window.location.href = "/users" + model.user._id;
-        },
-        403: function(jqXHR) {
-          var error = JSON.parse(jqXHR.responseText);
-          $('.error', formEvent).html(error.message);
-        }
-      },
-      error: function( jqXHR, textStatus, errorThrown ){
-             console.log('ОШИБКИ AJAX запроса: ' + textStatus );
-      }
-    })
+    //
+    view.openPlacer()
   }
 
 

@@ -222,6 +222,9 @@ function View(model){
         const bed = room.beds[y];
         if (bed.user) {
           var guest = ''
+          if(!bed.user.program || bed.user.program === 'Select Program'){
+            bed.user.program = ''
+          }
           if (bed.status) {
             guest = '<button class="guestOpen" value="' + bed.user._id + '">' + bed.user.name + ' ' + bed.user.lastname + '</button><p>' + bed.user.program + '</p><p>' + bed.user.balance + ' $</p>'
           } else {

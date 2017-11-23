@@ -16,19 +16,44 @@ block popup
       button.closeNotif X
       -if(guestID)
         -each gist in gists 
-          -if(gists._id == guestID)
-            .popupImg(style="background: url(img/upload/house/#{gist.image}); background-size: auto 100%; background-position: center")
+          -if(gist._id == guestID)
+            .popupImg(style="background: url(img/upload/guest/#{gist.image}); background-size: auto 100%; background-position: center")
+            .popInfo
+              p= gist.name + " " + gist.lastname
+              -each residence in residences
+                -if (gist.residence == residence._id)
+                  h1 Room: #{residence.room}
+                  h2 Bed: #{residence.bed}
+                  -var date = new Date(residence.startDate)
+                  -var d = date.getDate()
+                  -var m = date.getMonth() + 1
+                  -var y = date.getFullYear()
+                  -if(d < 10) d = '0'+ d
+                  -if(m < 10) m = '0' + m
+                  h3 In: #{m}/#{d}/#{y}
       -else
-        .popupImg(style="background: url(img/upload/house/#{gists[0].image}); background-size: auto 100%; background-position: center")
-      .popInfo
-        p House Name
-        h1 Room: 123
-        h2 Bed: 345
+        .popupImg(style="background: url(img/upload/guest/#{gists[0].image}); background-size: auto 100%; background-position: center")
+        .popInfo
+          p= gists[0].name + " " + gists[0].lastname
+          -each residence in residences
+            -if (gists[0].residence == residence._id)
+              h1 Room: #{residence.room}
+              h2 Bed: #{residence.bed}
+              -var date = new Date(residence.startDate)
+              -var d = date.getDate()
+              -var m = date.getMonth() + 1
+              -var y = date.getFullYear()
+              -if(d < 10) d = '0'+ d
+              -if(m < 10) m = '0' + m
+              h3 In: #{m}/#{d}/#{y}
+              p Price: #{residence.price}
+      
+   
       .popPrice
-        p Price 
-        input.placerInput(type="text")
-        p $
-        button.placerBtn(disabled) PLACE
+        p Notes 
+        textarea(name="", cols="50", rows="4").placerInput
+        
+        button.placerBtn(disabled) REPLACE
 
   
 block content

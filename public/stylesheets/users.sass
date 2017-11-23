@@ -614,10 +614,9 @@ body
     margin-right: 2%
     &:hover
       cursor: pointer
- 
 
- .superPuperHousePlace
-  // display: none
+.superPuperHousePlace
+   display: none
 
 .notificationHouse
   position: fixed
@@ -627,44 +626,49 @@ body
   opacity: 0.65
   z-index: 20
 
+
+
+ 
+
+
 .superPlaceWindow
 
   position: fixed
   background-color: #fff
-  top: 32.5%
+  top: 15%
   left: 25%
   width: 50%
-  height: 35%
+  height: 70%
   opacity: 1
   z-index: 20
   padding: 30px
 
   .closeNotif
-    top: -10px;
-    right: -10px;
-    width: 25px;
-    height: 25px;
-    position: absolute;
-    padding: 0;
-    border: 2px solid #ccc;
-    -webkit-border-radius: 15px;
-    -moz-border-radius: 15px;
-    -ms-border-radius: 15px;
-    -o-border-radius: 15px;
-    border-radius: 15px;
-    background-color: rgba(61, 61, 61, 0.8);
-    -webkit-box-shadow: 0px 0px 10px #000;
-    -moz-box-shadow: 0px 0px 10px #000;
-    box-shadow: 0px 0px 10px #000;
-    text-align: center;
-    text-decoration: none;
-    font: 13px 'Tahoma', Arial, sans-serif;
-    font-weight: bold;
-    -webkit-transition: all ease .8s;
-    -moz-transition: all ease .8s;
-    -ms-transition: all ease .8s;
-    -o-transition: all ease .8s;
-    transition: all ease .8s;
+    top: -10px
+    right: -10px
+    width: 25px
+    height: 25px
+    position: absolute
+    padding: 0
+    border: 2px solid #ccc
+    -webkit-border-radius: 15px
+    -moz-border-radius: 15px
+    -ms-border-radius: 15px
+    -o-border-radius: 15px
+    border-radius: 15px
+    background-color: rgba(61, 61, 61, 0.8)
+    -webkit-box-shadow: 0px 0px 10px #000
+    -moz-box-shadow: 0px 0px 10px #000
+    box-shadow: 0px 0px 10px #000
+    text-align: center
+    text-decoration: none
+    font: 13px 'Tahoma', Arial, sans-serif
+    font-weight: bold
+    -webkit-transition: all ease .8s
+    -moz-transition: all ease .8s
+    -ms-transition: all ease .8s
+    -o-transition: all ease .8s
+    transition: all ease .8s
     color: #fff
     &:hover
       cursor: pointer
@@ -688,15 +692,24 @@ body
   border-bottom: solid 1px $border-color
   padding-bottom: 20px
   p
-    color: $text-color
+    color: $secondary-color
   h1
     width: 40%
     float: left
     display: block
 
+  h1, h2
+    padding-bottom: 10px
+    color: $text-color
+  h3
+    color: $text-color
+
 .popPrice
-  padding: 20px 20px 20px 0
+  padding: 10px 20px 20px 0
   margin-left: 25%
+  textarea
+    border-color: $border-color
+    overflow: hidden
   p
     float: left
     margin-right: 15px
@@ -711,10 +724,10 @@ body
   button
     border: none
     color: white
-    background-color: $primary-color
+    background-color: #FA5454
     letter-spacing: 1px
     padding: 7px 30px
-    margin: -10px 0 0 100px
+    margin: 20px 0 0 0
     float: right
     &:hover
       cursor: pointer
