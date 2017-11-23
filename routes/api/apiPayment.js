@@ -165,6 +165,47 @@ router.post('/payments/delete/payment_:id?', function(req, res, next){
   });
 });
 
+//-------------------pending---------------------------
+router.get('/payments/pending', function(req, res, next){
+  Payment.find({status: 'pending'}).then(function(doc){
+    next(doc);
+  });
+}, function(pay, req, res, next){
+  Gist.find().then(function(doc){
+    next({
+      pay: pay,
+      users: doc
+    });
+  });
+}, function(items, req, res, next){
+  var result = [];
+  for (let i = 0; i < items.pay.length; i++) {
+    const pay = items.pay[i];
+    for (let y = 0; y < items.users.length; y++) {
+      const user = items.users[y];
+      if (pay.userID === user._id.toString()) {
+        result.push({
+          _id: pay._id,
+          userID: user._id,
+          name: user.name,
+          lastname: user.lastname,
+          program: pay.program,
+          date: pay.date,
+          sum: pay.sum,
+          status: pay.status
+        })
+      }
+      
+    }
+    if (i === items.pay.length - 1) {
+      res.send(result)
+    }
+    
+  }
+
+
+
+});
 
 
 
