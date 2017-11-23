@@ -1,0 +1,38 @@
+extends layout
+
+block script
+  link(rel='stylesheet', href='/stylesheets/payments.css')
+  link(rel='stylesheet', href='/stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+  script(src="/js/bootstrap.min.js")
+  script(src="/js/moment.js")
+  script(src="/js/daterangepickerSingle.js")
+  link(rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css")
+  
+block content
+  .mainBlock
+    .row
+      .col-lg-7
+        .scrollParent
+          .scroll
+            .payBlock
+                .article(id)
+                  button.userBtn(value)
+                    .gist
+                      h2 guest.name + ' ' + guest.lastname
+                      p guest.address
+                    .gistStatus
+                      .Activity
+                        p guest.program
+                        
+                        h3.active.activeL Active
+                      img.moreDetails(src='img/svg/join.svg', alt='join')
+          
+      .col-lg-5
+        .scrollParent
+          .scroll
+            .right
+              
+              
+block footer
+  script(src='js/pending.public.js')
+  script(src="js/onloadHandler3.js")

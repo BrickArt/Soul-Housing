@@ -32,7 +32,7 @@ var apiProgram = require('./routes/api/apiProgram');
 var apiReport = require('./routes/api/apiReport');
 
 var unpaid = require('./routes/unpaid');
-
+var pending = require('./routes/pending');
 
 //----------------DataBase-------------------
 var mongoose = require('./lib/mongoose');
@@ -177,6 +177,8 @@ app.use('/api', apiReport);
 app.use('/api', api);
 
 app.use('/', unpaid);
+app.use('/', pending);
+
 
 //------------------Static-------------------
 app.use(express.static(join(__dirname, 'public')));
