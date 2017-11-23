@@ -31,6 +31,8 @@ var apiResidence = require('./routes/api/apiResidence');
 var apiProgram = require('./routes/api/apiProgram');
 var apiReport = require('./routes/api/apiReport');
 
+var unpaid = require('./routes/unpaid');
+
 
 //----------------DataBase-------------------
 var mongoose = require('./lib/mongoose');
@@ -38,6 +40,10 @@ var mongoose = require('./lib/mongoose');
 var MongoStore = require('connect-mongo')(session);
 
 app.use(logger('dev'));
+
+var Residence = require('./models/residence').Residence;
+var Payment = require('./models/payment').Payment;
+var Unpaid = require('./models/unpaid').Unpaid;
 
 
 
@@ -93,6 +99,66 @@ Array.prototype.forEachAsync = async function(cb) {
 
 
 
+schedule.scheduleJob('*/10 * * * * *', function(){
+  console.log('The answer to life, the universe, and everything!');
+  var items = {};
+  items.time = new Date();
+ 
+
+  Residence.find({endDate: null}).then(function(doc){
+      if(doc.length > 0){
+          items.residence = doc;
+
+          //--each residences 
+          var sum = 0;
+          for (let i = 0; i < items.residence.length; i++) {
+              const element = items.residence[i];
+              var pay = new Payment({
+                  date: new Date(),
+                  sum: element.price,
+                  type: null,
+                  program: null,
+                  status: 'system',
+                  userID: element.userID
+              });
+              pay.save(function (err) {
+                  if (err) {
+                    console.log(err);
+                    return;
+                  }
+                });
+              sum += element.price;
+              //--stop eaching
+              if(i === items.residence.length - 1){
+                  var s = new Date();
+                  var n = s - items.time
+      
+                  var log = new Unpaid({
+                      date: new Date(),
+                      count: i,
+                      sum: sum,
+                      timeout: n/1000 + ' ms',
+                  })
+                  log.save(function (err) {
+                      if (err) {
+                        console.log(err);
+                        return;
+                      }
+                    });
+      
+                  console.log(n/1000 + ' ms')
+                  return;
+              }
+      
+              
+          }
+          
+      } else {
+          return;
+      }
+  })
+});
+
 //===========================================
 // Router
 //===========================================
@@ -109,7 +175,8 @@ app.use('/api', apiResidence);
 app.use('/api', apiProgram);
 app.use('/api', apiReport);
 app.use('/api', api);
-// app.use('/test', test);
+
+app.use('/', unpaid);
 
 //------------------Static-------------------
 app.use(express.static(join(__dirname, 'public')));

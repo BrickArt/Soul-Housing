@@ -12,5 +12,6 @@
     },
     "logger": {
       "format": "default"
-    }
+    },
+    "unpaid":"softensy"
   }
