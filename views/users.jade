@@ -7,6 +7,29 @@ block script
   script(src="/js/moment.js")
   script(src="/js/daterangepickerSingle.js")
   link(rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css")
+
+
+block popup
+  .superPuperHousePlace
+    .notificationHouse
+    .superPlaceWindow
+      button.closeNotif X
+      -if(guestID)
+        -each gist in gists 
+          -if(gists._id == guestID)
+            .popupImg(style="background: url(img/upload/house/#{gist.image}); background-size: auto 100%; background-position: center")
+      -else
+        .popupImg(style="background: url(img/upload/house/#{gists[0].image}); background-size: auto 100%; background-position: center")
+      .popInfo
+        p House Name
+        h1 Room: 123
+        h2 Bed: 345
+      .popPrice
+        p Price 
+        input.placerInput(type="text")
+        p $
+        button.placerBtn(disabled) PLACE
+
   
 block content
   .mainBlock
