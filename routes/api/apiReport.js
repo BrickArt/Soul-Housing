@@ -149,6 +149,11 @@ router.get('/report/createReport', async (req, res, next) => {
         .catch(e => {
             return e
         });
+
+    const payments = await Payment.find()
+        .catch(e => {
+            return e
+        });
   
     if (!gistInfo || gistInfo.error) return res.status(500).json(gistInfo);
 

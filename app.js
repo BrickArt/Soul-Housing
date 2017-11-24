@@ -159,6 +159,90 @@ Array.prototype.forEachAsync = async function(cb) {
 //   })
 // });
 
+var unpa = function(){
+  console.log('The answer to life, the universe, and everything!');
+  var items = {};
+  items.time = new Date();
+ 
+
+  Residence.find({endDate: null}).then(function(doc){
+      if(doc.length > 0){
+          items.residence = doc;
+
+          //--each residences 
+          var sum = 0;
+          for (let i = 0; i < items.residence.length; i++) {
+              const element = items.residence[i];
+              var pay = new Payment({
+                  date: new Date(),
+                  sum: element.price,
+                  type: null,
+                  program: null,
+                  status: 'system',
+                  userID: element.userID
+              });
+              pay.save(function (err) {
+                  if (err) {
+                    console.log(err);
+                    return;
+                  }
+                });
+              sum += element.price;
+              //--stop eaching
+              if(i === items.residence.length - 1){
+                  var s = new Date();
+                  var n = s - items.time
+      
+                  var log = new Unpaid({
+                      date: new Date(),
+                      count: i,
+                      sum: sum,
+                      timeout: n/1000 + ' ms',
+                  })
+                  log.save(function (err) {
+                      if (err) {
+                        console.log(err);
+                        return;
+                      }
+                    });
+      
+                  console.log(n/1000 + ' ms')
+                  return;
+              }
+      
+              
+          }
+          
+      } else {
+          return;
+      }
+  })
+}
+
+
+
+
+function init() {
+  var m = new Date();
+  Unpaid.find().then(function(doc){
+    for (let i = 0; i < doc.length; i++) {
+      const el = doc[i];
+      if(m.getMonth() === el.date.getMonth()){
+        console.log('init')
+        
+        console.log(el)
+
+
+        return;
+      }
+      if(i === doc.length - 1){
+        return unpa();
+      }
+    }
+  })
+};
+init();
+
 //===========================================
 // Router
 //===========================================
