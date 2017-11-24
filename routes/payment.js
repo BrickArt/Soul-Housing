@@ -190,8 +190,7 @@ router.post('/payments/delete/payment_:id?', function(req, res, next){
   Payment.findById(id).then(function(doc){
     if (doc.image){
       fs.unlink('./public/img/upload/house/' + doc.image, function (err){
-        if (err) throw err;
-        console.log('successfully deleted - ' + doc.image);
+        if (err) console.log('file not defind' + doc.image);
       });
     };
     next(id);

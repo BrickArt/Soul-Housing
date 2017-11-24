@@ -226,7 +226,7 @@ function View(model){
             bed.user.program = ''
           }
           if (bed.status) {
-            guest = '<button class="guestOpen" value="' + bed.user._id + '">' + bed.user.name + ' ' + bed.user.lastname + '</button><p>' + bed.user.program + '</p><p>' + bed.user.balance + ' $</p>'
+            guest = '<button class="guestOpen" value="' + bed.user._id + '">' + bed.user.name + ' ' + bed.user.lastname + '</button><p>' + bed.user.program + '</p><p class="balance">' + bed.user.balance + ' $</p>'
           } else {
             guest = '<p>EMPTY</p><button class="overPlace" value="' + room.num + '/' + bed.num + '">PLACE</button>'
           }

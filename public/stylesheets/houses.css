@@ -357,9 +357,11 @@ body {
       .overviewRooms .viewRoom .viewBed:last-child {
         border: none; }
       .overviewRooms .viewRoom .viewBed p, .overviewRooms .viewRoom .viewBed button {
-        float: left;
         margin-right: 8%;
+        float: left;
         color: #656565; }
+      .overviewRooms .viewRoom .viewBed .balance {
+        float: right; }
       .overviewRooms .viewRoom .viewBed button {
         padding: 0;
         border: none;

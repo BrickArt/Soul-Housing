@@ -150,10 +150,7 @@ router.get('/report/createReport', async (req, res, next) => {
             return e
         });
 
-    const payments = await Payment.find()
-        .catch(e => {
-            return e
-        });
+    
   
     if (!gistInfo || gistInfo.error) return res.status(500).json(gistInfo);
 
@@ -167,6 +164,17 @@ router.get('/report/createReport', async (req, res, next) => {
         }
     };
 
+    const makeBalance = async pays => {
+        var sum = 0;
+        for (let i in pays) {
+            if (pays[i].status != "pending") {
+                sum += pays[i].sum;
+            }
+        }
+        return sum;
+        
+    };
+
     await gistInfo.forEachAsync(async el => {
         const residencesByUser = await Residence.find({userID: el._id.toString()})
             .catch(e => {
@@ -174,10 +182,18 @@ router.get('/report/createReport', async (req, res, next) => {
             });
         let addres, room, price, date;
 
+        const payments = await Payment.find({userID: el._id.toString()})
+        .catch(e => {
+            return e
+        });
+
+        const balance = await makeBalance(payments);
+            
+
         const residenceInfo = await findActualResidence(residencesByUser);
         const emptyValue = "empty";
 
-        if (el.residence && residenceInfo) {
+        if (el.residence && residenceInfo && balance) {
             const houseInfo = await House.find({_id: residenceInfo.houseID })
                 .catch(e => {
                     console.log(e);
@@ -218,7 +234,8 @@ router.get('/report/createReport', async (req, res, next) => {
             ROOM: room,
             PAYMENT_SOURCE: el.program,
             AMOUNT: price,
-            MOVE_IN: date
+            MOVE_IN: date,
+            BALANCE: balance
         };
         response.push(answer);
         //if (!residenceInfo || residenceInfo.error) return res.status(500).json(residenceInfo);
