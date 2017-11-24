@@ -93,7 +93,8 @@ block content
                               -if (payment.status === 'system')
                                 p Charge for housing
                               -else
-                                p Department of Social Protection
+                                -if(payment.program)
+                                  p= payment.program
                               h3 #{payment.status}
                               
                       .overviewButtons
