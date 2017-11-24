@@ -48,10 +48,14 @@ block content
                             h2= guest.name + ' ' + guest.lastname
                           .overviewStatusBalance
                             h3 Balance
-                            -if (guest.balance < 0)
-                              p.red #{guest.balance} $
+                            -var sum = 0;
+                            -each pay in payments
+                              -if (pay.status != 'pending')
+                                -sum += pay.sum
+                            -if (sum < 0)
+                              p.red #{sum} $
                             -else
-                              p.green #{guest.balance} $
+                              p.green #{sum} $
                           .overviewStatusLast
                             h3 Last payment
                             -if (payments.length > 0 )
@@ -154,10 +158,14 @@ block content
                           h2= guests[0].name + ' ' + guests[0].lastname
                         .overviewStatusBalance
                           h3 Balance
-                          -if (guests[0].balance < 0)
-                            p.red #{guests[0].balance} $
-                          -else
-                            p.green #{guests[0].balance} $
+                          -var sum = 0;
+                            -each pay in payments
+                              -if (pay.status != 'pending')
+                                -sum += pay.sum
+                            -if (sum < 0)
+                              p.red #{sum} $
+                            -else
+                              p.green #{sum} $
                         .overviewStatusLast
                           h3 Last payment
                           -if (payments.length > 0 )

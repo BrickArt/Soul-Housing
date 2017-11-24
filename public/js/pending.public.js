@@ -88,10 +88,11 @@ function View(model){
         } else {
             sum = 0;
         }
+        $('.edit').hide()
         $('.editDate').val(pay.date);
         $('.editSum').val(sum);
         $('.done').val(id);
-        $('.edit').show();
+        $('.edit').slideDown()
         $('.delete').val(id);
         
         $('.article').removeClass('selectedPayment');

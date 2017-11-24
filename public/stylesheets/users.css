@@ -659,7 +659,7 @@ body {
     background-color: #FA5454;
     letter-spacing: 1px;
     padding: 7px 30px;
-    margin: 20px 0 0 0;
+    margin: 20px 0 0 20px;
     float: right; }
     .popPrice button:hover {
       cursor: pointer;
@@ -668,5 +668,7 @@ body {
       background-color: #EDEDED;
       color: #000000;
       cursor: not-allowed; }
+  .popPrice .reloc {
+    background-color: #358DE0; }
 
 /*# sourceMappingURL=users.css.map */

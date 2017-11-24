@@ -204,8 +204,10 @@ function View(model){
   self.placerBtn = function(r) {
     if (r) {
       $('.placerBtn').prop('disabled', false);
+      $('.reloc').prop('disabled', false);
     } else {
       $('.placerBtn').prop('disabled', true);      
+      $('.reloc').prop('disabled', true);      
     }
   }
 
@@ -261,6 +263,8 @@ function Controller(model, view){
   
   $(document).delegate( ".placerInput", "keyup", placerChange);
   $(document).delegate( ".placerBtn", "click", placerPlace);
+
+  $(document).delegate( ".reloc", "click", relocate);
   
   
 
@@ -279,6 +283,39 @@ function Controller(model, view){
     } else {
       view.placerBtn(false)
     }
+  }
+
+  function relocate() {
+    var id = model.user.residence
+    var text = $('.placerInput').val()
+    console.log('place');
+    $.ajax({
+      url: "/api/residence/replace" + id,
+      type: 'POST',
+      data: {
+        description: text,
+        date: new Date().toString()
+      },
+      statusCode: {
+        200: function() {
+          $.session.remove('houseID');
+          $.session.remove('userID');
+          $.session.remove('room');
+          $.session.remove('bed');
+          $.session.remove('price');
+          $.session.set('userID', model.user._id);
+
+          window.location.href = "/houses";
+        },
+        403: function(jqXHR) {
+          var error = JSON.parse(jqXHR.responseText);
+          $('.error', formEvent).html(error.message);
+        }
+      },
+      error: function( jqXHR, textStatus, errorThrown ){
+             console.log('ОШИБКИ AJAX запроса: ' + textStatus );
+      }
+    })
   }
 
   function placerPlace() {
