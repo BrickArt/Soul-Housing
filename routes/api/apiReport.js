@@ -187,13 +187,13 @@ router.get('/report/createReport', async (req, res, next) => {
             return e
         });
 
-        const balance = await makeBalance(payments);
+        let balance = await makeBalance(payments);
             
 
         const residenceInfo = await findActualResidence(residencesByUser);
         const emptyValue = "empty";
 
-        if (el.residence && residenceInfo && balance) {
+        if (el.residence && residenceInfo) {
             const houseInfo = await House.find({_id: residenceInfo.houseID })
                 .catch(e => {
                     console.log(e);

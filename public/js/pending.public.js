@@ -66,7 +66,7 @@ function View(model){
                 $('.payBlock').append(model.article(i, element.name, element.lastname, element.program, element.date, element.sum))
             }
         } else {
-            $('.payBlock').html('<h1>No overdue payments at the moment</h1>')
+            $('.mainBlock').html('<h1 class="no">No overdue payments at the moment</h1>')
         }
     }
 
