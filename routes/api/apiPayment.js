@@ -183,8 +183,8 @@ Payment.find({status: 'pending'}).then(function(doc){
     const pay = items.pay[i];
     for (let y = 0; y < items.users.length; y++) {
       const user = items.users[y];
-      // if (pay.userID === user._id.toString() && pay.date < Date.now) {
-        if (pay.userID === user._id.toString()) {
+      if (pay.userID === user._id.toString() && pay.date < Date.now) {
+        // if (pay.userID === user._id.toString()) {
         result.push({
           _id: pay._id,
           userID: user._id,

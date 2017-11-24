@@ -294,10 +294,16 @@ function Controller(model, view){
     var form = $('.edit').serializeArray();
 
     var data = new FormData();
-
-    for (var key in form){
-      data.append(form[key].name, form[key].value)
+    var sum = $('.editSum').val()
+    if(model.payment.status === 'system'){
+      sum = -sum;
     }
+    data.append('sum', sum)
+    data.append('date', $('.editDate').val())
+    data.append('type', $('.editType').val())
+    // for (var key in form){
+    //   data.append(form[key].name, form[key].value)
+    // }
 
     console.log(form)
     console.log(data)
@@ -307,8 +313,6 @@ function Controller(model, view){
       });
     }
 
-    
-    
     $.ajax({
       url: '/payments/edit/payment_' + id,
       type: 'post',
