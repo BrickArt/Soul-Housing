@@ -93,8 +93,10 @@ block content
                               -if (payment.status === 'system')
                                 p Charge for housing
                               -else
-                                -if(payment.program)
+                                -if(payment.program && payment.program != "Select Program")
                                   p= payment.program
+                                -else
+                                  p -
                               h3 #{payment.status}
                               
                       .overviewButtons
@@ -207,7 +209,10 @@ block content
                             -if (payment.status === 'system')
                               p Charge for housing
                             -else
-                              p Department of Social Protection
+                              -if(payment.program && payment.program != "Select Program")
+                                p= payment.program
+                              -else
+                                p -
                             h3 #{payment.status}
                     .overviewButtons
                       button.gistPaymentsHistory.paymentBtn(value= guests[0]._id) Add Payment
