@@ -136,6 +136,9 @@ body {
     width: 27px;
     margin: 0 auto; }
 
+.bell {
+  float: right; }
+
 .scrollParent {
   overflow: hidden;
   margin-right: -7px; }
@@ -541,5 +544,8 @@ body {
   .delete:hover {
     background-color: #FA6565;
     cursor: pointer; }
+
+.selectedPayment {
+  background-color: #f6f6f6; }
 
 /*# sourceMappingURL=payments.css.map */

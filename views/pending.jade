@@ -15,23 +15,34 @@ block content
         .scrollParent
           .scroll
             .payBlock
-                .article(id)
-                  button.userBtn(value)
-                    .gist
-                      h2 guest.name + ' ' + guest.lastname
-                      p guest.address
-                    .gistStatus
-                      .Activity
-                        p guest.program
-                        
-                        h3.active.activeL Active
-                      img.moreDetails(src='img/svg/join.svg', alt='join')
+
           
       .col-lg-5
         .scrollParent
           .scroll
             .right
-              
+              form.edit
+                .addPhoto
+                  button.uploadPhoto
+                    img(src='img/png/cloud.png', alt='Cloud')
+                    p Upload photo
+                  input.editImage(type='file', encType="multipart/form-data", accept='image/jpg, image/jpeg, image/png, image/gif')
+                .addText.addDate
+                  input.demo.editDate(type="text", placeholder="Select date", name="date")
+                .addText.addCash
+                  p Enrollment amount:
+                  input.editSum.checkInpEdit(type="numder", placeholder="Sum", name="sum", required, min='0')
+                  p $
+                .addText
+                  select(class="", name="type").addType.editType
+                    option(disabled selected) Type of payment
+                    option CASH
+                    option Department
+                .addButtons
+                  button.done(type="button") Confirm
+                  button.editSave.payCheck(type="button") Update
+                  button.delete(type="button") Delete 
+                  button.addCancel(type="button", value) Cancel
               
 block footer
   script(src='js/pending.public.js')

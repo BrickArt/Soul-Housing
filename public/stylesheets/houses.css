@@ -136,6 +136,9 @@ body {
     width: 27px;
     margin: 0 auto; }
 
+.bell {
+  float: right; }
+
 .scrollParent {
   overflow: hidden;
   margin-right: -7px; }

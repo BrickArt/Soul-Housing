@@ -153,7 +153,7 @@ router.post('/payments/delete/payment_:id?', function(req, res, next){
   Payment.findById(id).then(function(doc){
     if (doc.image){
       fs.unlink('./public/img/upload/house/' + doc.image, function (err){
-        if (err) throw err;
+        if (err) console.log('image not found - ' + doc.image);
         console.log('successfully deleted - ' + doc.image);
       });
     };
@@ -167,7 +167,7 @@ router.post('/payments/delete/payment_:id?', function(req, res, next){
 
 //-------------------pending---------------------------
 router.get('/payments/pending', function(req, res, next){
-  Payment.find({status: 'pending'}).then(function(doc){
+Payment.find({status: 'pending'}).then(function(doc){
     next(doc);
   });
 }, function(pay, req, res, next){
@@ -183,7 +183,8 @@ router.get('/payments/pending', function(req, res, next){
     const pay = items.pay[i];
     for (let y = 0; y < items.users.length; y++) {
       const user = items.users[y];
-      if (pay.userID === user._id.toString()) {
+      // if (pay.userID === user._id.toString() && pay.date < Date.now) {
+        if (pay.userID === user._id.toString()) {
         result.push({
           _id: pay._id,
           userID: user._id,
