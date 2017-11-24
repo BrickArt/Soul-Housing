@@ -60,9 +60,13 @@ function View(model){
     var self = this;
     
     self.init = function() {
-        for (let i = 0; i < model.payments.length; i++) {
-            const element = model.payments[i];
-            $('.payBlock').append(model.article(i, element.name, element.lastname, element.program, element.date, element.sum))
+        if(model.payments.length > 0){
+            for (let i = 0; i < model.payments.length; i++) {
+                const element = model.payments[i];
+                $('.payBlock').append(model.article(i, element.name, element.lastname, element.program, element.date, element.sum))
+            }
+        } else {
+            $('.payBlock').html('<h1>No overdue payments at the moment</h1>')
         }
     }
 
@@ -105,6 +109,12 @@ function View(model){
         $('.edit').slideDown()
     }
 
+    self.hideDown = function(id) {
+        $('.edit').hide()
+        $('#article_' + id).slideUp()
+        return;
+    }
+
 };
   
   
@@ -122,7 +132,9 @@ function Controller(model, view){
             model.payments = data;
             model.pay = data[0]
             view.init(data)
-            view.editShow(0);
+            if (data.length > 0){
+                view.editShow(0)
+            }
         })
 
 
@@ -177,9 +189,15 @@ function Controller(model, view){
         }).done(function(data){
             $('body').css('cursor', 'default')
             console.log(data)
-            view.done(num)
             model.payments.slice(num, 1);
-            view.editShow(0)
+            if(model.payments[1]){
+                console.log(model.payments[1])
+                view.done(num)
+                view.editShow(0)
+                console.log('1')
+            } else {
+                return view.hideDown(num)
+            }
             // window.location.href = '/pending';
         })
     };
@@ -239,11 +257,15 @@ function Controller(model, view){
           url: '/payments/delete/payment_' + id,
           type: 'post'
         }).done(function(data){
-          $('body').css('cursor', 'default')
-          console.log(data)
-          view.done(num)
-          model.payments.slice(num, 1);
-          view.editShow(0)
+            $('body').css('cursor', 'default')
+            console.log(data)
+            model.payments.slice(num, 1);
+            if (model.payments[1]){
+                view.done(num)
+                view.editShow(0)
+            } else {
+                return view.hideDown(num)
+            }
         })
     }
 
