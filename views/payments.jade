@@ -90,7 +90,10 @@ block content
                               -if (payment.status === "pending")
                                 img(src='img/png/clock.png', alt='Clock')
                             .paymentDiscription
-                              p Department of Social Protection
+                              -if (payment.status === 'system')
+                                p Charge for housing
+                              -else
+                                p Department of Social Protection
                               h3 #{payment.type}
                               
                       .overviewButtons
@@ -200,7 +203,10 @@ block content
                               -if (payment.status === "pending")
                                 img(src='img/png/clock.png', alt='Clock')
                           .paymentDiscription
-                            p Department of Social Protection
+                            -if (payment.status === 'system')
+                              p Charge for housing
+                            -else
+                              p Department of Social Protection
                             h3 #{payment.type}
                     .overviewButtons
                       button.gistPaymentsHistory.paymentBtn(value= guests[0]._id) Add Payment
