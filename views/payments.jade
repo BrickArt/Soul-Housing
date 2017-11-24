@@ -94,7 +94,7 @@ block content
                                 p Charge for housing
                               -else
                                 p Department of Social Protection
-                              h3 #{payment.type}
+                              h3 #{payment.status}
                               
                       .overviewButtons
                         button.gistPaymentsHistory.paymentBtn(value= guest._id) Add Payment
@@ -207,7 +207,7 @@ block content
                               p Charge for housing
                             -else
                               p Department of Social Protection
-                            h3 #{payment.type}
+                            h3 #{payment.status}
                     .overviewButtons
                       button.gistPaymentsHistory.paymentBtn(value= guests[0]._id) Add Payment
                       button.gistShelterHistory.paymentBtn(value= guests[0]._id) User Information
