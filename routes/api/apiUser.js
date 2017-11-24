@@ -145,7 +145,7 @@ router.get('/users/user_:id?', function(req, res, next){
   //   user.balance = 120
   // }
   for (var c = 0; c < items.payments.length; c++) {
-    if (req.params.id == items.payments[c].userID) {
+    if (req.params.id == items.payments[c].userID && items.payments[c].status != 'pending') {
       user.balance += items.payments[c].sum
     }
   }
@@ -272,7 +272,7 @@ router.get('/users', function(req, res, next){
       user.name = items.users[i].name
     }
     for (var c = 0; c < items.payments.length; c++) {
-      if (items.users[i]._id == items.payments[c].userID) {
+      if (items.users[i]._id == items.payments[c].userID && items.payments[c].status != 'pending') {
         user.balance += items.payments[c].sum
       }
     }
