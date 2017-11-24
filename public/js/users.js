@@ -201,15 +201,15 @@ function View(model){
     $('.superPuperHousePlace').hide();
   }
 
-  self.placerBtn = function(r) {
-    if (r) {
-      $('.placerBtn').prop('disabled', false);
-      $('.reloc').prop('disabled', false);
-    } else {
-      $('.placerBtn').prop('disabled', true);      
-      $('.reloc').prop('disabled', true);      
-    }
-  }
+  // self.placerBtn = function(r) {
+  //   if (r) {
+  //     $('.placerBtn').prop('disabled', false);
+  //     $('.reloc').prop('disabled', false);
+  //   } else {
+  //     $('.placerBtn').prop('disabled', true);      
+  //     $('.reloc').prop('disabled', true);      
+  //   }
+  // }
 
 
 
@@ -261,7 +261,7 @@ function Controller(model, view){
   $(document).delegate( ".notificationHouse", "click", closePlacer);
   $(document).delegate( ".closeNotif", "click", closePlacer);
   
-  $(document).delegate( ".placerInput", "keyup", placerChange);
+  // $(document).delegate( ".placerInput", "keyup", placerChange);
   $(document).delegate( ".placerBtn", "click", placerPlace);
 
   $(document).delegate( ".reloc", "click", relocate);
@@ -276,14 +276,14 @@ function Controller(model, view){
     view.closePlacer();
   }
   
-  function placerChange() {
-    var text = $(this).val();
-    if (text) {
-      view.placerBtn(true)
-    } else {
-      view.placerBtn(false)
-    }
-  }
+  // function placerChange() {
+  //   var text = $(this).val();
+  //   if (text) {
+  //     view.placerBtn(true)
+  //   } else {
+  //     view.placerBtn(false)
+  //   }
+  // }
 
   function relocate() {
     var id = model.user.residence
