@@ -181,26 +181,32 @@ Payment.find({status: 'pending'}).then(function(doc){
   var result = [];
   for (let i = 0; i < items.pay.length; i++) {
     const pay = items.pay[i];
-    for (let y = 0; y < items.users.length; y++) {
-      const user = items.users[y];
-      if (pay.userID === user._id.toString() && pay.date < Date.now) {
-        // if (pay.userID === user._id.toString()) {
-        result.push({
-          _id: pay._id,
-          userID: user._id,
-          name: user.name,
-          lastname: user.lastname,
-          program: pay.program,
-          date: pay.date,
-          sum: pay.sum,
-          status: pay.status
-        })
+    var date1 = new Date(pay.date);
+    var date2 = new Date();
+    
+      console.log('aaappp')
+      for (let y = 0; y < items.users.length; y++) {
+        const user = items.users[y];
+        
+        if (pay.userID === user._id.toString() && date1 < date2) {
+          // if (pay.userID === user._id.toString()) {
+          result.push({
+            _id: pay._id,
+            userID: user._id,
+            name: user.name,
+            lastname: user.lastname,
+            program: pay.program,
+            date: pay.date,
+            sum: pay.sum,
+            status: pay.status
+          })
+        }
+        
       }
-      
-    }
-    if (i === items.pay.length - 1) {
-      res.send(result)
-    }
+      if (i === items.pay.length - 1) {
+        res.send(result)
+      }
+    
     
   }
 
