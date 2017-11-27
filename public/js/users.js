@@ -394,10 +394,12 @@ function instFilter() {
     if (text === 'inactive') {
       users = model.filterUser(false)
     } else {
+      model.users2 = model.users
       users = model.users;
+      
     }
   }
-  view.init(users);
+  return instSort()
 }
 
 
