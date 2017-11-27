@@ -357,7 +357,6 @@ function init(){
       model.user = data;
       console.log(model.user);
     });
-  }else{
   }
   $.ajax({
     url: '/api/users',

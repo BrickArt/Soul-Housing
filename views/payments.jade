@@ -13,22 +13,20 @@ block content
     .row
       .col-lg-7
         .scrollParent
+          .instruments
+            img(src='img/png/search.png', alt='Search')
+            input.searchInput(type="text")
+            select.filterInput
+              option.defFilter(selected, disabled) Status
+              option All            
+              option(value="active") Active
+              option(value="inactive") Inactive
+            select.sortInput
+              option.defSort(value="name", selected) Name
+              option(value="lastname") Last name
           .scroll
             .payBlock
-              each guest in guests
-                .article(id= guest._id)
-                  button.userBtn(value= guest._id)
-                    .gist
-                      h2= guest.name + ' ' + guest.lastname
-                      p= guest.address
-                    .gistStatus
-                      .Activity
-                        p= guest.program
-                        -if (!guest.status)
-                          h3.inactive.inactiveL Inactive
-                        -else
-                          h3.active.activeL Active
-                      img.moreDetails(src='img/svg/join.svg', alt='join')
+              
           
       .col-lg-5
         .scrollParent
