@@ -294,31 +294,18 @@ function Model(data){
         method: 'GET',
         dataType: 'json'
       }).done(function (data){
-        var users = [];
-        for (let i = 0; i < data.users.length; i++) {
-          var balance = 0;
-          const user = data.users[i];
-          for (let y = 0; y < data.pays.length; y++) {
-            const pay = data.pays[y];
-            if(pay.userID === user._id && pay.status != 'pending'){
-              balance += +pay.sum;
-            }
-            if(y === data.pays.length - 1 && balance > 0){
-              user.balance = balance;
-              users.push(user);
-            }
-          }
-          if(i === data.users.length - 1){
-            if(users.length > 0){
-              model.users = users;
-              view.init(model.users)
-            } else {
-              $('.mainBlock').html('<h1 class="no">Past due payments unavailable</h1>')
-            }
-          }
+        console.log(data[0])
+        if(data.length > 0){
+          model.users = data;
+          model.users.sort(function(a, b){
+            if(a.balance < b.balance) return 1
+            if(a.balance > b.balance) return -1
+          });
+          console.log('aaasssdddaa!')
+          view.init(model.users)
+        } else {
+          $('.mainBlock').html('<h1 class="no">Past due payments unavailable</h1>')
         }
-
-        // console.log(model.users);
       });
     
     };

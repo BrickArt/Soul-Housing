@@ -101,8 +101,9 @@ block content
                               -if (payment.status === 'done')
                                 h3 paid
                               -else
+                                -var time = new Date()
                                 -if(payment.status === 'pending' && payment.date <= time)
-                                  h3 past due
+                                  h3.red past due
                                 -else
                                   h3 #{payment.status}
                               
@@ -227,8 +228,9 @@ block content
                             -if(payment.status === 'done')
                               h3 paid
                             -else
+                              -var time = new Date()
                               -if(payment.status === 'pending' && payment.date <= time)
-                                h3 past due
+                                h3.red past due
                               -else
                                 h3 #{payment.status}
                     .overviewButtons

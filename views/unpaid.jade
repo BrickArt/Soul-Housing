@@ -34,21 +34,21 @@ block content
           .scroll
             .right
               -if (guestID)
-                each guest in guests
-                  -if (guest._id == guestID)
+                each item in items
+                  -if (item._id == guestID)
                     .openGist
                       .overview
-                        -if (guest.image)
-                          .overviewImg(style="background: url(img/upload/guest/#{guest.image}); background-size: auto 160px; background-position: center; background-repeat: no-repeat")
+                        -if (item.image)
+                          .overviewImg(style="background: url(img/upload/guest/#{item.image}); background-size: auto 160px; background-position: center; background-repeat: no-repeat")
                         -else 
                           .overviewImg(style="background: url(img/upload/gist.png); background-size: auto 156px; background-position: center")
                         .overviewStatus
                           .overviewStatusName
-                            h2= guest.name + ' ' + guest.lastname
+                            h2= item.name + ' ' + item.lastname
                           .overviewStatusBalance
                             h3 Balance
                             -var sum = 0;
-                            -each pay in payments
+                            -each pay in item.payments
                               -if (pay.status != 'pending')
                                 -sum += pay.sum
                             -if (sum < 0)
@@ -57,8 +57,8 @@ block content
                               p.green #{sum} $
                           .overviewStatusLast
                             h3 Last payment
-                            -if (payments.length > 0 )
-                              -var date = payments[0].date
+                            -if (item.payments.length > 0 )
+                              -var date = item.payments[0].date
                               -var d = date.getDate();
                               -var m = date.getMonth()+ 1;
                               -var y = date.getFullYear();
@@ -69,8 +69,8 @@ block content
                               p -
                         .overviewExcel
                           
-                      -if (payments)      
-                        each payment in payments
+                      -if (item.payments)      
+                        each payment in item.payments
                           
                           button.payment(type="button", value= payment._id)
                             .paymentData
@@ -102,14 +102,15 @@ block content
                               -if (payment.status === 'done')
                                 h3 paid
                               -else
+                                -var time = new Date()
                                 -if(payment.status === 'pending' && payment.date <= time)
-                                  h3 past due
+                                  h3.red past due
                                 -else
                                   h3 #{payment.status}
                               
                       .overviewButtons
-                        button.gistPaymentsHistory.paymentBtn(value= guest._id) Add Payment
-                        button.gistShelterHistory.paymentBtn(value= guest._id) User Information
+                        button.gistPaymentsHistory.paymentBtn(value= item._id) Add Payment
+                        button.gistShelterHistory.paymentBtn(value= item._id) User Information
                         
                     form.add
                       .addPhoto
@@ -153,27 +154,27 @@ block content
                           option Department
                       .addButtons
                         button.done(type="button", disabled) Confirm
-                        button.editSave.payCheck(type="button", value= guests[0]._id) Update
+                        button.editSave.payCheck(type="button", value= items[0]._id) Update
                         button.delete(type="button") Delete 
-                        button.addCancel(type="button", value= guests[0]._id) Cancel
+                        button.addCancel(type="button", value= items[0]._id) Cancel
 
                       
                 
               -else
-                -if (guests[0])
+                -if (items[0])
                   .openGist
                     .overview
-                      -if (guests[0].image)
-                        .overviewImg(style="background: url(img/upload/guest/#{guests[0].image}); background-size: auto 160px; background-position: center; background-repeat: no-repeat")
+                      -if (items[0].image)
+                        .overviewImg(style="background: url(img/upload/guest/#{items[0].image}); background-size: auto 160px; background-position: center; background-repeat: no-repeat")
                       -else 
                         .overviewImg(style="background: url(img/upload/gist.png); background-size: auto 156px; background-position: center")
                       .overviewStatus
                         .overviewStatusName
-                          h2= guests[0].name + ' ' + guests[0].lastname
+                          h2= items[0].name + ' ' + items[0].lastname
                         .overviewStatusBalance
                           h3 Balance
                           -var sum = 0;
-                            -each pay in payments
+                            -each pay in items[0].payments
                               -if (pay.status != 'pending')
                                 -sum += pay.sum
                             -if (sum < 0)
@@ -182,8 +183,8 @@ block content
                               p.green #{sum} $
                         .overviewStatusLast
                           h3 Last payment
-                          -if (payments.length > 0 )
-                            -var date = payments[0].date
+                          -if (items[0].payments.length > 0 )
+                            -var date = items[0].payments[0].date
                             -var d = date.getDate();
                             -var m = date.getMonth()+ 1;
                             -var y = date.getFullYear();
@@ -195,8 +196,8 @@ block content
                             p -
                       .overviewExcel
                         
-                    -if (payments)
-                      each payment in payments
+                    -if (items[0].payments)
+                      each payment in items[0].payments
                         button.payment(type="button", value= payment._id)
                           .paymentData
                             -var date = payment.date
@@ -228,13 +229,14 @@ block content
                             -if(payment.status === 'done')
                               h3 paid
                             -else
+                              -var time = new Date()
                               -if(payment.status === 'pending' && payment.date <= time)
-                                h3 past due
+                                h3.red past due
                               -else
                                 h3 #{payment.status}
                     .overviewButtons
-                      button.gistPaymentsHistory.paymentBtn(value= guests[0]._id) Add Payment
-                      button.gistShelterHistory.paymentBtn(value= guests[0]._id) User Information
+                      button.gistPaymentsHistory.paymentBtn(value= items[0]._id) Add Payment
+                      button.gistShelterHistory.paymentBtn(value= items[0]._id) User Information
                       
                 form.add
                   .addPhoto
@@ -254,8 +256,8 @@ block content
                       option CASH
                       option Department
                   .addButtons
-                    button.addSave.payCheck(type="submit", value= guests[0]._id, disabled) Save
-                    button.addCancel(type="button", value= guests[0]._id) Cancel
+                    button.addSave.payCheck(type="submit", value= items[0]._id, disabled) Save
+                    button.addCancel(type="button", value= items[0]._id) Cancel
 
                 form.edit
                   .addPhoto
@@ -276,9 +278,9 @@ block content
                       option Department
                   .addButtons
                     button.done(type="button", disabled) Confirm
-                    button.editSave.payCheck(type="button", value= guests[0]._id) Update
+                    button.editSave.payCheck(type="button", value= items[0]._id) Update
                     button.delete(type="button") Delete                    
-                    button.addCancel(type="button", value= guests[0]._id) Cancel
+                    button.addCancel(type="button", value= items[0]._id) Cancel
               
 block footer
   script(src='js/unpaid.js')
