@@ -22,6 +22,10 @@ block popup
               p= gist.name + " " + gist.lastname
               -each residence in residences
                 -if (gist.residence == residence._id)
+                  -each house in houses
+                    -if(house._id.toString() === residence.houseID)
+                      p.popHouseName #{house.name}
+                      p.popHouseAddress #{house.address}
                   h1 Room: #{residence.room}
                   h2 Bed: #{residence.bed}
                   -var date = new Date(residence.startDate)
@@ -37,6 +41,10 @@ block popup
           p= gists[0].name + " " + gists[0].lastname
           -each residence in residences
             -if (gists[0].residence == residence._id)
+              -each house in houses
+                -if(house._id.toString() === residence.houseID)
+                  p.popHouseName #{house.name}
+                  p.popHouseAddress #{house.address}
               h1 Room: #{residence.room}
               h2 Bed: #{residence.bed}
               -var date = new Date(residence.startDate)

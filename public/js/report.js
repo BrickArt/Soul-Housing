@@ -96,7 +96,7 @@ function Controller(model, view){
   };
 
   function amount () {
-    window.location.href = '/pending'
+    window.location.href = '/unpaid'
   };
 
 };

@@ -233,10 +233,10 @@ router.get('/report/createReport', async (req, res, next) => {
             LASTNAME: el.lastname,
             LOCATION: addres,
             ROOM: room,
-            PAYMENT_SOURCE: el.program,
-            AMOUNT: price,
+            SOURCE: el.program,
+            RATE: price,
             MOVE_IN: date,
-            BALANCE: balance.toString()
+            PENDING: balance.toString()
         };
         response.push(answer);
         //if (!residenceInfo || residenceInfo.error) return res.status(500).json(residenceInfo);

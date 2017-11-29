@@ -22,7 +22,7 @@ var Unpaid = require('../models/unpaid').Unpaid;
 //------------------Router-------------------
 //===========================================
 
-router.post('/unpaid', function(req, res, next){
+router.post('/charge', function(req, res, next){
     var items = {};
     items.time = new Date();
    

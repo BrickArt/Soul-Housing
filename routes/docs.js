@@ -41,19 +41,18 @@ var Payment = require('../models/payment').Payment;
 
 // ------------------PDF--------------------
 router.get('/doc/houses', function(req, res, next){
+  console.log(req.client.parser.incoming._startTime)
   var items = {
     houses: []
   };
   House.find().sort({name: 1}).then(function(doc){
     items.houses = doc;
     next(items)
-    console.log(doc);
   });
 }, function(items, req, res, next){
   Gist.find({status: true}).then(function(doc){
     items.users = doc;
     next(items)
-    console.log(doc);
   });
 }, function(items, req, res, next){
   var now = new Date();
@@ -85,7 +84,6 @@ router.get('/api/doc/houses', function(req, res, next){
     }
     items.houses = houses;
     next(items)
-    console.log(doc);
   });
 
 
@@ -102,7 +100,6 @@ router.get('/api/doc/houses', function(req, res, next){
     }
     items.payments = payments;
     next(items)
-    console.log(doc);
   });
 
 
@@ -130,7 +127,6 @@ router.get('/api/doc/houses', function(req, res, next){
     }
     items.users = users;
     next(items)
-    console.log(doc);
   });
 
 
@@ -181,7 +177,7 @@ router.get('/api/doc/houses', function(req, res, next){
     houses: results,
     date: "",
   }
-  var now = new Date();
+  var now = req.client.parser.incoming._startTime;
   var d = now.getDay();
   var m = now.getMonth() + 1;
   var y = now.getFullYear();
@@ -198,17 +194,18 @@ router.get('/api/doc/houses', function(req, res, next){
     var pdfData = getPages(items);
     const pdfDoc = printer.createPdfKitDocument(pdfData);
 
-    var date = new Date;
-    var h = date.getHours() + 2;
+    var date = req.client.parser.incoming._startTime;
+    var h = date.getHours();
     var min = date.getMinutes();
     if(h < 10) h = '0' + h;
     if(min < 10) min = '0' + min;
     var m = date.getMonth() + 1;
     var d = date.getDate();
-    var y = date.getFullYear();
+    var y = date.getFullYear().toString().slice(2);
     if(m < 10) m = '0' + m;
     if(d < 10) d = '0' + d;
-    var fileName = 'houses_' + h + '_' + min + '_' + m + '_' + d + '_' + y + '.pdf'
+    // var fileName = 'houses_' + h + '_' + min + '_' + m + '_' + d + '_' + y + '.pdf'
+    var fileName = 'houses_' + m + '_' + d + '_' + y + '_' + h + '_' + min + '.pdf'
 
 
     res.set({
@@ -254,7 +251,6 @@ router.get('/api/doc/houses/house_:id?', function(req, res, next){
     }
     items.payments = payments;
     next(items)
-    console.log(doc);
   });
 
 
@@ -270,7 +266,6 @@ router.get('/api/doc/houses/house_:id?', function(req, res, next){
         balance: 0
       };
       for (var n = 0; n < items.payments.length; n++) {
-        console.log('+');
         if (items.payments[n].userID == doc[i]._id){
           user.balance += items.payments[n].sum;
         }
@@ -281,7 +276,6 @@ router.get('/api/doc/houses/house_:id?', function(req, res, next){
     }
     items.users = users;
     next(items)
-    console.log(doc);
   });
 
 
@@ -304,9 +298,7 @@ router.get('/api/doc/houses/house_:id?', function(req, res, next){
         status: items.house.rooms[i].beds[y].status,
         user: {}
       }
-      console.log('ooooooooooook');
       for (var z = 0; z < items.users.length; z++) {
-        console.log(items.house.rooms[i].beds[y].userID);
         if (items.users[z]._id == items.house.rooms[i].beds[y].userID) {
           bed.user = items.users[z]
         }
@@ -324,7 +316,7 @@ router.get('/api/doc/houses/house_:id?', function(req, res, next){
   }
 
 }, function(result, req, res, next){
-  var now = new Date();
+  var now = req.client.parser.incoming._startTime;
   var d = now.getDate();
   var m = now.getMonth() + 1;
   var y = now.getFullYear();
@@ -343,17 +335,18 @@ router.get('/api/doc/houses/house_:id?', function(req, res, next){
   const pdfDoc = printer.createPdfKitDocument(pdfData);
 
 
-  var date = new Date;
-  var h = date.getHours() + 2;
+  var date = req.client.parser.incoming._startTime;
+  var h = date.getHours();
   var min = date.getMinutes();
   if(h < 10) h = '0' + h;
   if(min < 10) min = '0' + min;
   var m = date.getMonth() + 1;
   var d = date.getDate();
-  var y = date.getFullYear();
+  var y = date.getFullYear().toString().slice(2);
   if(m < 10) m = '0' + m;
   if(d < 10) d = '0' + d;
-  var fileName = result.name + '_' + h + '_' + min + '_' + m + '_' + d + '_' + y + '.pdf'
+  // var fileName = result.name + '_' + h + '_' + min + '_' + m + '_' + d + '_' + y + '.pdf'
+  var fileName = result.name + ' - ' + m + '_' + d + '_' + y + '_' + h + '_' + min + '.pdf'
 
 
   res.set({"Content-Disposition" : 'attachment; filename=' + fileName + ''});
