@@ -7,6 +7,7 @@ function Model(data){
   self.users2;
   self.user;
 
+  self.types
 
 
   self.searchUser = function (text) {
@@ -260,6 +261,15 @@ function View(model){
   }
 
 
+  self.type = function(){
+    for (let i = 0; i < model.types.length; i++) {
+      const type = model.types[i];
+      var option = '<option>' + type.name + '</option>'
+      $('.addType').append(option)
+      console.log('a')
+    }
+  }
+
 
 
 };
@@ -290,6 +300,15 @@ function Controller(model, view){
       model.users = data;
       console.log(model.users);
       view.init(model.users)
+    });
+
+    $.ajax({
+      url: '/api/types',
+      method: 'GET',
+      dataType: 'json'
+    }).done(function (data){
+      model.types = data;
+      view.type();
     });
   
   };
@@ -404,7 +423,11 @@ function instSort() {
 //---------------ADD-------------------
   function add() {
     $('.openGist').hide();
+    
+    
     $('.add').show();
+    
+
   };
 
 //---------------CANCEL-------------------

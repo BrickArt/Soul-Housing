@@ -94,8 +94,8 @@ block content
                               -if (payment.status === 'system')
                                 p -
                               -else
-                                -if(payment.program && payment.program != "Select Program")
-                                  p= payment.program
+                                -if(payment.type && payment.type != 'null')
+                                  p= payment.type
                                 -else
                                   p -
                               -if (payment.status === 'done')
@@ -131,8 +131,6 @@ block content
                       .addText
                         select(class="", name="type").addType
                           option(disabled selected) Type of payment
-                          option CASH
-                          option Department
                       .addButtons
                         button.addSave.payCheck(value= guestID, disabled) Save
                         button.addCancel(value= guestID) Cancel
@@ -152,8 +150,6 @@ block content
                       .addText
                         select(class="", name="type").addType.editType
                           option(disabled selected) Type of payment
-                          option CASH
-                          option Department
                       .addButtons
                         button.done(type="button", disabled) Confirm
                         button.editSave.payCheck(type="button", value= guests[0]._id) Update
@@ -224,8 +220,8 @@ block content
                             -if (payment.status === 'system')
                               p -
                             -else
-                              -if(payment.program && payment.program != "Select Program")
-                                p= payment.program
+                              -if(payment.type && payment.type != 'null')
+                                p= payment.type
                               -else
                                 p -
                             -if(payment.status === 'done')
@@ -258,8 +254,6 @@ block content
                   .addText
                     select(class="", name="type").addType.editType
                       option(disabled selected) Type of payment
-                      option CASH
-                      option Department
                   .addButtons
                     button.addSave.payCheck(type="submit", value= guests[0]._id, disabled) Save
                     button.addCancel(type="button", value= guests[0]._id) Cancel
@@ -279,8 +273,6 @@ block content
                   .addText
                     select(class="", name="type").addType
                       option(disabled selected) Type of payment
-                      option CASH
-                      option Department
                   .addButtons
                     button.done(type="button", disabled) Confirm
                     button.editSave.payCheck(type="button", value= guests[0]._id) Update

@@ -31,6 +31,8 @@ var apiResidence = require('./routes/api/apiResidence');
 var apiProgram = require('./routes/api/apiProgram');
 var apiReport = require('./routes/api/apiReport');
 
+var type = require('./routes/pay.type');
+
 var unpaid = require('./routes/unpaid');
 var pending = require('./routes/pending');
 
@@ -262,6 +264,7 @@ app.use('/api', api);
 
 app.use('/', unpaid);
 app.use('/', pending);
+app.use('/', type);
 
 
 //------------------Static-------------------

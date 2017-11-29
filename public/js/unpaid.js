@@ -266,6 +266,15 @@ function Model(data){
       }
     }
   
+
+    self.type = function(){
+      for (let i = 0; i < model.types.length; i++) {
+        const type = model.types[i];
+        var option = '<option>' + type.name + '</option>'
+        $('.addType').append(option)
+        console.log('a')
+      }
+    }
   
   
   
@@ -306,6 +315,15 @@ function Model(data){
         } else {
           $('.mainBlock').html('<h1 class="no">Past due payments unavailable</h1>')
         }
+      });
+
+      $.ajax({
+        url: '/api/types',
+        method: 'GET',
+        dataType: 'json'
+      }).done(function (data){
+        model.types = data;
+        view.type();
       });
     
     };
