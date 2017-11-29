@@ -13,5 +13,6 @@
     "logger": {
       "format": "default"
     },
-    "unpaid":"softensy"
+    "unpaid":"softensy",
+    "timeZone": -8
   }

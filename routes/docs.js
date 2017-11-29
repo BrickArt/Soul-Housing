@@ -4,6 +4,7 @@ var fs = require('fs');
 var join = require('path').join;
 var pdfMake = require('pdfmake');
 var async = require('async');
+var config = require ('../config')
 
 
 var checkAuth = require('../middleware/checkAuth');
@@ -56,6 +57,7 @@ router.get('/doc/houses', function(req, res, next){
   });
 }, function(items, req, res, next){
   var now = new Date();
+  now.setHours(now.getUTCHours() + config.get('timeZone'))
   var d = now.getDay();
   var m = now.getMonth();
   var y = now.getFullYear();
@@ -177,8 +179,9 @@ router.get('/api/doc/houses', function(req, res, next){
     houses: results,
     date: "",
   }
-  var now = req.client.parser.incoming._startTime;
-  var d = now.getDay();
+  var now = new Date();
+  now.setHours(now.getUTCHours() + config.get('timeZone'))
+  var d = now.getDate();
   var m = now.getMonth() + 1;
   var y = now.getFullYear();
   if (d < 10) {
@@ -193,9 +196,9 @@ router.get('/api/doc/houses', function(req, res, next){
 }, function(items, req, res, next){
     var pdfData = getPages(items);
     const pdfDoc = printer.createPdfKitDocument(pdfData);
-
-    var date = req.client.parser.incoming._startTime;
-    var h = date.getHours();
+    
+    var date = new Date();
+    var h = date.getUTCHours() + config.get('timeZone');
     var min = date.getMinutes();
     if(h < 10) h = '0' + h;
     if(min < 10) min = '0' + min;
@@ -316,7 +319,8 @@ router.get('/api/doc/houses/house_:id?', function(req, res, next){
   }
 
 }, function(result, req, res, next){
-  var now = req.client.parser.incoming._startTime;
+  var now = new Date();
+  now.setHours(now.getUTCHours() + config.get('timeZone'))
   var d = now.getDate();
   var m = now.getMonth() + 1;
   var y = now.getFullYear();
@@ -335,8 +339,8 @@ router.get('/api/doc/houses/house_:id?', function(req, res, next){
   const pdfDoc = printer.createPdfKitDocument(pdfData);
 
 
-  var date = req.client.parser.incoming._startTime;
-  var h = date.getHours();
+  var date = new Date();
+  var h = date.getUTCHours() + config.get('timeZone');
   var min = date.getMinutes();
   if(h < 10) h = '0' + h;
   if(min < 10) min = '0' + min;

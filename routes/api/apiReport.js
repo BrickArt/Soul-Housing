@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var async = require('async');
 const fs = require('fs');
+var config         = require ('../../config')
 
 var checkAuth = require('../../middleware/checkAuth');
 
@@ -265,8 +266,9 @@ router.get('/report/createReport', async (req, res, next) => {
     //fs.createReadStream('ExcelFile.xlsx').pipe(res);
     //res.download('ExcelFile.xlsx');
     // census_mm:hh_mm_dd_yyyy
-    var date = req.client.parser.incoming._startTime;
-    var h = date.getHours();
+    var date = new Date()
+    // date.setHours(date.getHours() + config.get('timeZone'));
+    var h = date.getUTCHours() + config.get('timeZone');
     var min = date.getMinutes();
     if(h < 10) h = '0' + h;
     if(min < 10) min = '0' + min;
