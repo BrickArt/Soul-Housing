@@ -81,6 +81,10 @@ router.get('/unpaid:id?', function(req, res, next){
             }
             
             if (y === item.pays.length - 1 && user.balance > 0) {
+                payments.sort(function(a, b){
+                    if(a.date < b.date) return 1
+                    if(a.date > b.date) return -1
+                })
                 users.push({
                     _id: user._id,
                     name: user.name,
