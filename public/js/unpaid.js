@@ -69,10 +69,11 @@ function Model(data){
       if (rule === 'balance'){
         console.log(users2[0].balance)
         console.log(users2.sort({balance: -1}))
-        users2.sort(function (a, b) {
-          if (a > b) return 1;
-          if (a < b) return -1;
-        }); 
+         
+        users2.sort(function(a, b){
+          if(a.balance < b.balance) return 1
+          if(a.balance > b.balance) return -1
+        });
         return users2  
       }
     }

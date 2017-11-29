@@ -579,5 +579,7 @@ body {
     margin-right: 2%; }
     .instruments > select:hover {
       cursor: pointer; }
+  .instruments .balance {
+    float: right; }
 
 /*# sourceMappingURL=payments.css.map */

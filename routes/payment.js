@@ -82,6 +82,7 @@ router.get('/payments/payment_:id?', function(req, res, next){
 
 //-------------------ADD--------------------
 router.post('/payments/add:id?', upload.any(), function(req, res, next){
+  console.log(req.body)
   var id = req.params.id;
   var program;
   var s = req.body.sum;

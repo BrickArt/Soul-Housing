@@ -16,12 +16,8 @@ block content
           .instruments
             img(src='img/png/search.png', alt='Search')
             input.searchInput(type="text")
-            select.filterInput
-              option.defFilter(selected, disabled) Status
-              option(value="all") All            
-              option(value="active") Active
-              option(value="inactive") Inactive
-            select.sortInput
+            
+            select.sortInput.balance
               option(value="balance", selected) Balance
               option.defSort(value="name") Name
               option(value="lastname") Last name
@@ -132,8 +128,6 @@ block content
                       .addText
                         select(class="", name="type").addType
                           option(disabled selected) Type of payment
-                          option CASH
-                          option Department
                       .addButtons
                         button.addSave.payCheck(value= guestID, disabled) Save
                         button.addCancel(value= guestID) Cancel
@@ -153,8 +147,6 @@ block content
                       .addText
                         select(class="", name="type").addType.editType
                           option(disabled selected) Type of payment
-                          option CASH
-                          option Department
                       .addButtons
                         button.done(type="button", disabled) Confirm
                         button.editSave.payCheck(type="button", value= items[0]._id) Update
@@ -259,10 +251,8 @@ block content
                   .addText
                     select(class="", name="type").addType.editType
                       option(disabled selected) Type of payment
-                      option CASH
-                      option Department
                   .addButtons
-                    button.addSave.payCheck(type="submit", value= items[0]._id) Save
+                    button.addSave.payCheck(value= items[0]._id, disabled) Save
                     button.addCancel(type="button", value= items[0]._id) Cancel
 
                 form.edit
@@ -280,8 +270,6 @@ block content
                   .addText
                     select(class="", name="type").addType
                       option(disabled selected) Type of payment
-                      option CASH
-                      option Department
                   .addButtons
                     button.done(type="button", disabled) Confirm
                     button.editSave.payCheck(type="button", value= items[0]._id) Update
