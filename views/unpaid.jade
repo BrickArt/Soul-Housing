@@ -93,7 +93,7 @@ block content
                                   img(src='img/png/clock.png', alt='Clock')
                             .paymentDiscription
                               -if (payment.status === 'system')
-                                p Housing rate
+                                p -
                               -else
                                 -if(payment.program && payment.program != "Select Program")
                                   p= payment.program
@@ -106,7 +106,10 @@ block content
                                 -if(payment.status === 'pending' && payment.date <= time)
                                   h3.red past due
                                 -else
-                                  h3 #{payment.status}
+                                  -if(payment.status === 'system')
+                                    h3 Housing rate
+                                  -else
+                                    h3 #{payment.status}
                               
                       .overviewButtons
                         button.gistPaymentsHistory.paymentBtn(value= item._id) Add Payment
@@ -220,7 +223,7 @@ block content
                                   img(src='img/png/clock.png', alt='Clock')
                           .paymentDiscription
                             -if (payment.status === 'system')
-                              p Housing rate
+                              p -
                             -else
                               -if(payment.program && payment.program != "Select Program")
                                 p= payment.program
@@ -233,7 +236,10 @@ block content
                               -if(payment.status === 'pending' && payment.date <= time)
                                 h3.red past due
                               -else
-                                h3 #{payment.status}
+                                -if(payment.status === 'system')
+                                  h3 Housing rate
+                                -else
+                                  h3 #{payment.status}
                     .overviewButtons
                       button.gistPaymentsHistory.paymentBtn(value= items[0]._id) Add Payment
                       button.gistShelterHistory.paymentBtn(value= items[0]._id) User Information
