@@ -483,7 +483,7 @@ function Model(data){
           statusCode: {
             200: function() {
               formEvent.html("Payment is saved").addClass('alert-success');
-              window.location.href = '/payments' + id;
+              window.location.href = '/unpaid' + id;
             },
             403: function(jqXHR) {
               var error = JSON.parse(jqXHR.responseText);
@@ -588,7 +588,7 @@ function Model(data){
         $('body').css('cursor', 'default')
         console.log(data)
         view.done(data)
-        window.location.href = '/payments' + data.userID;
+        window.location.href = '/unpaid' + data.userID;
       })
     }
   
@@ -602,7 +602,7 @@ function Model(data){
       }).done(function(data){
         $('body').css('cursor', 'default')
         console.log(data)
-        window.location.href = '/payments' + user;
+        window.location.href = '/unpaid' + user;
       })
     }
   

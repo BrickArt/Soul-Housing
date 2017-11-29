@@ -281,17 +281,18 @@ function Controller(model, view){
   var files;
 
   function init(){
-    var id = $('.gistEdit').val();
-    if (id) {
-      $.ajax({
-        url: '/users/user_' + id,
-        method: 'GET',
-        dataType: 'json'
-      }).done(function (data){
-        model.user = data;
-        console.log(model.user);
-      });
-    }
+    var id = $('.gistPaymentsHistory').val();
+    console.log(id)
+    
+    $.ajax({
+      url: '/users/user_' + id,
+      method: 'GET',
+      dataType: 'json'
+    }).done(function (data){
+      model.user = data;
+      console.log(model.user);
+    });
+    
     $.ajax({
       url: '/api/users',
       method: 'GET',
