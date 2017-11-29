@@ -265,17 +265,19 @@ router.get('/report/createReport', async (req, res, next) => {
     //fs.createReadStream('ExcelFile.xlsx').pipe(res);
     //res.download('ExcelFile.xlsx');
     // census_mm:hh_mm_dd_yyyy
-    var date = new Date;
-    var h = date.getHours() + 2;
+    var date = req.client.parser.incoming._startTime;
+    var h = date.getHours();
     var min = date.getMinutes();
     if(h < 10) h = '0' + h;
     if(min < 10) min = '0' + min;
     var m = date.getMonth() + 1;
     var d = date.getDate();
-    var y = date.getFullYear();
+    var y = date.getFullYear().toString().slice(2);
     if(m < 10) m = '0' + m;
     if(d < 10) d = '0' + d;
-    var fileName = 'census_' + h + '_' + min + '_' + m + '_' + d + '_' + y + '.xlsx'
+    // var fileName = 'census_' + h + '_' + min + '_' + m + '_' + d + '_' + y + '.xlsx'
+    var fileName = 'census_' + m + '_' + d + '_' + y + '_' + h + '_' + min + '.xlsx'
+    
 
     file.write(fileName, res);
 });

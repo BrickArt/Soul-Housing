@@ -639,6 +639,7 @@ body {
   padding: 10px 20px 20px 0;
   margin-left: 25%; }
   .popPrice textarea {
+    width: 100%;
     border-color: #EDEDED;
     overflow: hidden; }
   .popPrice p {

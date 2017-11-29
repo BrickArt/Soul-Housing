@@ -66,6 +66,15 @@ function Model(data){
           return a.lastname.localeCompare(b.lastname)
         });   
       }
+      if (rule === 'balance'){
+        console.log(users2[0].balance)
+        console.log(users2.sort({balance: -1}))
+        users2.sort(function (a, b) {
+          if (a > b) return 1;
+          if (a < b) return -1;
+        }); 
+        return users2  
+      }
     }
   
   
