@@ -12,8 +12,8 @@ function Model(data){
     self.searchUser = function (text) {
       var users2 = [];
   
-      for (let i = 0; i < self.users.length; i++) {
-        const user = self.users[i];
+      for (i = 0; i < self.users.length; i++) {
+        var user = self.users[i];
         var name = user.name + ' ' + user.lastname;
         if (~name.toLowerCase().indexOf(text.toLowerCase())) {
           users2.push(user);
@@ -28,8 +28,8 @@ function Model(data){
     self.filterUser = function (status) {
       var users2 = [];
   
-      for (let i = 0; i < self.users.length; i++) {
-        const user = self.users[i];
+      for (i = 0; i < self.users.length; i++) {
+        var user = self.users[i];
         if (status) {
           if (user.status) {
             users2.push(user);
@@ -217,7 +217,7 @@ function Model(data){
       var users2 = users;
       if (users2){
         for (var i = 0; i < users2.length; i++) {
-          const user = users2[i];
+          var user = users2[i];
     
     
           if(!user.address){
@@ -269,8 +269,8 @@ function Model(data){
   
 
     self.type = function(){
-      for (let i = 0; i < model.types.length; i++) {
-        const type = model.types[i];
+      for (var i = 0; i < model.types.length; i++) {
+        var type = model.types[i];
         var option = '<option>' + type.name + '</option>'
         $('.addType').append(option)
         console.log('a')

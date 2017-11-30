@@ -10,7 +10,7 @@ function Model(data){
 
   self.searchUser = function (text) {
     var users2 = [];
-    for (let i = 0; i < self.users.length; i++) {
+    for ( i = 0; i < self.users.length; i++) {
       const user = self.users[i];
       var name = user.name + ' ' + user.lastname;
       if (~name.toLowerCase().indexOf(text.toLowerCase())) {
@@ -27,7 +27,7 @@ function Model(data){
   self.filterUser = function (status) {
     
     var users2 = [];
-    for (let i = 0; i < self.users.length; i++) {
+    for (i = 0; i < self.users.length; i++) {
       const user = self.users[i];
       if (status) {
         if (user.status) {
