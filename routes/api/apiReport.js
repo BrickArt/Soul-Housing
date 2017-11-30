@@ -260,9 +260,9 @@ router.get('/report/createReport', async (req, res, next) => {
             LOCATION: addres,
             ROOM: room,
             SOURCE: el.program,
-            RATE: price,
+            RATE: +price,
             MOVE_IN: date,
-            PENDING: balance.toString()
+            PENDING: +balance
         };
         response.push(answer);
         //if (!residenceInfo || residenceInfo.error) return res.status(500).json(residenceInfo);
