@@ -92,13 +92,19 @@ router.post('/payments/add:id?', upload.any(), function(req, res, next){
       console.error('Error, no entry found');
     }
     program = doc.program;
-    doc.balance += +req.body.sum;
 
-    doc.save();
-    next(program);
-    return;
+    doc.save(function (err) {
+      if (err) {
+        console.log(err);
+        res.sendStatus(403);
+      } else {
+        return next(program);
+      }
+    });
+    
   });
 }, function(program, req, res, next){
+  console.log('azza')
   var item = {};
   var date = new Date(req.body.date)
   var now = new Date;

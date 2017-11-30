@@ -252,8 +252,10 @@ block content
                     select(class="", name="type").addType.editType
                       option(disabled selected) Type of payment
                   .addButtons
+                    
+
                     button.addSave.payCheck(value= items[0]._id, disabled) Save
-                    button.addCancel(type="button", value= items[0]._id) Cancel
+                    button.addCancel(value= items[0]._id) Cancel
 
                 form.edit
                   .addPhoto

@@ -231,7 +231,7 @@ router.get('/report/createReport', async (req, res, next) => {
         let answer = {
             NUMBER: "",
             NAME: el.name,
-            LASTNAME: el.lastname,
+            LAST_NAME: el.lastname,
             LOCATION: addres,
             ROOM: room,
             SOURCE: el.program,
@@ -268,7 +268,8 @@ router.get('/report/createReport', async (req, res, next) => {
     // census_mm:hh_mm_dd_yyyy
     var date = new Date()
     // date.setHours(date.getHours() + config.get('timeZone'));
-    var h = date.getUTCHours() + config.get('timeZone');
+    date.setHours(date.getUTCHours() + config.get('timeZone'));
+    var h = date.getHours();
     var min = date.getMinutes();
     if(h < 10) h = '0' + h;
     if(min < 10) min = '0' + min;
