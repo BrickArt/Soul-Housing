@@ -12,5 +12,6 @@
   },
   "logger": {
     "format": "default"
-  }
+  },
+  "timeZone": -8
 }
