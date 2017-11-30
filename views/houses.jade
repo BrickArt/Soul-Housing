@@ -71,7 +71,7 @@ block content
                       .overview
                         .overviewImg
                           -if (house.image)
-                            .houseImage(style="background: url(img/upload/house/#{house.image}); background-size: auto 100%; background-position: center")
+                            .houseImage(style="background: url(img/upload/house/#{house.image}); background-size: auto 100%; background-clip: content-box; repeat: none; background-position: center")
                           -else 
                             img(src='img/upload/house.png', alt='House')
                         .overviewStatus

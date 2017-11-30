@@ -7,6 +7,7 @@ function Model(data){
     self.users2;
     self.user;
   
+    felf.flag = true;
   
   
     self.searchUser = function (text) {
@@ -55,20 +56,20 @@ function Model(data){
       }
       console.log(rule)
       if (rule === 'name'){
+        self.flag = true;
         return users2.sort(function (a, b) {
           return a.name.localeCompare(b.name)
         });
         
       }
       if (rule === 'lastname'){
-        console.log(users2.sort({lastname: 1}))
+        self.flag = false;
         return users2.sort(function (a, b) {
           return a.lastname.localeCompare(b.lastname)
         });   
       }
       if (rule === 'balance'){
-        console.log(users2[0].balance)
-        console.log(users2.sort({balance: -1}))
+        self.flag = true;
          
         users2.sort(function(a, b){
           if(a.balance < b.balance) return 1
@@ -233,12 +234,19 @@ function Model(data){
           if(!user.program || user.program === 'Select Program'){
             user.program = '-';
           }
+
+          var userName;
+          if (model.flag) {
+            userName = '<h2>' + user.name + ' ' + user.lastname + '</h2>'
+          } else {
+            userName = '<h2>' + user.lastname + ' ' + user.name + '</h2>'          
+          }
     
     
           var result =  '<div id="' + user._id + '" class="article">'+
           '<button value="' + user._id + '" class="userBtn">'+
           '<div class="gist">'+
-          '<h2>' + user.name + ' ' + user.lastname + '</h2>'+
+          userName +
           '<p>' + user.address + '</p>'+
           '</div>'+
           '<div class="gistStatus">'+

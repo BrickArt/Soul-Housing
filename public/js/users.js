@@ -6,6 +6,7 @@ function Model(data){
 
   self.user;
 
+  self.flag = true;
 
 
   self.searchUser = function (text) {
@@ -55,13 +56,14 @@ function Model(data){
     }
     console.log(rule)
     if (rule === 'name'){
+      self.flag = true;
       return users2.sort(function (a, b) {
         return a.name.localeCompare(b.name)
       });
       
     }
     if (rule === 'lastname'){
-      console.log(users2.sort({lastname: 1}))
+      self.flag = false;
       return users2.sort(function (a, b) {
         return a.lastname.localeCompare(b.lastname)
       });   
@@ -147,18 +149,24 @@ function View(model){
   
   
         var activity;
-  
         if(user.status){
           activity = '<h3 class="active activeL">Active</h3>';
         } else {
           activity = '<h3 class="inactive inactiveL">Inactive</h3>';
         };
+        
+        var userName;
+        if (model.flag) {
+          userName = '<h2>' + user.name + ' ' + user.lastname + '</h2>'
+        } else {
+          userName = '<h2>' + user.lastname + ' ' + user.name + '</h2>'          
+        }
   
   
         var result =  '<div id="' + user._id + '" class="article">'+
         '<button value="' + user._id + '" class="userBtn">'+
         '<div class="gist">'+
-        '<h2>' + user.name + ' ' + user.lastname + '</h2>'+
+        userName +
         '<p>' + user.address + '</p>'+
         '</div>'+
         '<div class="gistStatus">'+
