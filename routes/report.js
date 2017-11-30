@@ -87,21 +87,43 @@ router.get('/report/data', function(req, res, next){
   });
 }, function(items, req, res, next){
   Payment.find().then(function(doc){
-    console.log(doc)
-    for (var n = 0; n < doc.length; n++) {
-      if (doc[n].status != 'pending') {
-        items.money += +doc[n].sum;
-      } 
-      if (n === doc.length - 1) {
-        next(items);
-      }
-    }
+    
+    items.p = doc
+    next(items);
+      
+    
   })
 }, function(items, req, res, next){
   Gist.find().then(function(doc){
+    items.u = doc
     items.users = doc.length;
     next(items);
   })
+
+}, function(items, req, res, next){
+  var result = 0;
+  for (let i = 0; i < items.u.length; i++) {
+    const u = items.u[i];
+    var balance = 0;
+    for (let a = 0; a < items.p.length; a++) {
+      const p = items.p[a];
+      if (u._id.toString() === p.userID && p.status != 'pending') {
+        balance += +p.sum;
+      }
+      if(a === items.p.length - 1 && balance > 0){
+        result += balance;
+      }
+    }
+    if (i === items.u.length - 1) {
+      next({
+        freeBeds: items.freeBeds,
+        houses: items.houses,
+        users: items.users,
+        money: result
+      })
+    }
+    
+  }
 
 }, function(items, req, res, next){
   console.log(items)

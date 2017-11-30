@@ -7,7 +7,7 @@ function Model(data){
     self.users2;
     self.user;
   
-    felf.flag = true;
+    self.flag = true;
   
   
     self.searchUser = function (text) {
