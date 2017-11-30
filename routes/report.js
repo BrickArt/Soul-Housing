@@ -89,7 +89,9 @@ router.get('/report/data', function(req, res, next){
   Payment.find().then(function(doc){
     console.log(doc)
     for (var n = 0; n < doc.length; n++) {
-      items.money += +doc[n].sum;
+      if (doc[n].status != 'pending') {
+        items.money += +doc[n].sum;
+      } 
       if (n === doc.length - 1) {
         next(items);
       }
