@@ -91,8 +91,8 @@ block content
                               -if (payment.status === 'system')
                                 p -
                               -else
-                                -if(payment.program && payment.program != "Select Program")
-                                  p= payment.program
+                                -if(payment.type)
+                                  p= payment.type
                                 -else
                                   p -
                               -if (payment.status === 'done')
@@ -148,7 +148,7 @@ block content
                         select(class="", name="type").addType.editType
                           option(disabled selected) Type of payment
                       .addButtons
-                        button.done(type="button", disabled) Confirm
+                        button.done(type="button", disabled) Paid in full
                         button.editSave.payCheck(type="button", value= items[0]._id) Update
                         button.delete(type="button") Delete 
                         button.addCancel(type="button", value= items[0]._id) Cancel
@@ -217,8 +217,8 @@ block content
                             -if (payment.status === 'system')
                               p -
                             -else
-                              -if(payment.program && payment.program != "Select Program")
-                                p= payment.program
+                              -if(payment.type)
+                                p= payment.type
                               -else
                                 p -
                             -if(payment.status === 'done')
@@ -273,7 +273,7 @@ block content
                     select(class="", name="type").addType
                       option(disabled selected) Type of payment
                   .addButtons
-                    button.done(type="button", disabled) Confirm
+                    button.done(type="button", disabled) Paid in full
                     button.editSave.payCheck(type="button", value= items[0]._id) Update
                     button.delete(type="button") Delete                    
                     button.addCancel(type="button", value= items[0]._id) Cancel
