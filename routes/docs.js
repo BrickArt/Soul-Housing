@@ -181,6 +181,8 @@ router.get('/api/doc/houses', function(req, res, next){
   }
   var now = new Date();
   now.setHours(now.getUTCHours() + config.get('timeZone'))
+  var hh = now.getUTCHours() + config.get('timeZone');
+  var mm = now.getMinutes()
   var d = now.getDate();
   var m = now.getMonth() + 1;
   var y = now.getFullYear();
@@ -190,7 +192,9 @@ router.get('/api/doc/houses', function(req, res, next){
   if(m < 10){
     m = '0' + m;
   }
-  items.date = m + '.' + d + '.' + y;
+  var time;
+
+  items.date = m + '.' + d + '.' + y + time;
   next(items);
 
 }, function(items, req, res, next){

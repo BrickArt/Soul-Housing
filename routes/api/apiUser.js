@@ -356,8 +356,14 @@ router.post('/users/add', upload.any(), function(req, res, next){
 router.post('/users/delete:id?', function(req, res, next){
   var id = req.body.id;
   console.log(req.body);
-  Gist.findByIdAndRemove(id).exec();
-  res.sendStatus(200);
+  Gist.findByIdAndRemove(id).exec(function(err){
+    if (err) {
+      console.log(err);
+      res.sendStatus(403);
+    } else {
+      res.sendStatus(200);
+    }
+  });
 });
 
 
