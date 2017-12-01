@@ -9,6 +9,7 @@ var checkAuth = require('../middleware/checkAuth');
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
+    
     cb(null, './public/img/upload/house')
   },
   filename: function (req, file, cb) {
@@ -58,12 +59,8 @@ router.get('/houses:id?', function(req, res, next){
 });
 
 //-------------------ADD--------------------
-router.post('/houses/add', function(req, res, next){
-  if (req.file) {
-    console.log(req.files)
-  }
-  next();
-}, upload.any(), function(req, res, next){
+router.post('/houses/add', upload.any(), function(req, res, next){
+ 
   var item = req.body.rooms;
   console.log(req.body);
   var b = [];
@@ -287,7 +284,6 @@ router.post('/houses/add', function(req, res, next){
 //---------------------DELETE------------------------
 router.post('/houses/delete/house_:id?', function(req, res, next){
   var id = req.params.id
-  console.log(req.body)
   House.findById(id, function(err, doc){
     if (err) {
       console.error('Error, no entry found');

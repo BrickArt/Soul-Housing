@@ -194,9 +194,9 @@ router.get('/api/doc/houses', function(req, res, next){
   }
   var time;
   if (hh > 12) {
-    time = ' (' + (hh - 12) + ':' + mm + 'pm)';
+    time = ' ' + (hh - 12) + ':' + mm + 'PM';
   } else {
-    time = ' (' + hh + ':' + mm + 'am)';
+    time = ' ' + hh + ':' + mm + 'AM';
   }
 
   items.date = m + '.' + d + '.' + y + time;
@@ -344,9 +344,9 @@ router.get('/api/doc/houses/house_:id?', function(req, res, next){
 
   var time;
   if (hh > 12) {
-    time = ' (' + (hh - 12) + ':' + mm + 'pm)';
+    time = ' ' + (hh - 12) + ':' + mm + 'PM';
   } else {
-    time = ' (' + hh + ':' + mm + 'am)';
+    time = ' ' + hh + ':' + mm + 'AM';
   }
 
   result.date = m + '.' + d + '.' + y + time;
