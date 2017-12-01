@@ -217,7 +217,11 @@ router.post('/users/delete/user_:id?', function(req, res, next){
         console.log('successfully deleted - ' + doc.image);
       });
     };
-    next(id);
+    if(doc.status){
+      res.status(403).send('User is active')
+    } else {
+      next(id);
+    }
   });
 }, function(id, req, res, next){
   Gist.findByIdAndRemove(id).exec();

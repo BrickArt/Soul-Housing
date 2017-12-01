@@ -355,7 +355,26 @@ router.post('/users/add', upload.any(), function(req, res, next){
 //-------------------DELETE--------------------
 router.post('/users/delete:id?', function(req, res, next){
   var id = req.params.id;
-  console.log(req.body);
+  Gist.findById(id, function(err, doc){
+    if (err) {
+      console.error('Error, no entry found');
+    }
+    if (doc.image !== undefined){
+      fs.unlink('./public/img/upload/gists/' + doc.image, function (err){
+        if (err) {
+          console.error('Image, no entry found');
+        }
+        console.log('successfully deleted - ' + doc.image);
+      });
+    };
+    if(doc.status){
+      res.status(403).send('User is active')
+    } else {
+      next(id);
+    }
+  });
+}, function(id, req, res, next){
+
   Gist.findByIdAndRemove(id).exec(function(err){
     if (err) {
       console.log(err);
