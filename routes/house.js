@@ -3,6 +3,7 @@ var router = express.Router();
 var fs = require('fs');
 var path = require('path');
 var multer = require('multer');
+var piexif = require("piexifjs");
 
 var checkAuth = require('../middleware/checkAuth');
 
@@ -57,7 +58,12 @@ router.get('/houses:id?', function(req, res, next){
 });
 
 //-------------------ADD--------------------
-router.post('/houses/add', upload.any(), function(req, res, next){
+router.post('/houses/add', function(req, res, next){
+  if (req.file) {
+    console.log(req.files)
+  }
+  next();
+}, upload.any(), function(req, res, next){
   var item = req.body.rooms;
   console.log(req.body);
   var b = [];
