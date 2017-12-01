@@ -40,14 +40,22 @@ router.get('/houses', function(req, res, next){
   House.find()
   .then(function (doc){
     var items = [];
+
     for (var i = 0; i < doc.length; i++) {
-      doc[i].image = 'img/upload/house/' +  doc[i].image;
+      
+      if(doc[i].image){
+        doc[i].image = 'img/upload/house/' +  doc[i].image;
+      } else {
+        doc[i].image = null;
+      }
+
       var item = {
         _id: doc[i]._id,
         name: doc[i].name,
         address: doc[i].address,
         description: doc[i].description,
-        rooms: doc[i].rooms
+        rooms: doc[i].rooms,
+        image: doc[i].image
       }
       items.push(item);
     }
@@ -314,7 +322,6 @@ router.get('/houses:id?', function(req, res, next){
 //-------------------ADD--------------------
 router.post('/houses/add', upload.any(), function(req, res, next){
   var item = req.body;
-  console.log(req.body);
   if (req.body.rooms) {
     var rooms = req.body.rooms;
     var n = [];
@@ -336,9 +343,7 @@ router.post('/houses/add', upload.any(), function(req, res, next){
     item.rooms = n;
   }
 
-  console.log(item);
-  console.log(item.name);
-  console.log(item.address);
+ 
   if(req.files[0]){
     item.image = req.files[0].filename;
   };
