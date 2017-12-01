@@ -181,7 +181,7 @@ router.get('/api/doc/houses', function(req, res, next){
   }
   var now = new Date();
   now.setHours(now.getUTCHours() + config.get('timeZone'))
-  var hh = now.getUTCHours() + config.get('timeZone');
+  var hh = now.getHours();
   var mm = now.getMinutes()
   var d = now.getDate();
   var m = now.getMonth() + 1;
@@ -193,6 +193,11 @@ router.get('/api/doc/houses', function(req, res, next){
     m = '0' + m;
   }
   var time;
+  if (hh > 12) {
+    time = ' (' + (hh - 12) + ':' + mm + 'pm)';
+  } else {
+    time = ' (' + hh + ':' + mm + 'am)';
+  }
 
   items.date = m + '.' + d + '.' + y + time;
   next(items);
@@ -325,6 +330,8 @@ router.get('/api/doc/houses/house_:id?', function(req, res, next){
 }, function(result, req, res, next){
   var now = new Date();
   now.setHours(now.getUTCHours() + config.get('timeZone'))
+  var hh = now.getHours();
+  var mm = now.getMinutes()
   var d = now.getDate();
   var m = now.getMonth() + 1;
   var y = now.getFullYear();
@@ -334,7 +341,15 @@ router.get('/api/doc/houses/house_:id?', function(req, res, next){
   if(m < 10){
     m = '0' + m;
   }
-  result.date = m + '.' + d + '.' + y;
+
+  var time;
+  if (hh > 12) {
+    time = ' (' + (hh - 12) + ':' + mm + 'pm)';
+  } else {
+    time = ' (' + hh + ':' + mm + 'am)';
+  }
+
+  result.date = m + '.' + d + '.' + y + time;
   next(result);
 
 }, function(result, req, res, next){
