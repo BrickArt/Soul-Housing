@@ -38,7 +38,7 @@ block content
                     .openGist
                       .overview
                         -if (guest.image)
-                          .overviewImg(style="background: url(img/upload/guest/#{guest.image}); background-size: auto 160px; background-position: center; background-repeat: no-repeat")
+                          .overviewImg(style="background: url(#{guest.image}); background-size: auto 160px; background-position: center; background-repeat: no-repeat")
                         -else 
                           .overviewImg(style="background: url(img/upload/gist.png); background-size: auto 156px; background-position: center")
                         .overviewStatus
@@ -163,7 +163,7 @@ block content
                   .openGist
                     .overview
                       -if (guests[0].image)
-                        .overviewImg(style="background: url(img/upload/guest/#{guests[0].image}); background-size: auto 160px; background-position: center; background-repeat: no-repeat")
+                        .overviewImg(style="background: url(#{guests[0].image}); background-size: auto 160px; background-position: center; background-repeat: no-repeat")
                       -else 
                         .overviewImg(style="background: url(img/upload/gist.png); background-size: auto 156px; background-position: center")
                       .overviewStatus

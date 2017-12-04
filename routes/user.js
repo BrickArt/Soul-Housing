@@ -107,9 +107,9 @@ router.get('/users:id?', function(req, res, next){
     for (var i = 0; i < items.residences.length; i++) {
       if (items.residences[i].endDate == null){
         id = items.residences[i].houseID;
-        console.log("IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
-        console.log(id);
-        console.log("IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
+        // console.log("IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
+        // console.log(id);
+        // console.log("IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
         break;
       }
     }
@@ -136,7 +136,7 @@ router.get('/users:id?', function(req, res, next){
     });
 }, function(items, req, res, next){
   var id = req.params.id;
-  console.log(items);
+  // console.log(items);
   res.render('users', {
     gists: items.users,
     guestID: id,
@@ -163,7 +163,7 @@ router.post('/users/add', upload.any(), function(req, res, next){
 //   }
 // }, function(req, res, next){
   var item = req.body.rooms;
-  console.log(req.body);
+  // console.log(req.body);
   var b = [];
   var r = [];
   item.forEach(function (room, i, rooms){

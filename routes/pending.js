@@ -93,6 +93,7 @@ router.get('/unpaid:id?', function(req, res, next){
                     balance: user.balance,
                     program: user.program,
                     status: user.status,
+                    image: user.image,
 
 
                     payments: payments
