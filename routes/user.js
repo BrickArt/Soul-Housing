@@ -3,6 +3,7 @@ var router = express.Router();
 var fs = require('fs');
 var path = require('path');
 var multer = require('multer');
+var Jimp = require("jimp");
 
 var checkAuth = require('../middleware/checkAuth');
 

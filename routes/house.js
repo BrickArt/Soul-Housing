@@ -5,7 +5,7 @@ var path = require('path');
 var multer = require('multer');
 var piexif = require("piexifjs");
 
-
+var Jimp = require("jimp");
 
 var checkAuth = require('../middleware/checkAuth');
 var rotate = require('../middleware/photoRotate');
