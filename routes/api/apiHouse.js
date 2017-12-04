@@ -227,7 +227,7 @@ router.get('/houses:id?', function(req, res, next){
     }
     items.payments = payments;
     next(items)
-    console.log(doc);
+    // console.log(doc);
   });
 
 
@@ -236,7 +236,7 @@ router.get('/houses:id?', function(req, res, next){
     var users = [];
     if(doc.length > 0){
       for (var i = 0; i < doc.length; i++) {
-        console.log('aaaa')
+        // console.log('aaaa')
         var user = {
           _id: doc[i]._id,
           name: doc[i].name,
@@ -245,7 +245,7 @@ router.get('/houses:id?', function(req, res, next){
           balance: 0
         };
         for (var n = 0; n < items.payments.length; n++) {
-          console.log('+');
+          // console.log('+');
           if (items.payments[n].userID == doc[i]._id){
             user.balance += items.payments[n].sum;
           }
@@ -253,7 +253,7 @@ router.get('/houses:id?', function(req, res, next){
             users.push(user);
           }
         }
-        console.log(i);
+        // console.log(i);
         if(i >= doc.length - 1){
           items.users = users;
           next(items)
@@ -289,7 +289,7 @@ router.get('/houses:id?', function(req, res, next){
         status: items.house.rooms[i].beds[y].status,
         user: {}
       }
-      console.log('ooooooooooook');
+      // console.log('ooooooooooook');
       if(items.users.length > 0){
         for (var z = 0; z < items.users.length; z++) {
           console.log(items.house.rooms[i].beds[y].userID);

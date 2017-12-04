@@ -5,16 +5,23 @@ var path = require('path');
 var multer = require('multer');
 var piexif = require("piexifjs");
 
+
+
 var checkAuth = require('../middleware/checkAuth');
+var rotate = require('../middleware/photoRotate');
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
+    console.log(file)
     
     cb(null, './public/img/upload/house')
   },
   filename: function (req, file, cb) {
-    cb(null, 'house_' + Date.now() + '.' + file.mimetype.split('/')[1])
+    var fileName = 'house_' + Date.now() + '.' + file.mimetype.split('/')[1];
+    cb(null, fileName);
+    
   }
+  
 })
 
 var upload = multer({ storage: storage });
@@ -64,9 +71,21 @@ router.get('/houses:id?', function(req, res, next){
 
 //-------------------ADD--------------------
 router.post('/houses/add', upload.any(), function(req, res, next){
- 
+  if(req.files[0]){
+    Jimp.read(req.files[0].destination + '/' + req.files[0].filename, function (err, image) {
+      if (err) throw err;
+      image.quality(60)
+           .exifRotate() 
+           .write(req.files[0].destination + '/' + req.files[0].filename); // save 
+      next()
+      });
+
+  } else {
+    next()
+  }
+}, function(req, res, next){
   var item = req.body.rooms;
-  console.log(req.body);
+  // console.log(req.body);
   var b = [];
   var r = [];
   item.forEach(function (room, i, rooms){
@@ -124,8 +143,21 @@ router.post('/houses/delete/house_:id?', function(req, res, next){
 
 //---------------------UPDATE------------------------
 router.post('/houses/update:id?', upload.any(), function(req, res, next){
+  if(req.files[0]){
+    Jimp.read(req.files[0].destination + '/' + req.files[0].filename, function (err, image) {
+      if (err) throw err;
+      image.quality(60)
+           .exifRotate() 
+           .write(req.files[0].destination + '/' + req.files[0].filename); // save 
+      next()
+      });
+
+  } else {
+    next()
+  }
+}, function(req, res, next){
+  console.log(req.files[0])
   var item = req.body.rooms;
-  console.log(req.body);
   var b = [];
   var r = [];
   item.forEach(function (room, i, rooms){
@@ -166,12 +198,12 @@ router.post('/houses/update:id?', upload.any(), function(req, res, next){
     if (item.rooms){
       if (rooms.length >= doc.rooms.length) {
         if (rooms.length > doc.rooms.length) {
-          console.log('room is empty >>>>>')
+          // console.log('room is empty >>>>>')
           for (var i = 0; i < rooms.length; i++) {
             if (doc.rooms[i]) {
               if (rooms[i].beds.length != doc.rooms[i].beds.length) {
                 doc.rooms[i].beds = rooms[i].beds;
-                console.log('---------------ok---------------------------')
+                // console.log('---------------ok---------------------------')
               }
               // console.log('room is empty >>>>> ROOM')
               // var count = false;
@@ -229,7 +261,7 @@ router.post('/houses/update:id?', upload.any(), function(req, res, next){
     if(req.files[0]){
       doc.image = req.files[0].filename;
     };
-    console.log('time out')
+    // console.log('time out')
     doc.save(function (err) {
       if (err) {
         console.log(err);

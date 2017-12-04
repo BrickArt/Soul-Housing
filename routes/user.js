@@ -125,6 +125,19 @@ router.get('/users:id?', function(req, res, next){
 
 //-------------------ADD--------------------
 router.post('/users/add', upload.any(), function(req, res, next){
+  if(req.files[0]){
+    Jimp.read(req.files[0].destination + '/' + req.files[0].filename, function (err, image) {
+      if (err) throw err;
+      image.quality(60)
+           .exifRotate() 
+           .write(req.files[0].destination + '/' + req.files[0].filename); // save 
+      next()
+      });
+
+  } else {
+    next()
+  }
+}, function(req, res, next){
   var item = req.body.rooms;
   console.log(req.body);
   var b = [];
@@ -163,6 +176,19 @@ router.post('/users/add', upload.any(), function(req, res, next){
 
 //-------------------UPDATE--------------------
 router.post('/users/update:id?', upload.any(), function(req, res, next){
+  if(req.files[0]){
+    Jimp.read(req.files[0].destination + '/' + req.files[0].filename, function (err, image) {
+      if (err) throw err;
+      image.quality(60)
+           .exifRotate() 
+           .write(req.files[0].destination + '/' + req.files[0].filename); // save 
+      next()
+      });
+
+  } else {
+    next()
+  }
+}, function(req, res, next){
   var id = req.params.id;
   Gist.findById(id, function (err, doc){
     if (err) {
