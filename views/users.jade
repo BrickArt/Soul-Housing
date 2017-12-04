@@ -10,6 +10,7 @@ block script
 
 
 block popup
+
   -if(gists && gists[0])
     .superPuperHousePlace
       .notificationHouse
@@ -113,6 +114,9 @@ block content
         .scrollParent
           .scroll
             .right
+              .popUser
+                .warnDel
+                  p You can't delete active user!
               -if (guestID)
                 each gist in gists
                   -if (gist._id == guestID)

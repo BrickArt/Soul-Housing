@@ -218,6 +218,12 @@ function View(model){
   //     $('.reloc').prop('disabled', true);      
   //   }
   // }
+  self.warn = function() {
+    $('.warnDel').slideDown();
+    setTimeout(function(){
+      $('.warnDel').slideUp()
+    }, 5000)
+  }
 
 
 
@@ -471,22 +477,26 @@ function nav(){
     var id = $(this).attr('value');
     var right = view.elements.openGist;
     console.log('id og del--- ' + id)
-
-    $.ajax({
-      method: "POST",
-      url: "/users/delete/user_" + id,
-      statusCode: {
-        200: function() {
-          right.html("User is deleted").addClass('alert-success');
-          view.delete(id);
-          window.location.href = "/users";
-        },
-        403: function(jqXHR) {
-          var error = JSON.parse(jqXHR.responseText);
-          $('.error', form).html(error.message);
+    if(model.user.status){
+      view.warn();
+    } else {
+      $.ajax({
+        method: "POST",
+        url: "/users/delete/user_" + id,
+        statusCode: {
+          200: function() {
+            right.html("User is deleted").addClass('alert-success');
+            view.delete(id);
+            window.location.href = "/users";
+          },
+          403: function(jqXHR) {
+            var error = JSON.parse(jqXHR.responseText);
+            $('.error', form).html(error.message);
+          }
         }
-      }
-    });
+      });
+    }
+
   };
 
 //---------------SAVE-------------------
