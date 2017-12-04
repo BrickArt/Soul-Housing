@@ -22,6 +22,9 @@ var storage = cloudinaryStorage({
   cloudinary: cloudinary,
   folder: 'houses',
   allowedFormats: ['jpg', 'png'],
+  params:{
+    angle: "exif"
+  },
   filename: function (req, file, cb) {
     var fileName = 'house_' + Date.now();
     cb(undefined, fileName);
