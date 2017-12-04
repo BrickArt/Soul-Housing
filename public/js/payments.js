@@ -294,15 +294,16 @@ function Controller(model, view){
   function init(){
     var id = $('.gistPaymentsHistory').val();
     console.log(id)
-    
-    $.ajax({
-      url: '/users/user_' + id,
-      method: 'GET',
-      dataType: 'json'
-    }).done(function (data){
-      model.user = data;
-      console.log(model.user);
-    });
+    if (id){
+      $.ajax({
+        url: '/users/user_' + id,
+        method: 'GET',
+        dataType: 'json'
+      }).done(function (data){
+        model.user = data;
+        console.log(model.user);
+      });
+    }
     
     $.ajax({
       url: '/api/users',

@@ -36,14 +36,21 @@ var Payment = require('../models/payment').Payment;
 
 //------------------GET--------------------
 router.get('/payments:id?', function(req, res, next){
+  
   Gist.find().sort({name: 1})
-    .then(function(doc){
+  .then(function(doc){
+    var items = {
+      users: doc
+    };
+      if(doc.length > 0){
+        return next(items);
+      }else{
+        
+        console.log('not payments')
+        return res.render('payments');
+      }
       // console.log(doc);
-      var items = {
-        users: doc
-      };
-      next(items);
-      return;
+      
     });
 }, function(items, req, res, next){
   var id;
@@ -66,18 +73,22 @@ router.get('/payments:id?', function(req, res, next){
 
 router.get('/payments/payment_:id?', function(req, res, next){
   var id = req.params.id;
-  Payment.findById(id).then(function(doc){
-    console.log(doc)
-    res.send({
-      _id: doc._id,
-      date: doc.date,
-      sum: doc.sum,
-      type: doc.type,
-      status: doc.status,
-      image: doc.image,
-      userID: doc.userID
-    })
-  });
+  if(id){
+    Payment.findById(id).then(function(doc){
+      console.log(doc)
+      res.send({
+        _id: doc._id,
+        date: doc.date,
+        sum: doc.sum,
+        type: doc.type,
+        status: doc.status,
+        image: doc.image,
+        userID: doc.userID
+      })
+    });
+  } else {
+    return res.status(403).send('User id not found!')
+  }
 });
 
 //-------------------ADD--------------------

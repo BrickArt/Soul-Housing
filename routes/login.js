@@ -8,17 +8,17 @@ exports.post = function(req, res, next) {
     },
     function(user, callback) {
       if (!user) {
-        // user = new User({
-        //   username: req.body.username,
-        //   password: req.body.password
-        // });
-        // // если просто user.save(callback), то будет лишний аргумент у следующей функции
-        // user.save(function(err, user, affected) {
-        //   callback(err, user);
-        // });
+        user = new User({
+          username: req.body.username,
+          password: req.body.password
+        });
+        // если просто user.save(callback), то будет лишний аргумент у следующей функции
+        user.save(function(err, user, affected) {
+          callback(err, user);
+        });
 
-        console.log('error login')
-        res.send(403, 'Логин неверен.');
+        // console.log('error login')
+        // res.send(403, 'Логин неверен.');
       } else {
         if (user.checkPassword(req.body.password)) {
           callback(null, user);

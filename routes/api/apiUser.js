@@ -175,9 +175,13 @@ router.get('/users', function(req, res, next){
 
   Gist.find().sort({name: 1})
   .then(function (doc){
-    items.users = doc;
-    console.log('gist ok');
-    next(items)
+    if(doc){
+      items.users = doc;
+      console.log('gist ok');
+      next(items)
+    } else {
+      res.status(403).send('Users not found')
+    }
   });
 
 

@@ -36,11 +36,15 @@ var Program = require('../models/program').Program;
 //------------------GET--------------------
 router.get('/users/user_:id', function(req, res, next){
   var id = req.params.id;
-  Gist.findById(id, function(err, doc){
-    if (err) throw err;
-    next(doc);
-    return;
-  });
+  if(id){
+    Gist.findById(id, function(err, doc){
+      if (err) throw err;
+      next(doc);
+      return;
+    });
+  } else {
+    res.status(403).send('User not found')
+  }
 }, function(guest, req, res, next){
   res.send(guest)
 });
@@ -48,8 +52,12 @@ router.get('/users/user_:id', function(req, res, next){
 //------------------USERS--------------------
 router.get('/users:id?', function(req, res, next){
   Gist.find().sort({name: 1})
+    
     .then(function(doc){
-      console.log(doc);
+      if(doc.length === 0){
+        res.render('users')
+        return;
+      }
       var items = {
         users: doc
       };

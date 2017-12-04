@@ -9,25 +9,26 @@ block script
   link(rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css")
   
 block popup
-  .superPuperHousePlace
-    .notificationHouse
-    .superPlaceWindow
-      button.closeNotif X
-      -if(houseID)
-        -each house in houses 
-          -if(house._id == houseID)
-            .popupImg(style="background: url(img/upload/house/#{house.image}); background-size: auto 100%; background-position: center")
-      -else
-        .popupImg(style="background: url(img/upload/house/#{houses[0].image}); background-size: auto 100%; background-position: center")
-      .popInfo
-        p House Name
-        h1 Room: 123
-        h2 Bed: 345
-      .popPrice
-        p Price 
-        input.placerInput(type="text")
-        p $
-        button.placerBtn(disabled) PLACE
+  -if(houses && houses[0])
+    .superPuperHousePlace
+      .notificationHouse
+      .superPlaceWindow
+        button.closeNotif X
+        -if(houseID)
+          -each house in houses 
+            -if(house._id == houseID)
+              .popupImg(style="background: url(img/upload/house/#{house.image}); background-size: auto 100%; background-position: center")
+        -else
+          .popupImg(style="background: url(img/upload/house/#{houses[0].image}); background-size: auto 100%; background-position: center")
+        .popInfo
+          p House Name
+          h1 Room: 123
+          h2 Bed: 345
+        .popPrice
+          p Price 
+          input.placerInput(type="text")
+          p $
+          button.placerBtn(disabled) PLACE
 
 block content
   
@@ -65,124 +66,125 @@ block content
             .right
               
               -if (houseID)
-                each house in houses
-                  -if (house._id == houseID)
-                    .openHouse
-                      .overview
-                        .overviewImg
-                          -if (house.image)
-                            .houseImage(style="background: url(img/upload/house/#{house.image}); background-size: auto 100%; background-clip: content-box; repeat: none; background-position: center")
-                            //- img.houseImage(src="img/upload/house/#{house.image}")
-                          -else 
-                            img(src='img/upload/house.png', alt='House')
-                        .overviewStatus
-                          .houseName
-                            -if (house.name)
-                              h2= house.name
-                          img.bad(src='img/svg/bad.svg', alt='Bad')
-                          -var capacity = 0;
-                          -var freeBeds = 0
-                          -each room in house.rooms
-                            -capacity += room.beds.length
-                            -each bed in room.beds
-                              -if (bed.status)
-                                - ++freeBeds
-                          p #{freeBeds}/#{capacity}
-                          .houseInst
-                            button.gistEdit(value= house._id, disabled)
-                              img(src='img/png/edit.png', alt='Edit')
-                            button.gistDel(value= house._id, disabled)
-                              img(src='img/png/del.png', alt='Del')
-
-                      -if (house.address)
-                        .overviewName
-                          p= house.address
-                      -if (house.description)
-                        .overviewText
-                          p= house.description
-                      .overviewRooms
-                        
-
-
-                      .overviewButtons
-                        
-                        button.houseGistList(value= house._id) View guest list
-                        //- form.place
-                        //-   fieldset
-                        //-     .houseControls
-                        //-       select.selectRoom(value="Room" placeholder="Room") Room
-                        //-         option.selectRoomFirst(disabled selected) Room
-                        //-         -each room in house.rooms
-                        //-           -var count = 0
-                        //-           -each bed in room.beds
-                        //-             -if(!bed.status) ++count
-                        //-           -if(count>0)
-                        //-             option= room.num
-                                  
-                        //-       select.selectBed
-                        //-         option.selectBedFirst(disabled selected) Bed
-                                
-                        //-       input.selectPrice(placeholder='Price')
-                        //-     button.houseAddPerson(disabled, type= 'button', value= house._id) Place a Person
-                        //- button.placeOpen(value= house._id) Place
-                    
-                    form.add(enctype="multipart/form-data")
-                      fieldset
-                        .addPhoto
-                          .uploadPhoto
-                            button.uploadPhoto
-                              img(src='img/png/cloud.png', alt='Cloud')
-                              p Upload photo
-                            input(type='file', encType="multipart/form-data", accept='image/jpg, image/jpeg, image/png, image/gif')
-                        .addText.addTitle
-                          input.housename(type="text", placeholder="Title", name='name')
-                        .addText.addAddress
-                          input(type="text", placeholder="Address", name='address')
-                        .rooms
-                        .addText.addRoomBtn
-                          button(type="button").roomAdd Add Room
-                        .addDiscription
-                          textarea(placeholder="Notes", name='description')
-                        .addButtons
-                          button.addSave(type="button") Save
-                          button.addCancel(type="reset") Cancel
-                    
-                          
-                    form.edit
-                      fieldset
-                        .addPhoto
-                          .uploadPhoto
+                -if(houses)
+                  each house in houses
+                    -if (house._id == houseID)
+                      .openHouse
+                        .overview
+                          .overviewImg
                             -if (house.image)
-                              button.uploadPhoto(style="background: url(img/upload/house/#{house.image}); background-size: auto 200px; background-position: center")
-                                img(src='img/png/cloud.png', alt='Cloud')
-                                p Upload photo
-                            -else
+                              .houseImage(style="background: url(img/upload/house/#{house.image}); background-size: auto 100%; background-clip: content-box; repeat: none; background-position: center")
+                              //- img.houseImage(src="img/upload/house/#{house.image}")
+                            -else 
+                              img(src='img/upload/house.png', alt='House')
+                          .overviewStatus
+                            .houseName
+                              -if (house.name)
+                                h2= house.name
+                            img.bad(src='img/svg/bad.svg', alt='Bad')
+                            -var capacity = 0;
+                            -var freeBeds = 0
+                            -each room in house.rooms
+                              -capacity += room.beds.length
+                              -each bed in room.beds
+                                -if (bed.status)
+                                  - ++freeBeds
+                            p #{freeBeds}/#{capacity}
+                            .houseInst
+                              button.gistEdit(value= house._id, disabled)
+                                img(src='img/png/edit.png', alt='Edit')
+                              button.gistDel(value= house._id, disabled)
+                                img(src='img/png/del.png', alt='Del')
+
+                        -if (house.address)
+                          .overviewName
+                            p= house.address
+                        -if (house.description)
+                          .overviewText
+                            p= house.description
+                        .overviewRooms
+                          
+
+
+                        .overviewButtons
+                          
+                          button.houseGistList(value= house._id) View guest list
+                          //- form.place
+                          //-   fieldset
+                          //-     .houseControls
+                          //-       select.selectRoom(value="Room" placeholder="Room") Room
+                          //-         option.selectRoomFirst(disabled selected) Room
+                          //-         -each room in house.rooms
+                          //-           -var count = 0
+                          //-           -each bed in room.beds
+                          //-             -if(!bed.status) ++count
+                          //-           -if(count>0)
+                          //-             option= room.num
+                                    
+                          //-       select.selectBed
+                          //-         option.selectBedFirst(disabled selected) Bed
+                                  
+                          //-       input.selectPrice(placeholder='Price')
+                          //-     button.houseAddPerson(disabled, type= 'button', value= house._id) Place a Person
+                          //- button.placeOpen(value= house._id) Place
+                      
+                      form.add(enctype="multipart/form-data")
+                        fieldset
+                          .addPhoto
+                            .uploadPhoto
                               button.uploadPhoto
                                 img(src='img/png/cloud.png', alt='Cloud')
                                 p Upload photo
-                            input(type='file', encType="multipart/form-data", accept='image/jpg, image/jpeg, image/png, image/gif').updateInput
-                        .addText.addTitle
-                          -if (house.name)
-                            input.houseNameEdit(type="text", placeholder="Title", name='name', value= house.name)
-                          -else
-                            input.houseNameEdit(type="text", placeholder="Title", name='name', value= '')
-                        .addText.addAddress
-                          -if(house.address)
-                            input.houseAddressEdit(type="text", placeholder="Address", name='address', value= house.address)
-                          -else
-                            input.houseAddressEdit(type="text", placeholder="Address", name='address', value= '')
-                        
-                        .rooms
-                        .addText.addRoomBtn
-                          button(type="button").roomAdd Add Room
-                        .addDiscription
-                          -if(house.description)
-                            textarea.houseNotesEdit(placeholder="Notes", name='description', value= house.description)= house.description
-                          -else
-                            textarea.houseNotesEdit(placeholder="Notes", name='description', value= house.description)
-                        .addButtons
-                          button.editSave(type="button", value= house._id) Save changes
-                          button.editCancel(type="reset", value= house._id) Cancel
+                              input(type='file', encType="multipart/form-data", accept='image/jpg, image/jpeg, image/png, image/gif')
+                          .addText.addTitle
+                            input.housename(type="text", placeholder="Title", name='name')
+                          .addText.addAddress
+                            input(type="text", placeholder="Address", name='address')
+                          .rooms
+                          .addText.addRoomBtn
+                            button(type="button").roomAdd Add Room
+                          .addDiscription
+                            textarea(placeholder="Notes", name='description')
+                          .addButtons
+                            button.addSave(type="button") Save
+                            button.addCancel(type="reset") Cancel
+                      
+                            
+                      form.edit
+                        fieldset
+                          .addPhoto
+                            .uploadPhoto
+                              -if (house.image)
+                                button.uploadPhoto(style="background: url(img/upload/house/#{house.image}); background-size: auto 200px; background-position: center")
+                                  img(src='img/png/cloud.png', alt='Cloud')
+                                  p Upload photo
+                              -else
+                                button.uploadPhoto
+                                  img(src='img/png/cloud.png', alt='Cloud')
+                                  p Upload photo
+                              input(type='file', encType="multipart/form-data", accept='image/jpg, image/jpeg, image/png, image/gif').updateInput
+                          .addText.addTitle
+                            -if (house.name)
+                              input.houseNameEdit(type="text", placeholder="Title", name='name', value= house.name)
+                            -else
+                              input.houseNameEdit(type="text", placeholder="Title", name='name', value= '')
+                          .addText.addAddress
+                            -if(house.address)
+                              input.houseAddressEdit(type="text", placeholder="Address", name='address', value= house.address)
+                            -else
+                              input.houseAddressEdit(type="text", placeholder="Address", name='address', value= '')
+                          
+                          .rooms
+                          .addText.addRoomBtn
+                            button(type="button").roomAdd Add Room
+                          .addDiscription
+                            -if(house.description)
+                              textarea.houseNotesEdit(placeholder="Notes", name='description', value= house.description)= house.description
+                            -else
+                              textarea.houseNotesEdit(placeholder="Notes", name='description', value= house.description)
+                          .addButtons
+                            button.editSave(type="button", value= house._id) Save changes
+                            button.editCancel(type="reset", value= house._id) Cancel
                           
                           
                 
@@ -190,6 +192,7 @@ block content
                     
                     
               -else
+                -if(houses)
                 form.add(enctype="multipart/form-data")
                   fieldset
                     .addPhoto

@@ -159,7 +159,7 @@ block content
                       
                 
               -else
-                -if (guests[0])
+                -if (guests && guests[0])
                   .openGist
                     .overview
                       -if (guests[0].image)
@@ -238,47 +238,47 @@ block content
                     .overviewButtons
                       button.gistPaymentsHistory.paymentBtn(value= guests[0]._id) Add Payment
                       button.gistShelterHistory.paymentBtn(value= guests[0]._id) User Information
-                      
-                form.add
-                  .addPhoto
-                    button.uploadPhoto
-                      img(src='img/png/cloud.png', alt='Cloud')
-                      p Upload photo
-                    input.editImage(type='file', encType="multipart/form-data", accept='image/jpg, image/jpeg, image/png, image/gif')
-                  .addText.addDate
-                    input.demo(type="text", placeholder="Select date", name="date")
-                  .addText.addCash
-                    p Enrollment amount:
-                    input.addInp(type="number", placeholder="Sum", name="sum", required, min='0')
-                    p $
-                  .addText
-                    select(class="", name="type").addType.editType
-                      option(disabled selected) Type of payment
-                  .addButtons
-                    button.addSave.payCheck(type="submit", value= guests[0]._id, disabled) Save
-                    button.addCancel(type="button", value= guests[0]._id) Cancel
+                -if (guests)      
+                  form.add
+                    .addPhoto
+                      button.uploadPhoto
+                        img(src='img/png/cloud.png', alt='Cloud')
+                        p Upload photo
+                      input.editImage(type='file', encType="multipart/form-data", accept='image/jpg, image/jpeg, image/png, image/gif')
+                    .addText.addDate
+                      input.demo(type="text", placeholder="Select date", name="date")
+                    .addText.addCash
+                      p Enrollment amount:
+                      input.addInp(type="number", placeholder="Sum", name="sum", required, min='0')
+                      p $
+                    .addText
+                      select(class="", name="type").addType.editType
+                        option(disabled selected) Type of payment
+                    .addButtons
+                      button.addSave.payCheck(type="submit", value= guests[0]._id, disabled) Save
+                      button.addCancel(type="button", value= guests[0]._id) Cancel
 
-                form.edit
-                  .addPhoto
-                    button.uploadPhoto
-                      img(src='img/png/cloud.png', alt='Cloud')
-                      p Upload photo
-                    input(type='file', encType="multipart/form-data", accept='image/jpg, image/jpeg, image/png, image/gif')
-                  .addText.addDate
-                    input.demo.editDate(type="text", placeholder="Select date", name="date")
-                  .addText.addCash
-                    p Enrollment amount:
-                    input.editSum.checkInpEdit(type="number", placeholder="Sum", name="sum", required, min='0')
-                    p $
-                  .addText
-                    select(class="", name="type").addType
-                      option(disabled selected) Type of payment
-                  .addButtons
-                    button.done(type="button", disabled) Paid in full
-                    button.editSave.payCheck(type="button", value= guests[0]._id) Update
-                    button.delete(type="button") Delete                    
-                    button.addCancel(type="button", value= guests[0]._id) Cancel
-              
+                  form.edit
+                    .addPhoto
+                      button.uploadPhoto
+                        img(src='img/png/cloud.png', alt='Cloud')
+                        p Upload photo
+                      input(type='file', encType="multipart/form-data", accept='image/jpg, image/jpeg, image/png, image/gif')
+                    .addText.addDate
+                      input.demo.editDate(type="text", placeholder="Select date", name="date")
+                    .addText.addCash
+                      p Enrollment amount:
+                      input.editSum.checkInpEdit(type="number", placeholder="Sum", name="sum", required, min='0')
+                      p $
+                    .addText
+                      select(class="", name="type").addType
+                        option(disabled selected) Type of payment
+                    .addButtons
+                      button.done(type="button", disabled) Paid in full
+                      button.editSave.payCheck(type="button", value= guests[0]._id) Update
+                      button.delete(type="button") Delete                    
+                      button.addCancel(type="button", value= guests[0]._id) Cancel
+                
 block footer
   script(src='js/payments.js')
   script(src="js/onloadHandler3.js")
