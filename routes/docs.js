@@ -298,7 +298,7 @@ router.get('/api/doc/houses/house_:id?', function(req, res, next){
     address: items.house.address,
     rooms: [],
   }
-
+  if(items.house.rooms.length === 0) return next(result)
   for (var i = 0; i < items.house.rooms.length; i++) {
     var room = {
       num: items.house.rooms[i].num,
@@ -687,6 +687,7 @@ function getPage(result){
     }
   };
 
+if(result.rooms.length > 0){
 
   for (var i = 0; i < result.rooms.length; i++) {
     if (i < 5) {
@@ -797,6 +798,9 @@ function getPage(result){
       return doc
     }
   }
+} else{
+  return doc
+}
 
 };
 
