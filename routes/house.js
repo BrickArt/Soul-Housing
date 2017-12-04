@@ -4,25 +4,44 @@ var fs = require('fs');
 var path = require('path');
 var multer = require('multer');
 var piexif = require("piexifjs");
-
 var Jimp = require("jimp");
 
 var checkAuth = require('../middleware/checkAuth');
 var rotate = require('../middleware/photoRotate');
 
-var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    console.log(file)
-    
-    cb(null, './public/img/upload/house')
-  },
-  filename: function (req, file, cb) {
-    var fileName = 'house_' + Date.now() + '.' + file.mimetype.split('/')[1];
-    cb(null, fileName);
-    
-  }
-  
+var cloudinary = require('cloudinary');
+var cloudinaryStorage = require('multer-storage-cloudinary');
+
+cloudinary.config({
+  cloud_name: 'soul-housing',
+  api_key: '495199143277778',
+  api_secret: 'w3hydFUPpoprV-hHvrqxQDhN5ow'
 })
+
+
+var storage = cloudinaryStorage({
+  cloudinary: cloudinary,
+  folder: 'houses',
+  allowedFormats: ['jpg', 'png'],
+  filename: function (req, file, cb) {
+    var fileName = 'house_' + Date.now();
+    cb(undefined, fileName);
+  }
+});
+
+// var storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     console.log(file)
+    
+//     cb(null, './public/img/upload/house')
+//   },
+//   filename: function (req, file, cb) {
+//     var fileName = 'house_' + Date.now() + '.' + file.mimetype.split('/')[1];
+//     cb(null, fileName);
+    
+//   }
+  
+// })
 
 var upload = multer({ storage: storage });
 
@@ -71,19 +90,20 @@ router.get('/houses:id?', function(req, res, next){
 
 //-------------------ADD--------------------
 router.post('/houses/add', upload.any(), function(req, res, next){
-  if(req.files[0]){
-    Jimp.read(req.files[0].destination + '/' + req.files[0].filename, function (err, image) {
-      if (err) throw err;
-      image.quality(60)
-           .exifRotate() 
-           .write(req.files[0].destination + '/' + req.files[0].filename); // save 
-      next()
-      });
+//   console.log(req.files[0])
+//   if(req.files[0]){
+//     Jimp.read(req.files[0].url, function (err, image) {
+//       if (err) throw err;
+//       image.quality(60)
+//            .exifRotate() 
+//            .write(req.files[0].url); // save 
+//       next()
+//       });
 
-  } else {
-    next()
-  }
-}, function(req, res, next){
+//   } else {
+//     next()
+//   }
+// }, function(req, res, next){
   var item = req.body.rooms;
   // console.log(req.body);
   var b = [];
@@ -105,7 +125,7 @@ router.post('/houses/add', upload.any(), function(req, res, next){
   var item = req.body;
   item.rooms = rooms;
   if(req.files[0]){
-    item.image = req.files[0].filename;
+    item.image = req.files[0].url;
   };
   next(item);
 }, function(house, req, res, next){
@@ -125,17 +145,17 @@ router.post('/houses/add', upload.any(), function(req, res, next){
 //---------------------DELETE------------------------
 router.post('/houses/delete/house_:id?', function(req, res, next){
   var id = req.params.id
-  House.findById(id, function(err, doc){
-    if (err) {
-      console.error('Error, no entry found');
-    }
-    if (doc.image){
-      fs.unlink('./public/img/upload/house/' + doc.image, function (err){
-        if (err) throw err;
-        console.log('successfully deleted - ' + doc.image);
-      });
-    };
-  })
+  // House.findById(id, function(err, doc){
+  //   if (err) {
+  //     console.error('Error, no entry found');
+  //   }
+  //   if (doc.image){
+  //     fs.unlink('./public/img/upload/house/' + doc.image, function (err){
+  //       if (err) throw err;
+  //       console.log('successfully deleted - ' + doc.image);
+  //     });
+  //   };
+  // })
   House.findByIdAndRemove(id).exec();
   res.sendStatus(200);
 });
@@ -143,19 +163,19 @@ router.post('/houses/delete/house_:id?', function(req, res, next){
 
 //---------------------UPDATE------------------------
 router.post('/houses/update:id?', upload.any(), function(req, res, next){
-  if(req.files[0]){
-    Jimp.read(req.files[0].destination + '/' + req.files[0].filename, function (err, image) {
-      if (err) throw err;
-      image.quality(60)
-           .exifRotate() 
-           .write(req.files[0].destination + '/' + req.files[0].filename); // save 
-      next()
-      });
+//   if(req.files[0]){
+//     Jimp.read(req.files[0].destination + '/' + req.files[0].filename, function (err, image) {
+//       if (err) throw err;
+//       image.quality(60)
+//            .exifRotate() 
+//            .write(req.files[0].destination + '/' + req.files[0].filename); // save 
+//       next()
+//       });
 
-  } else {
-    next()
-  }
-}, function(req, res, next){
+//   } else {
+//     next()
+//   }
+// }, function(req, res, next){
   console.log(req.files[0])
   var item = req.body.rooms;
   var b = [];
@@ -259,7 +279,7 @@ router.post('/houses/update:id?', upload.any(), function(req, res, next){
       }
     }
     if(req.files[0]){
-      doc.image = req.files[0].filename;
+      doc.image = req.files[0].url;
     };
     // console.log('time out')
     doc.save(function (err) {

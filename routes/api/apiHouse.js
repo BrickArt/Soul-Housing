@@ -8,14 +8,34 @@ var Jimp = require("jimp");
 
 var checkAuth = require('../../middleware/checkAuth');
 
-var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, './public/img/upload/house')
-  },
-  filename: function (req, file, cb) {
-    cb(null, 'house_' + Date.now() + '.' + file.mimetype.split('/')[1])
-  }
+var cloudinary = require('cloudinary');
+var cloudinaryStorage = require('multer-storage-cloudinary');
+
+cloudinary.config({
+  cloud_name: 'soul-housing',
+  api_key: '495199143277778',
+  api_secret: 'w3hydFUPpoprV-hHvrqxQDhN5ow'
 })
+
+
+var storage = cloudinaryStorage({
+  cloudinary: cloudinary,
+  folder: 'houses',
+  allowedFormats: ['jpg', 'png'],
+  filename: function (req, file, cb) {
+    var fileName = 'house_' + Date.now();
+    cb(undefined, fileName);
+  }
+});
+
+// var storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, './public/img/upload/house')
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, 'house_' + Date.now() + '.' + file.mimetype.split('/')[1])
+//   }
+// })
 
 var upload = multer({ storage: storage });
 
@@ -46,7 +66,7 @@ router.get('/houses', function(req, res, next){
     for (var i = 0; i < doc.length; i++) {
       
       if(doc[i].image){
-        doc[i].image = 'img/upload/house/' +  doc[i].image;
+        doc[i].image = doc[i].image;
       } else {
         doc[i].image = null;
       }
@@ -207,7 +227,7 @@ router.get('/houses:id?', function(req, res, next){
       name: doc.name,
       address: doc.address,
       description: doc.description,
-      image: 'img/upload/house/' +  doc.image,
+      image: doc.image,
       rooms: doc.rooms,
     }
     items.house = house;
@@ -294,7 +314,7 @@ router.get('/houses:id?', function(req, res, next){
       // console.log('ooooooooooook');
       if(items.users.length > 0){
         for (var z = 0; z < items.users.length; z++) {
-          console.log(items.house.rooms[i].beds[y].userID);
+          // console.log(items.house.rooms[i].beds[y].userID);
           if (items.users[z]._id == items.house.rooms[i].beds[y].userID) {
             bed.user = items.users[z]
           }
@@ -323,19 +343,19 @@ router.get('/houses:id?', function(req, res, next){
 
 //-------------------ADD--------------------
 router.post('/houses/add', upload.any(), function(req, res, next){
-  if(req.files[0]){
-    Jimp.read(req.files[0].destination + '/' + req.files[0].filename, function (err, image) {
-      if (err) throw err;
-      image.quality(60)
-           .exifRotate() 
-           .write(req.files[0].destination + '/' + req.files[0].filename); // save 
-      next()
-      });
+//   if(req.files[0]){
+//     Jimp.read(req.files[0].destination + '/' + req.files[0].filename, function (err, image) {
+//       if (err) throw err;
+//       image.quality(60)
+//            .exifRotate() 
+//            .write(req.files[0].destination + '/' + req.files[0].filename); // save 
+//       next()
+//       });
 
-  } else {
-    next()
-  }
-}, function(req, res, next){
+//   } else {
+//     next()
+//   }
+// }, function(req, res, next){
   var item = req.body;
   if (req.body.rooms) {
     var rooms = req.body.rooms;
@@ -360,7 +380,7 @@ router.post('/houses/add', upload.any(), function(req, res, next){
 
  
   if(req.files[0]){
-    item.image = req.files[0].filename;
+    item.image = req.files[0].url;
   };
 
   var data = new House(item);
@@ -389,19 +409,19 @@ router.post('/houses/delete:id?', function(req, res, next){
 
 //------------------UPDATE--------------------
 router.post('/houses/update:id?', upload.any(), function(req, res, next){
-  if(req.files[0]){
-    Jimp.read(req.files[0].destination + '/' + req.files[0].filename, function (err, image) {
-      if (err) throw err;
-      image.quality(60)
-           .exifRotate() 
-           .write(req.files[0].destination + '/' + req.files[0].filename); // save 
-      next()
-      });
+//   if(req.files[0]){
+//     Jimp.read(req.files[0].destination + '/' + req.files[0].filename, function (err, image) {
+//       if (err) throw err;
+//       image.quality(60)
+//            .exifRotate() 
+//            .write(req.files[0].destination + '/' + req.files[0].filename); // save 
+//       next()
+//       });
 
-  } else {
-    next()
-  }
-}, function(req, res, next){
+//   } else {
+//     next()
+//   }
+// }, function(req, res, next){
   var item = req.body;
   console.log(req.body);
   if (req.body.rooms) {
@@ -425,11 +445,11 @@ router.post('/houses/update:id?', upload.any(), function(req, res, next){
     item.rooms = n;
   }
 
-  console.log(item);
-  console.log(item.name);
-  console.log(item.address);
+  // console.log(item);
+  // console.log(item.name);
+  // console.log(item.address);
   if(req.files[0]){
-    item.image = req.files[0].filename;
+    item.image = req.files[0].url;
   };
   var id = req.params.id
   House.findById(id, function(err, doc){

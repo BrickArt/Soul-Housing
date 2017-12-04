@@ -8,15 +8,35 @@ var Jimp = require("jimp");
 
 var checkAuth = require('../../middleware/checkAuth');
 
-var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, './public/img/upload/guest')
-  },
-  filename: function (req, file, cb) {
-    console.log(file);
-    cb(null, 'guest_' + Date.now() + '.' + file.mimetype.split('/')[1])
-  }
+var cloudinary = require('cloudinary');
+var cloudinaryStorage = require('multer-storage-cloudinary');
+
+cloudinary.config({
+  cloud_name: 'soul-housing',
+  api_key: '495199143277778',
+  api_secret: 'w3hydFUPpoprV-hHvrqxQDhN5ow'
 })
+
+
+var storage = cloudinaryStorage({
+  cloudinary: cloudinary,
+  folder: 'houses',
+  allowedFormats: ['jpg', 'png'],
+  filename: function (req, file, cb) {
+    var fileName = 'house_' + Date.now();
+    cb(undefined, fileName);
+  }
+});
+
+// var storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, './public/img/upload/guest')
+//   },
+//   filename: function (req, file, cb) {
+//     console.log(file);
+//     cb(null, 'guest_' + Date.now() + '.' + file.mimetype.split('/')[1])
+//   }
+// })
 
 var upload = multer({ storage: storage });
 
@@ -138,7 +158,7 @@ router.get('/users/user_:id?', function(req, res, next){
     user.status = items.user.status
   }
   if (items.user.image) {
-    user.image = 'img/upload/guest/' + items.user.image
+    user.image = items.user.image
   }
   if (items.user.residence) {
     user.residence = items.user.residence
@@ -248,7 +268,7 @@ router.get('/users', function(req, res, next){
       bed: null
     }
     if (items.users[i].image) {
-      user.image = 'img/upload/guest/' + items.users[i].image
+      user.image = items.users[i].image
     }
     if (items.users[i].description) {
       user.description = items.users[i].description
@@ -319,19 +339,19 @@ res.send(users)
 
 //-------------------ADD--------------------
 router.post('/users/add', upload.any(), function(req, res, next){
-  if(req.files[0]){
-    Jimp.read(req.files[0].destination + '/' + req.files[0].filename, function (err, image) {
-      if (err) throw err;
-      image.quality(60)
-           .exifRotate() 
-           .write(req.files[0].destination + '/' + req.files[0].filename); // save 
-      next()
-      });
+//   if(req.files[0]){
+//     Jimp.read(req.files[0].destination + '/' + req.files[0].filename, function (err, image) {
+//       if (err) throw err;
+//       image.quality(60)
+//            .exifRotate() 
+//            .write(req.files[0].destination + '/' + req.files[0].filename); // save 
+//       next()
+//       });
 
-  } else {
-    next()
-  }
-}, function(req, res, next){
+//   } else {
+//     next()
+//   }
+// }, function(req, res, next){
   if(req.files[0]){
     req.body.image = req.files[0].filename;
   };
@@ -346,7 +366,7 @@ router.post('/users/add', upload.any(), function(req, res, next){
     program: data.program,
     description: data.description,
     status: data.status,
-    image: 'img/upload/guest/' + data.image,
+    image: data.image,
     residence: data.residence,
     balance: 0,
     house: null,
@@ -379,12 +399,12 @@ router.post('/users/delete:id?', function(req, res, next){
       console.error('Error, no entry found');
     }
     if (doc.image !== undefined){
-      fs.unlink('./public/img/upload/gists/' + doc.image, function (err){
-        if (err) {
-          console.error('Image, no entry found');
-        }
-        console.log('successfully deleted - ' + doc.image);
-      });
+      // fs.unlink('./public/img/upload/gists/' + doc.image, function (err){
+      //   if (err) {
+      //     console.error('Image, no entry found');
+      //   }
+      //   console.log('successfully deleted - ' + doc.image);
+      // });
     };
     if(doc.status){
       res.status(403).send('User is active')
@@ -408,25 +428,25 @@ router.post('/users/delete:id?', function(req, res, next){
 
 //------------------UPDATE--------------------
 router.post('/users/update:id?', upload.any(), function(req, res, next){
-  if(req.files[0]){
-    Jimp.read(req.files[0].destination + '/' + req.files[0].filename, function (err, image) {
-      if (err) throw err;
-      image.quality(60)
-           .exifRotate() 
-           .write(req.files[0].destination + '/' + req.files[0].filename); // save 
-      next()
-      });
+//   if(req.files[0]){
+//     Jimp.read(req.files[0].destination + '/' + req.files[0].filename, function (err, image) {
+//       if (err) throw err;
+//       image.quality(60)
+//            .exifRotate() 
+//            .write(req.files[0].destination + '/' + req.files[0].filename); // save 
+//       next()
+//       });
 
-  } else {
-    next()
-  }
-}, function(req, res, next){
+//   } else {
+//     next()
+//   }
+// }, function(req, res, next){
   var item = req.body;
-  console.log(item);
-  console.log(item.name);
-  console.log(item.address);
+  // console.log(item);
+  // console.log(item.name);
+  // console.log(item.address);
   if(req.files[0]){
-    item.image = req.files[0].filename;
+    item.image = req.files[0].url;
   };
   var id = req.params.id
   Gist.findById(id, function(err, doc){

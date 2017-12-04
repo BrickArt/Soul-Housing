@@ -17,9 +17,9 @@ block popup
         -if(houseID)
           -each house in houses 
             -if(house._id == houseID)
-              .popupImg(style="background: url(img/upload/house/#{house.image}); background-size: auto 100%; background-position: center")
+              .popupImg(style="background: url(#{house.image}); background-size: auto 100%; background-position: center")
         -else
-          .popupImg(style="background: url(img/upload/house/#{houses[0].image}); background-size: auto 100%; background-position: center")
+          .popupImg(style="background: url(#{houses[0].image}); background-size: auto 100%; background-position: center")
         .popInfo
           p House Name
           h1 Room: 123
@@ -73,7 +73,7 @@ block content
                         .overview
                           .overviewImg
                             -if (house.image)
-                              .houseImage(style="background: url(img/upload/house/#{house.image}); background-size: auto 100%; background-clip: content-box; repeat: none; background-position: center")
+                              .houseImage(style="background: url(#{house.image}); background-size: auto 100%; background-clip: content-box; repeat: none; background-position: center")
                               //- img.houseImage(src="img/upload/house/#{house.image}")
                             -else 
                               img(src='img/upload/house.png', alt='House')
@@ -155,7 +155,7 @@ block content
                           .addPhoto
                             .uploadPhoto
                               -if (house.image)
-                                button.uploadPhoto(style="background: url(img/upload/house/#{house.image}); background-size: auto 200px; background-position: center")
+                                button.uploadPhoto(style="background: url(#{house.image}); background-size: auto 200px; background-position: center")
                                   img(src='img/png/cloud.png', alt='Cloud')
                                   p Upload photo
                               -else
@@ -218,7 +218,7 @@ block content
                     .overview
                       .overviewImg
                         -if (houses[0].image)
-                          .houseImage(style="background: url(img/upload/house/#{houses[0].image}); background-size: auto 100%; background-position: center")
+                          .houseImage(style="background: url(#{houses[0].image}); background-size: auto 100%; background-position: center")
                         -else 
                           img(src='img/upload/house.png', alt='House')
                       .overviewStatus
@@ -275,7 +275,7 @@ block content
                       .addPhoto
                         .uploadPhoto
                           -if (houses[0].image)
-                            button.uploadPhoto(style="background: url(img/upload/house/#{houses[0].image}); background-size: auto 200px; background-position: center")
+                            button.uploadPhoto(style="background: url(#{houses[0].image}); background-size: auto 200px; background-position: center")
                               img(src='img/png/cloud.png', alt='Cloud')
                               p Upload photo
                           -else
