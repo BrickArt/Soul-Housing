@@ -4,6 +4,8 @@ var fs = require('fs');
 var path = require('path');
 var multer = require('multer');
 
+var Jimp = require("jimp");
+
 var checkAuth = require('../../middleware/checkAuth');
 
 var storage = multer.diskStorage({
@@ -321,6 +323,19 @@ router.get('/houses:id?', function(req, res, next){
 
 //-------------------ADD--------------------
 router.post('/houses/add', upload.any(), function(req, res, next){
+  if(req.files[0]){
+    Jimp.read(req.files[0].destination + '/' + req.files[0].filename, function (err, image) {
+      if (err) throw err;
+      image.quality(60)
+           .exifRotate() 
+           .write(req.files[0].destination + '/' + req.files[0].filename); // save 
+      next()
+      });
+
+  } else {
+    next()
+  }
+}, function(req, res, next){
   var item = req.body;
   if (req.body.rooms) {
     var rooms = req.body.rooms;
@@ -374,6 +389,19 @@ router.post('/houses/delete:id?', function(req, res, next){
 
 //------------------UPDATE--------------------
 router.post('/houses/update:id?', upload.any(), function(req, res, next){
+  if(req.files[0]){
+    Jimp.read(req.files[0].destination + '/' + req.files[0].filename, function (err, image) {
+      if (err) throw err;
+      image.quality(60)
+           .exifRotate() 
+           .write(req.files[0].destination + '/' + req.files[0].filename); // save 
+      next()
+      });
+
+  } else {
+    next()
+  }
+}, function(req, res, next){
   var item = req.body;
   console.log(req.body);
   if (req.body.rooms) {
