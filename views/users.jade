@@ -19,7 +19,7 @@ block popup
         -if(guestID)
           -each gist in gists 
             -if(gist._id == guestID)
-              .popupImg(style="background: url(img/upload/guest/#{gist.image}); background-size: auto 100%; background-position: center")
+              .popupImg(style="background: url(#{gist.image}); background-size: auto 100%; background-position: center")
               .popInfo
                 p= gist.name + " " + gist.lastname
                 -each residence in residences
@@ -38,7 +38,7 @@ block popup
                     -if(m < 10) m = '0' + m
                     h3 In: #{m}/#{d}/#{y}
         -else
-          .popupImg(style="background: url(img/upload/guest/#{gists[0].image}); background-size: auto 100%; background-position: center")
+          .popupImg(style="background: url(#{gists[0].image}); background-size: auto 100%; background-position: center")
           .popInfo
             p= gists[0].name + " " + gists[0].lastname
             -each residence in residences
@@ -123,7 +123,7 @@ block content
                     .openGist
                       .overview
                         -if (gist.image)
-                          .overviewImg(style="background: url(img/upload/guest/#{gist.image}); background-size: auto 240px; background-position: center; background-repeat: no-repeat")
+                          .overviewImg(style="background: url(#{gist.image}); background-size: auto 240px; background-position: center; background-repeat: no-repeat")
                         -else 
                           .overviewImg(style="background: url(img/upload/gist.png); background-size: auto 156px; background-position: center")
                         .overviewStatus
@@ -251,7 +251,7 @@ block content
                       fieldset
                         .addHeader
                           .addPhoto
-                            button.uploadPhoto(type="button", style="background: url(img/upload/guest/#{gist.image}); background-size: auto 110px; background-position: center")
+                            button.uploadPhoto(type="button", style="background: url(#{gist.image}); background-size: auto 110px; background-position: center")
                               -if (gist.image)
                                 .whiter
                                 img(src='img/png/addPhoto.png', alt='Add photo')
@@ -305,7 +305,7 @@ block content
                     .openGist
                       .overview
                         -if (gists[0].image)
-                          .overviewImg(style="background: url(img/upload/guest/#{gists[0].image}); background-size: auto 240px; background-position: center; background-repeat: none")
+                          .overviewImg(style="background: url(#{gists[0].image}); background-size: auto 240px; background-position: center; background-repeat: none")
                         -else 
                           .overviewImg(style="background: url(img/upload/gist.png); background-size: auto 156px; background-position: center")
                         .overviewStatus
@@ -398,7 +398,7 @@ block content
                       fieldset
                         .addHeader
                           .addPhoto
-                            button.uploadPhoto(type="button", style="background: url(img/upload/guest/#{gists[0].image}); background-size: auto 110px; background-position: center")
+                            button.uploadPhoto(type="button", style="background: url(#{gists[0].image}); background-size: auto 110px; background-position: center")
                               -if (gists[0].image)
                                 .whiter
                                 img(src='img/png/addPhoto.png', alt='Add photo')
