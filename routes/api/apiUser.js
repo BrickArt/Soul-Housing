@@ -67,7 +67,9 @@ router.get('/users/user_:id?', function(req, res, next){
     payments: [],
   };
   var id = req.params.id
-  Gist.findById(id)
+  Gist.findById(id).catch(function(err){
+    res.status(403).send('User not found')
+  })
   .then(function (doc){
 
     if (doc){
@@ -414,6 +416,8 @@ router.post('/users/delete:id?', function(req, res, next){
     } else {
       next(id);
     }
+  }).catch(function(err){
+    res.status(403).send('User not found')
   });
 }, function(id, req, res, next){
 

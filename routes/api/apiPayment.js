@@ -60,6 +60,8 @@ router.get('/payments/user_:id?', function(req, res, next){
     .then(function (doc){
       res.send(doc);
       console.log(doc);
+    }).catch(function(err){
+      res.status(403).send('Payments not found')
     });
     return;
   }
@@ -144,6 +146,8 @@ router.post('/payments/edit/payment_:id?', upload.any(), function(req, res, next
         });
       }
     });
+  }).catch(function(err){
+    res.status(403).send('Payment not found')
   });
 });
 
@@ -152,12 +156,14 @@ router.post('/payments/delete/payment_:id?', function(req, res, next){
   var id = req.params.id;
   Payment.findById(id).then(function(doc){
     if (doc.image){
-      fs.unlink('./public/img/upload/house/' + doc.image, function (err){
-        if (err) console.log('image not found - ' + doc.image);
-        console.log('successfully deleted - ' + doc.image);
-      });
+      // fs.unlink('./public/img/upload/house/' + doc.image, function (err){
+      //   if (err) console.log('image not found - ' + doc.image);
+      //   console.log('successfully deleted - ' + doc.image);
+      // });
     };
     next(id);
+  }).catch(function(err){
+    res.status(403).send('Payment not found')
   })
 }, function(id, req, res, next){
   Payment.findByIdAndRemove(id).then(function(){

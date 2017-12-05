@@ -91,6 +91,8 @@ router.get('/residence/user_:id?', function(req, res, next){
   .then(function (doc){
     items.residences = doc;
     next(items);
+  }).catch(function(err){
+    res.status(403).send('Residence not found')
   });
 
 
@@ -200,6 +202,8 @@ router.post('/residence/place', function(req, res, next){
         return;
       }
     });
+  }).catch(function(err){
+    res.status(403).send('House not found')
   });
 }, function(item, req, res, next){
   Gist.findById(item.residence.userID).then(function(doc){
@@ -222,6 +226,8 @@ router.post('/residence/place', function(req, res, next){
         return;
       }
     });
+  }).catch(function(err){
+    res.status(403).send('User not found')
   })
 });
 

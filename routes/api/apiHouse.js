@@ -407,8 +407,11 @@ router.post('/houses/add', upload.any(), function(req, res, next){
 router.post('/houses/delete:id?', function(req, res, next){
   var id = req.params.id
   console.log(req.body)
-  House.findByIdAndRemove(id).exec();
-  res.sendStatus(200);
+  House.findByIdAndRemove(id).exec(function(){
+    res.sendStatus(200);
+  }).catch(function(err){
+      res.status(403).send('House not found')
+    });
 });
 
 
@@ -524,6 +527,8 @@ router.post('/houses/update:id?', upload.any(), function(req, res, next){
         res.sendStatus(200);
       }
     });
+  }).catch(function(err){
+    res.status(403).send('House not found')
   });
 });
 
