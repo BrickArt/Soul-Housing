@@ -1,7 +1,7 @@
 function Model(data){
   var self = this;
 
-  self.house;
+  self.house = {};
   self.rooms = [];
   self.placeData;
   self.placeHouse;
@@ -338,19 +338,17 @@ function Controller(model, view){
   function init(){
     var id = $('.gistEdit').val();
     console.log('init')
-
-    $.ajax({
-      url: 'api/houses' + id,
-      method: 'GET',
-      dataType: 'json'
-    }).done(function (data){
-      model.houseWith = data;
-      view.initHouse();
-      console.log(model.house);
-    });
-
-
+    
     if (id) {
+      $.ajax({
+        url: 'api/houses' + id,
+        method: 'GET',
+        dataType: 'json'
+      }).done(function (data){
+        model.houseWith = data;
+        view.initHouse();
+        console.log(model.house);
+      });
       $.ajax({
         url: '/houses/house_' + id,
         method: 'GET',
