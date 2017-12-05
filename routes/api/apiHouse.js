@@ -292,9 +292,11 @@ router.get('/houses:id?', function(req, res, next){
       next(items)
     }
     
+  }).catch(function(err){
+    next(items)
   });
 
-
+console.log('user ep')
 
 }, function(items, req, res, next){
   var result = {
@@ -305,39 +307,43 @@ router.get('/houses:id?', function(req, res, next){
     image: items.house.image,
     rooms: [],
   }
-
-  for (var i = 0; i < items.house.rooms.length; i++) {
-    var room = {
-      num: items.house.rooms[i].num,
-      beds: []
-    }
-    for (var y = 0; y < items.house.rooms[i].beds.length; y++) {
-      var bed = {
-        num: items.house.rooms[i].beds[y].num,
-        status: items.house.rooms[i].beds[y].status,
-        user: {}
+  if(items.house.rooms.length > 0) {
+    
+    for (var i = 0; i < items.house.rooms.length; i++) {
+      var room = {
+        num: items.house.rooms[i].num,
+        beds: []
       }
-      // console.log('ooooooooooook');
-      if(items.users.length > 0){
-        for (var z = 0; z < items.users.length; z++) {
-          // console.log(items.house.rooms[i].beds[y].userID);
-          if (items.users[z]._id == items.house.rooms[i].beds[y].userID) {
-            bed.user = items.users[z]
-          }
-          if (z === items.users.length - 1) {
-            room.beds.push(bed);
-          }
-        } 
-      }else {
-        room.beds.push(bed);          
+      for (var y = 0; y < items.house.rooms[i].beds.length; y++) {
+        var bed = {
+          num: items.house.rooms[i].beds[y].num,
+          status: items.house.rooms[i].beds[y].status,
+          user: {}
+        }
+        // console.log('ooooooooooook');
+        if(items.users.length > 0){
+          for (var z = 0; z < items.users.length; z++) {
+            // console.log(items.house.rooms[i].beds[y].userID);
+            if (items.users[z]._id == items.house.rooms[i].beds[y].userID) {
+              bed.user = items.users[z]
+            }
+            if (z === items.users.length - 1) {
+              room.beds.push(bed);
+            }
+          } 
+        }else {
+          room.beds.push(bed);          
+        }
+        if (y === items.house.rooms[i].beds.length - 1) {
+          result.rooms.push(room);
+        }
       }
-      if (y === items.house.rooms[i].beds.length - 1) {
-        result.rooms.push(room);
+      if (i === items.house.rooms.length - 1) {
+        next(result)
       }
     }
-    if (i === items.house.rooms.length - 1) {
-      next(result)
-    }
+  } else {
+    next(result)
   }
 
 }, function(result, req, res, next){
