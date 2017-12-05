@@ -237,6 +237,8 @@ router.get('/houses:id?', function(req, res, next){
     items.house = house;
 
     next(items);
+  }).catch(function(err){
+    res.status(403).send('House not found')
   });
 
 
