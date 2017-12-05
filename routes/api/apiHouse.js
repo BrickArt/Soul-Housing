@@ -355,6 +355,8 @@ console.log('user ep')
 
 //-------------------ADD--------------------
 router.post('/houses/add', upload.any(), function(req, res, next){
+  console.log('post')
+  console.log(req.body)
 //   if(req.files[0]){
 //     Jimp.read(req.files[0].destination + '/' + req.files[0].filename, function (err, image) {
 //       if (err) throw err;
@@ -389,9 +391,12 @@ router.post('/houses/add', upload.any(), function(req, res, next){
     });
     item.rooms = n;
   }
+  next(item);
+
+}, function(item, req, res, next){
 
  
-  if(req.files[0]){
+  if(req.files && req.files[0]){
     item.image = req.files[0].url;
   };
 
@@ -424,6 +429,9 @@ router.post('/houses/delete:id?', function(req, res, next){
 
 //------------------UPDATE--------------------
 router.post('/houses/update:id?', upload.any(), function(req, res, next){
+  console.log('post')
+  console.log(req.body)
+  
 //   if(req.files[0]){
 //     Jimp.read(req.files[0].destination + '/' + req.files[0].filename, function (err, image) {
 //       if (err) throw err;
