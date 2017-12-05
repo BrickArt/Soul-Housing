@@ -556,6 +556,18 @@ body {
     .instruments > select:hover {
       cursor: pointer; }
 
+.instrumentsAdd button {
+  border: none;
+  background-color: #358DE0;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  margin: 10px;
+  width: 96%; }
+  .instrumentsAdd button:hover {
+    cursor: pointer;
+    opacity: 0.8; }
+
 .superPuperHousePlace {
   display: none; }
 

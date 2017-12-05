@@ -242,7 +242,7 @@ function Controller(model, view){
   //===========================================
   $(document).delegate( ".userBtn", "click", open);
 
-  $(document).delegate( ".addBtn", "click", add);
+  $(document).delegate( "#addBtn", "click", add);
   $(document).delegate( ".saveUser", "click", save);
   $(document).delegate( ".cancelUser", "click", cancel);
   $(document).delegate( ".userDel", "click", del);
@@ -379,6 +379,7 @@ function init(){
   }).done(function (data){
     model.users = data;
     console.log(model.users);
+    model.sortUser('name')
     view.init(model.users)
   });
 
