@@ -224,6 +224,7 @@ router.get('/houses:id?', function(req, res, next){
   };
   House.findById(id)
   .then(function(doc){
+    if(!doc) return res.status(403).send('House not found')
 
     var house = {
       _id: doc._id,
