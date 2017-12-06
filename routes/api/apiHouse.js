@@ -235,7 +235,7 @@ router.get('/houses:id?', function(req, res, next){
       rooms: doc.rooms,
     }
     items.house = house;
-
+    console.log('houses ok')
     next(items);
   }).catch(function(err){
     res.status(403).send('House not found')
@@ -254,6 +254,8 @@ router.get('/houses:id?', function(req, res, next){
       payments.push(payment);
     }
     items.payments = payments;
+    console.log('pays ok')
+    
     next(items)
     // console.log(doc);
   });
@@ -262,8 +264,12 @@ router.get('/houses:id?', function(req, res, next){
 }, function(items, req, res, next){
   Gist.find({status: true}).then(function(doc){
     var users = [];
+    console.log(doc.length)
+    
     if(doc.length > 0){
+      
       for (var i = 0; i < doc.length; i++) {
+        console.log('ok')
         // console.log('aaaa')
         var user = {
           _id: doc[i]._id,
@@ -272,23 +278,32 @@ router.get('/houses:id?', function(req, res, next){
           program: doc[i].program,
           balance: 0
         };
-        for (var n = 0; n < items.payments.length; n++) {
-          // console.log('+');
-          if (items.payments[n].userID == doc[i]._id){
-            user.balance += items.payments[n].sum;
+        console.log('+');
+        if (items.payments.length > 0) {
+          for (var n = 0; n < items.payments.length; n++) {
+            if (items.payments[n].userID.toString() === doc[i]._id){
+              user.balance += items.payments[n].sum;
+            }
+            if (n === items.payments.length - 1) {
+              console.log(user)
+      
+              users.push(user);
+            }
           }
-          if (n === items.payments.length - 1) {
-            users.push(user);
-          }
+          
+        } else {
+          users.push(user);
         }
-        // console.log(i);
-        if(i >= doc.length - 1){
+        if(i === doc.length - 1){
           items.users = users;
           next(items)
         }
+        // console.log(i);
       }
     } else {
       items.users = users;
+    console.log('users ok')
+    
       next(items)
     }
     
@@ -323,9 +338,10 @@ console.log('user ep')
         // console.log('ooooooooooook');
         if(items.users.length > 0){
           for (var z = 0; z < items.users.length; z++) {
-            // console.log(items.house.rooms[i].beds[y].userID);
-            if (items.users[z]._id == items.house.rooms[i].beds[y].userID) {
+            console.log(items.house.rooms[i].beds[y].userID);
+            if (items.users[z]._id.toString() === items.house.rooms[i].beds[y].userID) {
               bed.user = items.users[z]
+              console.log('ioi')
             }
             if (z === items.users.length - 1) {
               room.beds.push(bed);
