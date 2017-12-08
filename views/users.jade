@@ -227,7 +227,7 @@ block content
                               input.name(type="text", placeholder="Name", name='name')
                               input.lastname(type="text", placeholder="Last name", name='lastname')
                             .addNameStatus
-                              p Status
+                              
                               
                         .addText.addDate
                           input.demo(type="text", placeholder="Select date", name="date")
@@ -266,7 +266,7 @@ block content
                               input.name(type="text", placeholder="Name", name='name', value= gist.name)
                               input.lastname(type="text", placeholder="Last name", name='lastname', value= gist.lastname)
                             .addNameStatus
-                              p Status
+                              
                               
                         .addText.addDate
                           -var birth = new Date(gist.dateOfBirth)
@@ -413,7 +413,7 @@ block content
                               input.name(type="text", placeholder="Name", name='name', value= gists[0].name)
                               input.lastname(type="text", placeholder="Last name", name='lastname', value= gists[0].lastname)
                             .addNameStatus
-                              p Status
+                              
                               
                         .addText.addDate
                           -var birth = new Date(gists[0].dateOfBirth)
@@ -435,8 +435,7 @@ block content
                             -else
                               option Female 
                     
-                        .addText.addAddress
-                          input(type="text", placeholder="Address", name='address', value= gists[0].address)
+                        
                         .addText.addPhone
                           input(type="text", placeholder="Phone number", name='phone', value= gists[0].phone)
                         .addText.addProgram
@@ -462,7 +461,7 @@ block content
                           input.name(type="text", placeholder="Name", name='name')
                           input.lastname(type="text", placeholder="Last name", name='lastname')
                         .addNameStatus
-                          p Status
+                          
                          
                     .addText.addDate
                       input.demo(type="text", placeholder="Select date", name="date")
@@ -471,8 +470,7 @@ block content
                         option(disabled selected) Sex
                         option Male
                         option Female
-                    .addText.addAddress
-                      input(type="text", placeholder="Address", name='address')
+                    
                     .addText.addPhone
                       input(type="text", placeholder="Phone number", name='phone')
                     .addText.addProgram
