@@ -293,7 +293,10 @@ block content
                           select(class="", name='program')
                             option(disabled) Select program
                             -each prog in programs
-                              option= prog.abbr
+                              -if(gist.program && gist.program === prog.abbr)
+                                option(selected)= prog.abbr
+                              -else
+                                option= prog.abbr
                         .addDiscription
                           textarea(placeholder="Notes", name='description', value= gist.description)= gist.description
                         .addButtons
@@ -442,7 +445,10 @@ block content
                           select(class="", name='program')
                             option(disabled) Select program
                             -each prog in programs
-                              option= prog.abbr 
+                              -if(gists[0].program && gists[0].program === prog.abbr)
+                                  option(selected)= prog.abbr
+                                -else
+                                  option= prog.abbr 
                         .addDiscription
                           textarea(placeholder="Notes", name='description', value= gists[0].description)= gists[0].description
                         .addButtons

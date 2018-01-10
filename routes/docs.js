@@ -511,6 +511,9 @@ function getPages(items){
             } else {
               room.columns[2].table.body[0][0] = bed;
             }
+            if(items.houses[i].rooms[e].beds.length === 1){
+              room.columns.splice(2, 1)
+            }
             // расширяем для большего количества кроватей
           }
         }
@@ -732,6 +735,10 @@ if(result.rooms.length > 0){
             room.columns[2].table.body[0][0] = bed;
           }
           // расширяем для большего количества кроватей
+
+          if(result.rooms[i].beds.length === 1){
+            room.columns.splice(2, 1)
+          }
         }
       }
       doc.content.push(room);

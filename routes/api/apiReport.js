@@ -194,7 +194,7 @@ router.get('/report/createReport', async (req, res, next) => {
         var  a = 0;
         
         for (let i in pays) {
-            if (pays[i].status != "pending" && pays[i].sum) {
+            if (pays[i].sum && pays[i].status != "pending") {
                 a += +pays[i].sum;
             }
         }
@@ -209,12 +209,12 @@ router.get('/report/createReport', async (req, res, next) => {
             });
         let addres, room, price, date;
 
-        const payments = await Payment.find({userID: el._id.toString()})
-        .catch(e => {
-            return e
-        });
+        // const payments = await Payment.find({userID: el._id.toString()})
+        // .catch(e => {
+        //     return e
+        // });
 
-        var balance = await makeBalance(payments);
+        // var balance = await makeBalance(payments);
             
 
         const residenceInfo = await findActualResidence(residencesByUser);
@@ -250,7 +250,7 @@ router.get('/report/createReport', async (req, res, next) => {
             price = "0";
         }
 
-        console.log(balance)
+        console.log('Balance is ')
 
 
         let answer = {
@@ -262,7 +262,7 @@ router.get('/report/createReport', async (req, res, next) => {
             SOURCE: el.program,
             RATE: price,
             MOVE_IN: date,
-            PENDING: balance.toString()
+            // PENDING: balance.toString()
         };
         response.push(answer);
         //if (!residenceInfo || residenceInfo.error) return res.status(500).json(residenceInfo);
