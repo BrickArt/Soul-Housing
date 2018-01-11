@@ -1,3 +1,5 @@
+
+
 var express = require('express');
 var router = express.Router();
 var async = require('async');
@@ -190,42 +192,63 @@ router.get('/report/createReport', async (req, res, next) => {
         }
     };
 
-    const makeBalance = async pays => {
+    const payments = await Payment.find()
+        .catch(e => {
+            return e
+        });
+
+    const makeBalance = async id => {
         var  a = 0;
         
-        for (let i in pays) {
-            if (pays[i].sum && pays[i].status != "pending") {
-                a += +pays[i].sum;
+        for (let i in payments) {
+            if (payments[i].sum && payments[i].status != "pending" && payments[i].userID === id) {
+                a += +payments[i].sum;
             }
         }
         
         return a; 
     };
+    const houseInfo = await House.find()
+        .catch(e => {
+            return e
+        });
+
+    const makeHouseInfo = async id => {
+        for (let i in houseInfo) {
+            if (houseInfo[i]._id && houseInfo[i]._id.toString() === id){
+                return houseInfo[i]
+            }
+        }
+    }
+
+    const residences = await Residence.find()
+            .catch(e => {
+                    return e
+                });
+
+    const makeUserResidence = async id => {
+        for (let i in residences) {
+            if (residences[i]._id && residences[i]._id.toString() === id){
+                return residences[i]
+            }
+        }
+    }
 
     await gistInfo.forEachAsync(async el => {
-        const residencesByUser = await Residence.find({userID: el._id.toString()})
-            .catch(e => {
-                return e
-            });
+        const residencesByUser = await makeUserResidence(el._id.toString());
+           
         let addres, room, price, date;
 
-        // const payments = await Payment.find({userID: el._id.toString()})
-        // .catch(e => {
-        //     return e
-        // });
+        
 
-        // var balance = await makeBalance(payments);
+        var balance = await makeBalance(el._id.toString());
             
 
         const residenceInfo = await findActualResidence(residencesByUser);
         const emptyValue = "empty";
 
         if (el.residence && residenceInfo) {
-            const houseInfo = await House.find({_id: residenceInfo.houseID })
-                .catch(e => {
-                    console.log(e);
-                    return e
-                });
+            var house = await makeHouseInfo(el.residence)
             if (!houseInfo[0] || !houseInfo[0].address) {
                 addres = emptyValue;
             } else {
@@ -262,7 +285,7 @@ router.get('/report/createReport', async (req, res, next) => {
             SOURCE: el.program,
             RATE: price,
             MOVE_IN: date,
-            // PENDING: balance.toString()
+            PENDING: balance.toString()
         };
         response.push(answer);
         //if (!residenceInfo || residenceInfo.error) return res.status(500).json(residenceInfo);
