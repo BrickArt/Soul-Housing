@@ -241,7 +241,7 @@ block content
                           input(type="text", placeholder="Phone number", name='phone')
                         .addText.addProgram
                           select(class="", name='program')
-                            option(disabled selected) Select program
+                            option(disabled selected) Choose program
                             -each prog in programs
                               option= prog.abbr
                         .addDiscription
@@ -481,7 +481,7 @@ block content
                       input(type="text", placeholder="Phone number", name='phone')
                     .addText.addProgram
                       select(class="", name='program')
-                        option(disabled selected) Select program
+                        option(disabled selected) Choose program
                         -if(programs)
                           -each prog in programs
                             option= prog.abbr

@@ -270,6 +270,11 @@ app.use('/', type);
 //------------------Static-------------------
 app.use(express.static(join(__dirname, 'public')));
 
+app.get('/', function(err, req, res, next){
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+})
+
 
 
 //===========================================
