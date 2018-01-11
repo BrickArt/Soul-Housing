@@ -291,7 +291,10 @@ block content
                           input(type="text", placeholder="Phone number", name='phone', value= gist.phone)
                         .addText.addProgram
                           select(class="", name='program')
-                            option(disabled) Select program
+                            -if(gist.program)
+                              option(disabled) Select program
+                            -else
+                              option(selected disabled) Select program
                             -each prog in programs
                               -if(gist.program && gist.program === prog.abbr)
                                 option(selected)= prog.abbr
@@ -443,7 +446,10 @@ block content
                           input(type="text", placeholder="Phone number", name='phone', value= gists[0].phone)
                         .addText.addProgram
                           select(class="", name='program')
-                            option(disabled) Select program
+                            -if(gists[0].program)
+                              option(disabled) Select program
+                            -else
+                              option(selected disabled) Select program
                             -each prog in programs
                               -if(gists[0].program && gists[0].program === prog.abbr)
                                   option(selected)= prog.abbr
