@@ -180,24 +180,25 @@ router.post('/houses/update:id?', upload.any(), function(req, res, next){
 //   }
 // }, function(req, res, next){
   console.log(req.files[0])
-  var item = req.body.rooms;
-  var b = [];
-  var r = [];
-  item.forEach(function (room, i, rooms){
-    b = [];
-    for (var y = 0; y < room; y++) {
-      b.push({
-        num: y+1,
-        status: false
-      });
-    };
-    r.push({
-      num: i+1,
-      beds: b
-    })
-  });
-  next(r);
-}, function(rooms, req, res, next){
+  // var item = req.body.rooms;
+  // var b = [];
+  // var r = [];
+  // item.forEach(function (room, i, rooms){
+  //   b = [];
+  //   for (var y = 0; y < room; y++) {
+  //     b.push({
+  //       num: y+1,
+  //       status: false
+  //     });
+  //   };
+  //   r.push({
+  //     num: i+1,
+  //     beds: b
+  //   })
+  // });
+  // next(r);
+  next();
+}, function(req, res, next){
   var item = req.body
 
 
@@ -218,73 +219,85 @@ router.post('/houses/update:id?', upload.any(), function(req, res, next){
     if (item.image){
       doc.image = item.image;
     }
-    if (item.rooms){
-      if (rooms.length >= doc.rooms.length) {
-        if (rooms.length > doc.rooms.length) {
-          // console.log('room is empty >>>>>')
-          for (var i = 0; i < rooms.length; i++) {
-            if (doc.rooms[i]) {
-              if (rooms[i].beds.length != doc.rooms[i].beds.length) {
-                doc.rooms[i].beds = rooms[i].beds;
-                // console.log('---------------ok---------------------------')
-              }
-              // console.log('room is empty >>>>> ROOM')
-              // var count = false;
-              // for (var c = 0; c < doc.rooms[i].beds.length; c++) {
-              //   var element = doc.rooms[i].beds[c];
-              //   if (doc.rooms[i].beds[c].status) {
-              //     console.log('room is empty >>>>> STATUS')
+    // if (item.rooms){
+    //   if (rooms.length >= doc.rooms.length) {
+    //     if (rooms.length > doc.rooms.length) {
+    //       // console.log('room is empty >>>>>')
+    //       for (var i = 0; i < rooms.length; i++) {
+    //         if (doc.rooms[i]) {
+    //           if (rooms[i].beds.length != doc.rooms[i].beds.length) {
+    //             doc.rooms[i].beds = rooms[i].beds;
+    //             // console.log('---------------ok---------------------------')
+    //           }
+    //           // console.log('room is empty >>>>> ROOM')
+    //           // var count = false;
+    //           // for (var c = 0; c < doc.rooms[i].beds.length; c++) {
+    //           //   var element = doc.rooms[i].beds[c];
+    //           //   if (doc.rooms[i].beds[c].status) {
+    //           //     console.log('room is empty >>>>> STATUS')
               
-              //     count = true;
-              //   }
-              //   if (c === doc.rooms[i].beds.length - 1 && !count) {
-              //     console.log('room is empty >>>>> A')
-              //     console.log(doc.rooms[i])
-              //     doc.rooms[i] = rooms[i]
-              //     console.log(rooms[i])
+    //           //     count = true;
+    //           //   }
+    //           //   if (c === doc.rooms[i].beds.length - 1 && !count) {
+    //           //     console.log('room is empty >>>>> A')
+    //           //     console.log(doc.rooms[i])
+    //           //     doc.rooms[i] = rooms[i]
+    //           //     console.log(rooms[i])
                   
-              //   }
-              // }
-              // if (rooms[i].beds.length != doc.rooms[i].beds.length) {
-              //   doc.rooms[i] = rooms[i]
-              // }
-            } else {
-              doc.rooms.push(rooms[i])
-            }
-          }
-        } else {
-          for (var b = 0; b < doc.rooms.length; b++) {
-            var element = doc.rooms[b];
-            var count = false;
-            for (var v = 0; v < element.beds.length; v++) {
-              var element2 = element.beds[v];
-              if (element2.status) {
-                count = true;
-              }
-              if (v === element.beds.length - 1 && !count) {
-                doc.rooms[b] = rooms[b]
-              }
+    //           //   }
+    //           // }
+    //           // if (rooms[i].beds.length != doc.rooms[i].beds.length) {
+    //           //   doc.rooms[i] = rooms[i]
+    //           // }
+    //         } else {
+    //           doc.rooms.push(rooms[i])
+    //         }
+    //       }
+    //     } else {
+    //       for (var b = 0; b < doc.rooms.length; b++) {
+    //         var element = doc.rooms[b];
+    //         var count = false;
+    //         for (var v = 0; v < element.beds.length; v++) {
+    //           var element2 = element.beds[v];
+    //           if (element2.status) {
+    //             count = true;
+    //           }
+    //           if (v === element.beds.length - 1 && !count) {
+    //             doc.rooms[b] = rooms[b]
+    //           }
               
-            }
-          }
-        }
-      } else {
-        for (var y = 0; y < doc.rooms.length; y++) {
-          if (rooms[y]) {
-            if (rooms[y].beds.length != doc.rooms[y].beds.length) {
-              doc.rooms[y] = rooms[y]
-            }
-          } else {
-            doc.rooms.splice(y, 1);
-            y--;
-          }
-        }
-      }
+    //         }
+    //       }
+    //     }
+    //   } else {
+    //     for (var y = 0; y < doc.rooms.length; y++) {
+    //       if (rooms[y]) {
+    //         if (rooms[y].beds.length != doc.rooms[y].beds.length) {
+    //           doc.rooms[y] = rooms[y]
+    //         }
+    //       } else {
+    //         doc.rooms.splice(y, 1);
+    //         y--;
+    //       }
+    //     }
+    //   }
+    // }
+
+//------ new code!
+
+    if(item.rooms){
+      doc.rooms = JSON.parse(req.body.rooms);
     }
+
     if(req.files[0]){
       doc.image = req.files[0].url;
     };
-    // console.log('time out')
+    // console.log('295 - houses.js - ', doc)
+    // console.log(req.body)
+    // console.log(req.body.rooms)
+    // console.log(JSON.parse(req.body.rooms))
+
+
     doc.save(function (err) {
       if (err) {
         console.log(err);

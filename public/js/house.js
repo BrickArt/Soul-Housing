@@ -182,21 +182,20 @@ function View(model){
 
   self.initRooms = function(){
     self.elements.rooms.html('');
-    for (var i = 0; i < model.rooms.length; i++) {
-      if(model.rooms[i] === null){
+    for (var i = 0; i < model.house.rooms.length; i++) {
+      if(model.house.rooms[i] !== null){
 
-      } else {
         var flag = "";
         var ahtung = '';
         if (model.house.rooms[i]) {
           for (var y = 0; y < model.house.rooms[i].beds.length; y++) {
             if (model.house.rooms[i].beds[y].status){
-              flag = 'disabled';
-              ahtung = 'delEditFalse';
+              // flag = 'disabled';
+              // ahtung = 'delEditFalse';
             }
           }
         }
-        self.elements.rooms.append('<div class="addText addRoom ' + ahtung + '"><div class="addRoomLeft "><p class="room">Room #</p><p class="roomNum">' + model.rooms[i].num + '</p></div><div class="addRoomRight"><button ' + flag + ' class="bedsLeft" value="' + i + '" type="button"><img src="img/png/left.png" alt="left"/></button><input id="room_' + i + '" class="beds" value="' + model.rooms[i].beds + '" type="number" max="50" min="1" name="rooms[' + i + ']"/><button value="' + i + '" type="button" ' + flag + ' class="bedsRight"><img src="img/png/right.png" alt="right"/></button><p>Beds</p><button class="roomDel ' + ahtung + '"' + flag + ' value="' + i + '"><img src="img/png/del.png" alt="Del"/></button></div></div>')
+        self.elements.rooms.append('<div class="addText addRoom ' + ahtung + '"><div class="addRoomLeft "><p class="room">Room #</p><p class="roomNum">' + model.house.rooms[i].num + '</p></div><div class="addRoomRight"><button ' + flag + ' class="editBedKeyDown" value="' + model.house.rooms[i].num + '" type="button"><img src="img/png/left.png" alt="left"/></button><input id="room_' + model.house.rooms[i].num + '" class="editBedInput" value="' + model.house.rooms[i].beds.length + '" type="number" max="50" min="1" name="rooms[' + i + ']"/><button value="' + model.house.rooms[i].num + '" type="button" ' + flag + ' class=" editBedKeyUp"><img src="img/png/right.png" alt="right"/></button><p>Beds</p><button type="button" class="editBedKeyDelete ' + ahtung + '"' + flag + ' value="' + model.house.rooms[i].num + '"><img src="img/png/del.png" alt="Del"/></button></div></div>')
       }
 
     }
@@ -330,11 +329,159 @@ function Controller(model, view){
   
   $(document).delegate( ".placerInput", "keyup", placerChange);
   $(document).delegate( ".placerBtn", "click", placerPlace);
+
+
+  $(document).delegate(".editBedKeyUp", "click", editBedKeyUp);
+  $(document).delegate(".editBedKeyDown", "click", editBedKeyDown);
+  $(document).delegate(".editBedInput", "change", editBedInput);
+  $(document).delegate(".editBedKeyDelete", "click", editBedKeyDelete);
+  $(document).delegate(".editBedKeyAdd", "click", editBedKeyAdd);
   
   
 //===========================================
 //---------------Functions-------------------
 //===========================================
+
+  function editBedKeyUp() {
+    var up = $(this).val();
+
+    model.house.rooms.forEach(function(room) {
+      if (room && +room.num === +up) {
+        room.beds.push({
+          num: room.beds.length,
+          userID: null,
+          status: false
+        })
+      }
+    });
+    
+    view.initRooms();
+
+    // console.log(up)
+    // console.log(model.house.rooms[0])
+  };
+  function editBedKeyDown() {
+    var down = $(this).val();
+
+    model.house.rooms.forEach(function (room) {
+      if (room && +room.num === +down) {
+        for (var i = room.beds.length - 1; i >= 0; i--) {
+          var bed = room.beds[i];
+
+          if (!bed.status) {
+            room.beds.splice(i, 1);
+            break
+          }
+
+          // console.log(i)
+          
+        }
+      }
+    });
+
+    view.initRooms();
+    // console.log('wahaha')
+  };
+  function editBedInput() {
+    var bedsCurrent = $(this).val();
+    var id = $(this).attr('id').slice(5);
+
+    model.house.rooms.forEach(function(room) {
+      if (room && +room.num === +id) {
+        // console.log('abc')
+        
+        if (bedsCurrent > room.beds.length) {
+          for(var i = 0; i < bedsCurrent; i++) {
+            // console.log('abc')
+            
+            if (!room.beds[i]){
+              room.beds[i] = {
+                num: i + 1,
+                userID: null,
+                status: false
+              }
+            }
+
+          }
+          
+        } else {
+          for (var i = room.beds.length - 1; i >= bedsCurrent; i--) {
+            // console.log('abc')
+
+            if (!room.beds[i].status) {
+              room.beds.splice(i, 1);
+            }
+
+          }
+          // console.log('Rooms - ' + room.beds.length)
+          return          
+        }
+      }
+    })
+  
+    view.initRooms();
+    // console.log(id)
+  };
+  function editBedKeyDelete() {
+    var id = $(this).val();
+
+    model.house.rooms.forEach(function(room, r) {
+      if (room && +room.num === +id) {
+        console.log(room)
+        var flag = true;
+        room.beds.forEach(function(bed) {
+          if (bed.status) flag = false;
+        });
+        // if (flag) model.house.rooms.splice(r, 1)
+        if (flag) model.house.rooms[r] = null
+      }
+    });
+    view.initRooms();
+    console.log(model.house.rooms)
+    
+    console.log('wahaha')
+  };
+  function editBedKeyAdd() {
+    console.log(model.house.rooms)
+    var flag = true;
+    model.house.rooms.forEach(function(room, r) {
+      if(!room && flag){
+        flag = false;
+        model.house.rooms[r] = {
+          num: r + 1,
+          beds: [
+            {
+              num: 1,
+              userID: null,
+              status: false
+            }
+          ]
+        }
+        return view.initRooms();
+        
+      }
+
+    })
+    if (flag) {
+      model.house.rooms.push({
+      num: model.house.rooms.length + 1,
+      beds: [
+        {
+          num: 1,
+          userID: null,
+          status: false
+        }
+      ]
+    })}
+      
+
+    view.initRooms();
+    console.log('wahha')
+  };
+
+
+
+
   function init(){
     var id = $('.gistEdit').val();
     console.log('init')
@@ -676,18 +823,59 @@ function Controller(model, view){
 
     var data = new FormData();
 
-    // var name = $('.houseNameEdit').val();
-    // data.append( 'name', name );
-    //
-    // var address = $('.houseAddressEdit').val();
-    // data.append( 'address', address );
-    //
-    // var description = $('.houseNotesEdit').val();
-    // data.append( 'description', description );
+    var name = $('.houseNameEdit').val();
+    data.append( 'name', name );
+    
+    var address = $('.houseAddressEdit').val();
+    data.append( 'address', address );
+    
+    var description = $('.houseNotesEdit').val();
+    data.append( 'description', description );
 
-    for (var key in form){
-      data.append(form[key].name, form[key].value)
+    var rooms = model.house.rooms;
+    for (var i = 0; i < rooms.length; i++) {
+      var room = rooms[i];
+      if (!room) {
+        rooms.splice(i, 1)
+        i--
+      }
     }
+    // var roomItems = [];
+    // rooms.forEach(function(room) {
+    //   var b = []
+    //   room.beds.forEach(function(bed){
+    //     b.push({
+    //       num: bed.num,
+    //       status: bed.status,
+    //       userID: bed.userID
+    //     })
+    //   })
+    //   roomItems.push({
+    //     num: room.num,
+    //     beds: b
+    //   })
+    // });
+
+    data.append('rooms', JSON.stringify(rooms) );
+
+    // console.log(roomItems)
+
+    // var formGroup = {
+    //   name: $('.houseNameEdit').val(),
+    //   address: $('.houseAddressEdit').val(),
+    //   description: $('.houseNotesEdit').val(),
+    //   rooms: model.house.rooms
+    // }
+
+    // for (var key in formGroup) {
+    //   // data.append(form[key].name, form[key].value)
+    //   console.log(key)
+    //   console.log(formGroup.key)
+    // }
+
+    // for (var key in form){
+    //   data.append(form[key].name, form[key].value)
+    // }
 
 
     $.each( files, function( key, value ){
