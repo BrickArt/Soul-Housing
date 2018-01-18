@@ -184,58 +184,73 @@ router.get('/report/createReport', async (req, res, next) => {
 
     let response = [];
 
-    const findActualResidence = async residences => {
-        for (let i in residences) {
-            if (residences[i].endDate === null) {
-                return residences[i];
-            }
-        }
-    };
+    const residences = await Residence.find({endDate: null})
+        .catch(e => {
+                console.log('residence error')
+                return e
+            });
+
+    
 
     const payments = await Payment.find()
+    // .then(doc => {console.log('Payments - ', doc.length)})
         .catch(e => {
             return e
         });
 
-    const makeBalance = async id => {
-        var  a = 0;
-        
-        for (let i in payments) {
-            if (payments[i].sum && payments[i].status != "pending" && payments[i].userID === id) {
-                a += +payments[i].sum;
-            }
-        }
-        
-        return a; 
-    };
+    
     const houseInfo = await House.find()
+    // .then(doc => {console.log('Houses - ', doc.length)})
         .catch(e => {
             return e
         });
 
-    const makeHouseInfo = async id => {
-        for (let i in houseInfo) {
-            if (houseInfo[i]._id && houseInfo[i]._id.toString() === id){
-                return houseInfo[i]
-            }
-        }
-    }
-
-    const residences = await Residence.find()
-            .catch(e => {
-                    return e
-                });
-
-    const makeUserResidence = async id => {
-        for (let i in residences) {
-            if (residences[i]._id && residences[i]._id.toString() === id){
-                return residences[i]
-            }
-        }
-    }
+    
 
     await gistInfo.forEachAsync(async el => {
-        const residencesByUser = await makeUserResidence(el._id.toString());
+        const makeUserResidence =  id => {
+            // console.log('o', residences)
+            
+            for (let i in residences) {
+                // console.log(residences[i].userID, '<==>',id)
+                
+                if (residences[i].userID && residences[i].userID.toString() === id){
+                    console.log('o')
+                    return residences[i]
+                }
+            }
+            return null;
+        }
+
+        const makeHouseInfo = async id => {
+            for (let i in houseInfo) {
+                if (houseInfo[i]._id && houseInfo[i]._id.toString() === id){
+                    return houseInfo[i]
+                }
+            }
+        }
+
+        const makeBalance = async id => {
+            var  a = 0;
+            
+            for (let i in payments) {
+                if (payments[i].sum && payments[i].status != "pending" && payments[i].userID === id) {
+                    a += +payments[i].sum;
+                }
+            }
+            
+            return a; 
+        }
+
+        const findActualResidence = async residences => {
+            for (let i in residences) {
+                if (residences[i] && residences[i].endDate === null && !residences[i].endDate) {
+                    return residences[i];
+                }
+            }
+        }
+
+        var residencesByUser = await makeUserResidence(el._id.toString());
            
         let addres, room, price, date;
 
@@ -246,11 +261,14 @@ router.get('/report/createReport', async (req, res, next) => {
 
         const residenceInfo = await findActualResidence(residencesByUser);
         const emptyValue = "empty";
+        console.log('info', residencesByUser)
 
         if (el.residence && residenceInfo) {
             var house = await makeHouseInfo(el.residence)
             if (!houseInfo[0] || !houseInfo[0].address) {
                 addres = emptyValue;
+                console.log('empty')
+
             } else {
                 addres = houseInfo[0].address;
             }
@@ -268,12 +286,14 @@ router.get('/report/createReport', async (req, res, next) => {
             room = residenceInfo.room.toString();
             price = residenceInfo.price.toString();
         } else {
+            // console.log('empty')
+            
             addres = emptyValue;
             room = emptyValue;
             price = "0";
         }
 
-        console.log('Balance is ')
+        // console.log('Balance is ')
 
 
         let answer = {
