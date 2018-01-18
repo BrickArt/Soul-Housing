@@ -8,6 +8,14 @@ function Model(data){
   self.houseWith;
   self.placer = {};
 
+  self.sortRoomsByNum = function(arr) {
+    arr.sort(function(a, b) {
+      if (a.num > b.num) return 1;
+      if (a.num < b.num) return -1;
+      return 0;
+    })
+  }
+
   self.roomDel = function(num){
     for (var i = 0; i < self.rooms.length; i++) {
       var room = self.rooms[i];
@@ -385,8 +393,21 @@ function bedUp (){
 
   model.rooms.forEach(function(room) {
     if (room && +room.num === +up) {
+      var roomNum;
+        for(i = 1; i <= 50; i++){
+          var flag = true;
+          for(y = 0; y < room.beds.length; y++){
+            if (+room.beds[y].num === +i) {
+              flag = false;
+            }
+          }
+          if(flag) {
+            roomNum = i;
+            break
+          }
+        }
       room.beds.push({
-        num: room.beds.length,
+        num: roomNum,
         userID: null,
         status: false
       })
@@ -463,8 +484,21 @@ function AddBedInput() {
 
     model.house.rooms.forEach(function(room) {
       if (room && +room.num === +up) {
+        var roomNum;
+        for(i = 1; i <= 50; i++){
+          var flag = true;
+          for(y = 0; y < room.beds.length; y++){
+            if (+room.beds[y].num === +i) {
+              flag = false;
+            }
+          }
+          if(flag) {
+            roomNum = i;
+            break
+          }
+        }
         room.beds.push({
-          num: room.beds.length,
+          num: roomNum,
           userID: null,
           status: false
         })
@@ -580,18 +614,31 @@ function AddBedInput() {
 
     })
     if (flag) {
-      model.house.rooms.push({
-      num: model.house.rooms.length + 1,
-      beds: [
-        {
-          num: 1,
-          userID: null,
-          status: false
+      var roomNum;
+        for(i = 1; i <= 50; i++){
+          var flag = true;
+          for(y = 0; y < model.house.rooms.length; y++){
+            if (+model.house.rooms[y].num === +i) {
+              flag = false;
+            }
+          }
+          if(flag) {
+            roomNum = i;
+            break
+          }
         }
-      ]
-    })}
+      model.house.rooms.push({
+        num: roomNum,
+        beds: [
+          {
+            num: 1,
+            userID: null,
+            status: false
+          }
+        ]
+      })}
       
-
+    model.sortRoomsByNum(model.house.rooms)
     view.initRooms();
     console.log('wahha')
   };
@@ -960,6 +1007,11 @@ function roomAddOnEdit() {
         i--
       }
     }
+    
+    model.sortRoomsByNum(rooms);
+    rooms.forEach(function(room) {
+      model.sortRoomsByNum(room.beds)
+    })
     // var roomItems = [];
     // rooms.forEach(function(room) {
     //   var b = []
