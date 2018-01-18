@@ -325,7 +325,7 @@ function Controller(model, view){
   $(document).delegate( ".gistDel", "click", del);
 
   $(document).delegate( ".roomAdd", "click", roomAdd);
-  $(document).delegate( ".beds", "change", saveBeds);
+  $(document).delegate( ".beds", "change", AddBedInput);
   $(document).delegate( ".roomDel", "click", roomDel);
 
   $(document).delegate( ".gistEdit", "click", edit);
@@ -372,7 +372,7 @@ function Controller(model, view){
   $(document).delegate(".editBedInput", "change", editBedInput);
   $(document).delegate(".editBedKeyDelete", "click", editBedKeyDelete);
   $(document).delegate(".editBedKeyAdd", "click", editBedKeyAdd);
-  $(document).delegate( ".roomAddOnEdit", "click", roomAddOnEdit);
+  $(document).delegate( ".roomAddOnEdit", "click", AddBedInput);
   
   
   
@@ -417,6 +417,47 @@ function bedDown (){
     view.initRoomsOnAdd();
 }
 
+function AddBedInput() {
+  var bedsCurrent = $(this).val();
+  var id = $(this).attr('id').slice(5);
+
+  model.rooms.forEach(function(room) {
+    if (room && +room.num === +id) {
+      // console.log('abc')
+      
+      if (bedsCurrent > room.beds.length) {
+        for(var i = 0; i < bedsCurrent; i++) {
+          // console.log('abc')
+          
+          if (!room.beds[i]){
+            room.beds[i] = {
+              num: i + 1,
+              userID: null,
+              status: false
+            }
+          }
+
+        }
+        
+      } else {
+        for (var i = room.beds.length - 1; i >= bedsCurrent; i--) {
+          // console.log('abc')
+
+          if (!room.beds[i].status) {
+            room.beds.splice(i, 1);
+          }
+
+        }
+        // console.log('Rooms - ' + room.beds.length)
+        return          
+      }
+    }
+  })
+
+  view.initRoomsOnAdd();
+  // console.log(id)
+};
+
   function editBedKeyUp() {
     var up = $(this).val();
 
@@ -457,6 +498,7 @@ function bedDown (){
     view.initRooms();
     // console.log('wahaha')
   };
+  
   function editBedInput() {
     var bedsCurrent = $(this).val();
     var id = $(this).attr('id').slice(5);
