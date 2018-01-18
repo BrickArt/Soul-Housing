@@ -8,9 +8,14 @@ function Model(data){
   self.houseWith;
   self.placer = {};
 
-  self.roomDel = function(i){
-    self.rooms[i] = null;
-    console.log(self.rooms);
+  self.roomDel = function(num){
+    for (var i = 0; i < self.rooms.length; i++) {
+      var room = self.rooms[i];
+      if (room && +room.num === +num) return self.rooms[i] = null
+    }
+    
+    // self.rooms[i] = null;
+    // console.log(self.rooms);
   };
 
   self.roomAdd = function(){
@@ -20,10 +25,11 @@ function Model(data){
         if(self.rooms[i] === null){
           var r = {
             num: i + 1,
-            beds: 1
+            beds: [{num: 1, userID: null, status: false}]
           };
           self.rooms[i] = r;
           console.log(self.rooms);
+          
           return self.rooms
         }
       }
@@ -31,7 +37,7 @@ function Model(data){
     }
     var r = {
       num: self.rooms.length + 1,
-      beds: 1
+      beds: [{num: 1, userID: null, status: false}]
     };
     self.rooms.push(r);
     console.log(self.rooms);
@@ -202,6 +208,28 @@ function View(model){
 
   }
 
+  self.initRoomsOnAdd = function(){
+    self.elements.rooms.html('');
+    for (var i = 0; i < model.rooms.length; i++) {
+      if(model.rooms[i] !== null){
+
+        var flag = "";
+        var ahtung = '';
+        if (model.rooms[i]) {
+          for (var y = 0; y < model.rooms[i].beds.length; y++) {
+            if (model.rooms[i].beds[y].status){
+              // flag = 'disabled';
+              // ahtung = 'delEditFalse';
+            }
+          }
+        }
+        self.elements.rooms.append('<div class="addText addRoom ' + ahtung + '"><div class="addRoomLeft "><p class="room">Room #</p><p class="roomNum">' + model.rooms[i].num + '</p></div><div class="addRoomRight"><button ' + flag + ' class="editBedKeyDown" value="' + model.rooms[i].num + '" type="button"><img src="img/png/left.png" alt="left"/></button><input id="room_' + model.rooms[i].num + '" class="beds" value="' + model.rooms[i].beds.length + '" type="number" max="50" min="1" name="rooms[' + i + ']"/><button value="' + model.rooms[i].num + '" type="button" ' + flag + ' class=" editBedKeyUp"><img src="img/png/right.png" alt="right"/></button><p>Beds</p><button type="button" class="roomDel ' + ahtung + '"' + flag + ' value="' + model.rooms[i].num + '"><img src="img/png/del.png" alt="Del"/></button></div></div>')
+      }
+
+    }
+
+  }
+
 
   self.btnUnlock = function(){
     self.elements.delBtn.removeAttr('disabled');
@@ -336,6 +364,8 @@ function Controller(model, view){
   $(document).delegate(".editBedInput", "change", editBedInput);
   $(document).delegate(".editBedKeyDelete", "click", editBedKeyDelete);
   $(document).delegate(".editBedKeyAdd", "click", editBedKeyAdd);
+  $(document).delegate( ".roomAddOnEdit", "click", roomAddOnEdit);
+  
   
   
 //===========================================
@@ -774,7 +804,10 @@ function Controller(model, view){
     window.location.href = '/houses' + model.placeData.houseID;
   };
 
-
+function roomAddOnEdit() {
+  model.roomAdd();
+  view.initRooms();
+}
 
 
 
@@ -783,15 +816,15 @@ function Controller(model, view){
 //---------------ADD-ROOM-------------------
   function roomAdd (){
     model.roomAdd();
-    view.initRooms();
+    view.initRoomsOnAdd();
 
   };
 //---------------DEL-ROOM-------------------
   function roomDel (){
     var num = $(this).attr('value');
-    view.roomDel(num);
+    // view.roomDel(num);
     model.roomDel(num);
-    view.initRooms();
+    view.initRoomsOnAdd();
     return false;
   };
 
