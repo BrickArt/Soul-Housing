@@ -215,7 +215,7 @@ router.get('/report/createReport', async (req, res, next) => {
                 // console.log(residences[i].userID, '<==>',id)
                 
                 if (residences[i].userID && residences[i].userID.toString() === id){
-                    console.log('o')
+                    // console.log('o')
                     return residences[i]
                 }
             }
@@ -261,13 +261,13 @@ router.get('/report/createReport', async (req, res, next) => {
 
         const residenceInfo = await findActualResidence(residencesByUser);
         const emptyValue = "empty";
-        console.log('info', residencesByUser)
+        // console.log('info', residencesByUser)
 
         if (el.residence && residenceInfo) {
             var house = await makeHouseInfo(el.residence)
             if (!houseInfo[0] || !houseInfo[0].address) {
                 addres = emptyValue;
-                console.log('empty')
+                // console.log('empty')
 
             } else {
                 addres = houseInfo[0].address;
