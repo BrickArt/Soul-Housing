@@ -15,6 +15,11 @@ var join           = require ('path').join,
     express        = require ('express'),
     app            = express ();
 
+var log = require('./lib/log')(module);
+
+log.debug('App is created')
+
+
 //------------------Routes-------------------
 var index = require('./routes/index');
 var api = require('./routes/api');
@@ -81,12 +86,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 //-------------------Sass--------------------
-app.use(sassMiddleware({
-  src: join(__dirname, 'public'),
-  dest: join(__dirname, 'public'),
-  indentedSyntax: true,
-  sourceMap: true
-}));
+// app.use(sassMiddleware({
+//   src: join(__dirname, 'public'),
+//   dest: join(__dirname, 'public'),
+//   indentedSyntax: true,
+//   sourceMap: true
+// }));
 
 
 
