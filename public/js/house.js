@@ -8,9 +8,22 @@ function Model(data){
   self.houseWith;
   self.placer = {};
 
-  self.roomDel = function(i){
-    self.rooms[i] = null;
-    console.log(self.rooms);
+  self.sortRoomsByNum = function(arr) {
+    arr.sort(function(a, b) {
+      if (a.num > b.num) return 1;
+      if (a.num < b.num) return -1;
+      return 0;
+    })
+  }
+
+  self.roomDel = function(num){
+    for (var i = 0; i < self.rooms.length; i++) {
+      var room = self.rooms[i];
+      if (room && +room.num === +num) return self.rooms[i] = null
+    }
+    
+    // self.rooms[i] = null;
+    // console.log(self.rooms);
   };
 
   self.roomAdd = function(){
@@ -20,10 +33,11 @@ function Model(data){
         if(self.rooms[i] === null){
           var r = {
             num: i + 1,
-            beds: 1
+            beds: [{num: 1, userID: null, status: false}]
           };
           self.rooms[i] = r;
           console.log(self.rooms);
+          
           return self.rooms
         }
       }
@@ -31,16 +45,24 @@ function Model(data){
     }
     var r = {
       num: self.rooms.length + 1,
-      beds: 1
+      beds: [{num: 1, userID: null, status: false}]
     };
     self.rooms.push(r);
     console.log(self.rooms);
     return self.rooms
   }
 
-  self.roomSave = function (id, beds){
-    self.rooms[id].beds = beds;
-    return self.rooms;
+  self.roomSave = function (num, beds){
+    for (var i = 0; i < self.rooms.length; i++) {
+      var room = self.rooms[i];
+      if (room && +room.num === +num) {
+        var bedsD = [];
+        for (var n = 1; n < beds; n++) {
+          bedsD.push({num: n, userID: null, status: false})
+        }
+        return self.rooms[i].beds = bedsD
+      }
+    }
   };
 
   self.editInit = function(){
@@ -202,6 +224,28 @@ function View(model){
 
   }
 
+  self.initRoomsOnAdd = function(){
+    self.elements.rooms.html('');
+    for (var i = 0; i < model.rooms.length; i++) {
+      if(model.rooms[i] !== null){
+
+        var flag = "";
+        var ahtung = '';
+        if (model.rooms[i] && model.rooms[i].beds) {
+          for (var y = 0; y < model.rooms[i].beds.length; y++) {
+            if (model.rooms[i].beds[y].status){
+              // flag = 'disabled';
+              // ahtung = 'delEditFalse';
+            }
+          }
+        }
+        self.elements.rooms.append('<div class="addText addRoom ' + ahtung + '"><div class="addRoomLeft "><p class="room">Room #</p><p class="roomNum">' + model.rooms[i].num + '</p></div><div class="addRoomRight"><button ' + flag + ' class="bedsLeft" value="' + model.rooms[i].num + '" type="button"><img src="img/png/left.png" alt="left"/></button><input id="room_' + model.rooms[i].num + '" class="beds" value="' + model.rooms[i].beds.length + '" type="number" max="50" min="1" name="rooms[' + i + ']"/><button value="' + model.rooms[i].num + '" type="button" ' + flag + ' class="bedsRight"><img src="img/png/right.png" alt="right"/></button><p>Beds</p><button type="button" class="roomDel ' + ahtung + '"' + flag + ' value="' + model.rooms[i].num + '"><img src="img/png/del.png" alt="Del"/></button></div></div>')
+      }
+
+    }
+
+  }
+
 
   self.btnUnlock = function(){
     self.elements.delBtn.removeAttr('disabled');
@@ -289,7 +333,7 @@ function Controller(model, view){
   $(document).delegate( ".gistDel", "click", del);
 
   $(document).delegate( ".roomAdd", "click", roomAdd);
-  $(document).delegate( ".beds", "change", saveBeds);
+  $(document).delegate( ".beds", "change", AddBedInput);
   $(document).delegate( ".roomDel", "click", roomDel);
 
   $(document).delegate( ".gistEdit", "click", edit);
@@ -336,19 +380,125 @@ function Controller(model, view){
   $(document).delegate(".editBedInput", "change", editBedInput);
   $(document).delegate(".editBedKeyDelete", "click", editBedKeyDelete);
   $(document).delegate(".editBedKeyAdd", "click", editBedKeyAdd);
+  $(document).delegate( ".roomAddOnEdit", "click", AddBedInput);
+  
   
   
 //===========================================
 //---------------Functions-------------------
 //===========================================
 
+function bedUp (){
+  var up = $(this).val();
+
+  model.rooms.forEach(function(room) {
+    if (room && +room.num === +up) {
+      var roomNum;
+        for(i = 1; i <= 50; i++){
+          var flag = true;
+          for(y = 0; y < room.beds.length; y++){
+            if (+room.beds[y].num === +i) {
+              flag = false;
+            }
+          }
+          if(flag) {
+            roomNum = i;
+            break
+          }
+        }
+      room.beds.push({
+        num: roomNum,
+        userID: null,
+        status: false
+      })
+    }
+  });
+  
+  view.initRoomsOnAdd();
+}
+function bedDown (){
+  var down = $(this).val();
+
+    model.rooms.forEach(function (room) {
+      if (room && +room.num === +down) {
+        for (var i = room.beds.length - 1; i >= 0; i--) {
+          var bed = room.beds[i];
+
+          if (!bed.status) {
+            room.beds.splice(i, 1);
+            break
+          }
+
+          // console.log(i)
+          
+        }
+      }
+    });
+
+    view.initRoomsOnAdd();
+}
+
+function AddBedInput() {
+  var bedsCurrent = $(this).val();
+  var id = $(this).attr('id').slice(5);
+
+  model.rooms.forEach(function(room) {
+    if (room && +room.num === +id) {
+      // console.log('abc')
+      
+      if (bedsCurrent > room.beds.length) {
+        for(var i = 0; i < bedsCurrent; i++) {
+          // console.log('abc')
+          
+          if (!room.beds[i]){
+            room.beds[i] = {
+              num: i + 1,
+              userID: null,
+              status: false
+            }
+          }
+
+        }
+        
+      } else {
+        for (var i = room.beds.length - 1; i >= bedsCurrent; i--) {
+          // console.log('abc')
+
+          if (!room.beds[i].status) {
+            room.beds.splice(i, 1);
+          }
+
+        }
+        // console.log('Rooms - ' + room.beds.length)
+        return          
+      }
+    }
+  })
+
+  view.initRoomsOnAdd();
+  // console.log(id)
+};
+
   function editBedKeyUp() {
     var up = $(this).val();
 
     model.house.rooms.forEach(function(room) {
       if (room && +room.num === +up) {
+        var roomNum;
+        for(i = 1; i <= 50; i++){
+          var flag = true;
+          for(y = 0; y < room.beds.length; y++){
+            if (+room.beds[y].num === +i) {
+              flag = false;
+            }
+          }
+          if(flag) {
+            roomNum = i;
+            break
+          }
+        }
         room.beds.push({
-          num: room.beds.length,
+          num: roomNum,
           userID: null,
           status: false
         })
@@ -382,6 +532,7 @@ function Controller(model, view){
     view.initRooms();
     // console.log('wahaha')
   };
+  
   function editBedInput() {
     var bedsCurrent = $(this).val();
     var id = $(this).attr('id').slice(5);
@@ -463,18 +614,31 @@ function Controller(model, view){
 
     })
     if (flag) {
-      model.house.rooms.push({
-      num: model.house.rooms.length + 1,
-      beds: [
-        {
-          num: 1,
-          userID: null,
-          status: false
+      var roomNum;
+        for(i = 1; i <= 50; i++){
+          var flag = true;
+          for(y = 0; y < model.house.rooms.length; y++){
+            if (+model.house.rooms[y].num === +i) {
+              flag = false;
+            }
+          }
+          if(flag) {
+            roomNum = i;
+            break
+          }
         }
-      ]
-    })}
+      model.house.rooms.push({
+        num: roomNum,
+        beds: [
+          {
+            num: 1,
+            userID: null,
+            status: false
+          }
+        ]
+      })}
       
-
+    model.sortRoomsByNum(model.house.rooms)
     view.initRooms();
     console.log('wahha')
   };
@@ -774,7 +938,10 @@ function Controller(model, view){
     window.location.href = '/houses' + model.placeData.houseID;
   };
 
-
+function roomAddOnEdit() {
+  model.roomAdd();
+  view.initRooms();
+}
 
 
 
@@ -783,15 +950,15 @@ function Controller(model, view){
 //---------------ADD-ROOM-------------------
   function roomAdd (){
     model.roomAdd();
-    view.initRooms();
+    view.initRoomsOnAdd();
 
   };
 //---------------DEL-ROOM-------------------
   function roomDel (){
     var num = $(this).attr('value');
-    view.roomDel(num);
+    // view.roomDel(num);
     model.roomDel(num);
-    view.initRooms();
+    view.initRoomsOnAdd();
     return false;
   };
 
@@ -840,6 +1007,11 @@ function Controller(model, view){
         i--
       }
     }
+    
+    model.sortRoomsByNum(rooms);
+    rooms.forEach(function(room) {
+      model.sortRoomsByNum(room.beds)
+    })
     // var roomItems = [];
     // rooms.forEach(function(room) {
     //   var b = []
@@ -1014,27 +1186,7 @@ function Controller(model, view){
 //---------------Functions-------------------
 //===========================================
 
-  function bedUp (){
-    console.log('click');
-    var num = $(this).val();
-    var data = $('#room_' + num).val()
-    var val = +data + 1
-    if(data<50){
-      model.roomSave(num, val)
-      view.initRooms();
-    }
-    return;
-  }
-  function bedDown (){
-    var num = $(this).val();
-    var data = $('#room_' + num).val()
-    var val = +data - 1
-    if(data>0){
-      model.roomSave(num, val)
-      view.initRooms();
-    }
-    return;
-  }
+  
 
 
 function guestsList (){
