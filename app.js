@@ -48,6 +48,8 @@ var MongoStore = require('connect-mongo')(session);
 
 app.use(logger('dev'));
 
+var dev = require('./routes/development.route')
+
 var Residence = require('./models/residence').Residence;
 var Payment = require('./models/payment').Payment;
 var Unpaid = require('./models/unpaid').Unpaid;
@@ -271,12 +273,14 @@ app.use('/', unpaid);
 app.use('/', pending);
 app.use('/', type);
 
+app.use('/development', dev);
+
 
 //------------------Static-------------------
 app.use(express.static(join(__dirname, 'public')));
 
 app.get('/', function(err, req, res, next){
-  console.error(err.stack);
+  log.error(err.stack);
   res.status(500).send('Something broke!');
 })
 
@@ -291,5 +295,5 @@ var server = app.server = http.createServer(app);
 // });
 
 server.listen(process.env.PORT || config.get('port'), function (){
-  console.log('App listening on port - ' + config.get('port') + '!')
+  log.info('App listening on port - ' + config.get('port') + '!')
 });
