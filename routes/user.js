@@ -5,6 +5,8 @@ var path = require('path');
 var multer = require('multer');
 var Jimp = require("jimp");
 
+var log = require('../lib/log')(module);
+
 var checkAuth = require('../middleware/checkAuth');
 
 var cloudinary = require('cloudinary');
@@ -193,6 +195,7 @@ router.post('/users/add', upload.any(), function(req, res, next){
       console.log(err);
       res.sendStatus(403);
     } else {
+      log.info('User create - ' + guest.name + ' ' + guest.lastname)
       res.sendStatus(200);
     }
   });
@@ -253,10 +256,16 @@ router.post('/users/update:id?', upload.any(), function(req, res, next){
     doc.description = req.body.description;
     doc.image = guest.image;
 
-    doc.save();
-    return;
+    doc.save(function (err) {
+      if (err) {
+        log.error(err)
+        return res.sendStatus(403);
+      } else {
+        log.info('User update - ' + guest.name + ' ' + guest.lastname)
+        return res.sendStatus(200);
+      }
+    });
   });
-  res.sendStatus(200);
 
 });
 
@@ -282,8 +291,10 @@ router.post('/users/delete/user_:id?', function(req, res, next){
     }
   });
 }, function(id, req, res, next){
-  Gist.findByIdAndRemove(id).exec();
-  res.sendStatus(200);
+  Gist.findByIdAndRemove(id).exec(function(doc) {
+    log.info('User delete - ' + doc.name + ' ' + doc.lastname)
+    return res.sendStatus(200);
+  });
 });
 
 //-------------------PLACE--------------------
@@ -472,6 +483,7 @@ router.get('/users/history:id?', function(req, res, next){
     return;
   });
 }, function(guest, req, res, next){
+  log.info('User history geted')
   res.send(guest)
 });
 

@@ -3,7 +3,7 @@ var router = express.Router();
 var fs = require('fs');
 var path = require('path');
 
-
+var log = require('../lib/log')(module);
 
 //===========================================
 //-----------------DataBase------------------
@@ -75,6 +75,7 @@ router.post('/charge', function(req, res, next){
               });
 
             console.log(n/1000 + ' ms')
+            log.info('Unpaid is success!')
             res.status(200).send('unpaid is success')
         }
 

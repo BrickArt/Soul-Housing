@@ -6,6 +6,9 @@ var multer = require('multer');
 var piexif = require("piexifjs");
 var Jimp = require("jimp");
 
+var log = require('../lib/log')(module);
+
+
 var checkAuth = require('../middleware/checkAuth');
 var rotate = require('../middleware/photoRotate');
 
@@ -136,8 +139,10 @@ router.post('/houses/add', upload.any(), function(req, res, next){
   data.save(function (err) {
     if (err) {
       console.log(err);
+      log.error(err)
       res.sendStatus(403);
     } else {
+      log.info('House is added #' + data._id.toString())
       res.sendStatus(200);
     }
   });
@@ -159,8 +164,10 @@ router.post('/houses/delete/house_:id?', function(req, res, next){
   //     });
   //   };
   // })
-  House.findByIdAndRemove(id).exec();
-  res.sendStatus(200);
+  House.findByIdAndRemove(id).exec(function(doc) {
+    log.info('House is deleted #' + doc._id.toString())
+    return res.sendStatus(200);
+  });
 });
 
 
@@ -300,9 +307,11 @@ router.post('/houses/update:id?', upload.any(), function(req, res, next){
 
     doc.save(function (err) {
       if (err) {
-        console.log(err);
+        // console.log(err);
+        log.error(err)
         res.sendStatus(403);
       } else {
+        log.info('House is updated #' + doc._id.toString())
         res.sendStatus(200);
       }
     });

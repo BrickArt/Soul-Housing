@@ -17,6 +17,9 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage });
 
+var log = require('../lib/log')(module);
+
+
 
 //===========================================
 //-----------------DataBase------------------
@@ -106,9 +109,11 @@ router.post('/payments/add:id?', upload.any(), function(req, res, next){
 
     doc.save(function (err) {
       if (err) {
-        console.log(err);
+        // console.log(err);
+        log.error(err)
         res.sendStatus(403);
       } else {
+        
         return next(program);
       }
     });
@@ -140,9 +145,11 @@ router.post('/payments/add:id?', upload.any(), function(req, res, next){
   // console.log(data);
   data.save(function (err) {
     if (err) {
-      console.log(err);
+      // console.log(err);
+      log.error(err)
       res.sendStatus(403);
     } else {
+      log.info('Payment is added #' + data._id)
       res.sendStatus(200);
     }
   });
