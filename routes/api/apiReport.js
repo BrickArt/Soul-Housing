@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var async = require('async');
 const fs = require('fs');
-var config = require('../../config')
+var config         = require ('../../config')
 
 var checkAuth = require('../../middleware/checkAuth');
 
@@ -27,7 +27,7 @@ const exel = require('../../lib/exelCreate');
 //===========================================
 
 //------------------GET--------------------
-router.get('/report/data', function (req, res, next) {
+router.get('/report/data', function(req, res, next){
     var items = {
         freeBeds: 0,
         houses: 0,
@@ -35,7 +35,7 @@ router.get('/report/data', function (req, res, next) {
         unpaid: 0
     };
 
-    House.find().then(function (doc) {
+    House.find().then(function(doc){
         for (var i = 0; i < doc.length; i++) {
             for (var x = 0; x < doc[i].rooms.length; x++) {
                 for (var y = 0; y < doc[i].rooms[x].beds.length; y++) {
@@ -51,8 +51,8 @@ router.get('/report/data', function (req, res, next) {
             }
         }
     });
-}, function (items, req, res, next) {
-    Payment.find().then(function (doc) {
+}, function(items, req, res, next){
+    Payment.find().then(function(doc){
 
 
         items.p = doc;
@@ -60,14 +60,14 @@ router.get('/report/data', function (req, res, next) {
 
 
     })
-}, function (items, req, res, next) {
-    Gist.find().then(function (doc) {
+}, function(items, req, res, next){
+    Gist.find().then(function(doc){
         items.u = doc;
         items.users = doc.length;
         next(items);
     })
 
-}, function (items, req, res, next) {
+}, function(items, req, res, next){
     var result = 0;
     for (let i = 0; i < items.u.length; i++) {
         const u = items.u[i];
@@ -77,7 +77,7 @@ router.get('/report/data', function (req, res, next) {
             if (u._id.toString() === p.userID && p.status != 'pending') {
                 balance += +p.sum;
             }
-            if (a === items.p.length - 1 && balance > 0) {
+            if(a === items.p.length - 1 && balance > 0){
                 result += balance;
             }
         }
@@ -92,7 +92,7 @@ router.get('/report/data', function (req, res, next) {
 
     }
 
-}, function (items, req, res, next) {
+}, function(items, req, res, next){
     console.log(items)
     res.send(items)
 });
@@ -104,13 +104,13 @@ router.get('/report/data', function (req, res, next) {
 //------------------Users By program--------------------
 router.post('/report/users', async (req, res, next) => {
     const current = await Gist.aggregate([
-        {
-            $group: {
-                _id: { program: "$program" },
-                count: { $sum: 1 }
+            {
+                $group: {
+                    _id: { program: "$program"},
+                    count: {$sum: 1}
+                }
             }
-        }
-    ]
+        ]
     );
 
     if (!current || current.error) return res.status(500).send(current);
@@ -135,32 +135,31 @@ router.post('/report/payments', async (req, res, next) => {
     const program = req.body.program;
 
     const current = await Payment.aggregate([
-        {
-            $match: {
-                program: program,
-                date: {
-                    $gt: start,
-                    $lt: end
+            {
+                $match: {
+                    program: program,
+                    date: {
+                        $gt: start,
+                        $lt: end
+                    }
                 }
+            },
+            {
+                $group: {
+                    _id: {
+                        month: {$month: "$date"},
+                        day: {$dayOfMonth: "$date"},
+                        year: {$year: "$date"}
+                    },
+                    //_id: {date: "$date"},
+                    totalSum: {$sum: "$sum"},
+                    count: {$sum: 1}
+                }
+            },
+            { $sort:
+            { "_id": 1 }
             }
-        },
-        {
-            $group: {
-                _id: {
-                    month: { $month: "$date" },
-                    day: { $dayOfMonth: "$date" },
-                    year: { $year: "$date" }
-                },
-                //_id: {date: "$date"},
-                totalSum: { $sum: "$sum" },
-                count: { $sum: 1 }
-            }
-        },
-        {
-            $sort:
-                { "_id": 1 }
-        }
-    ]
+        ]
     );
 
     if (!current || current.error) return res.status(500).send(current);
@@ -192,7 +191,7 @@ router.get('/report/createReport', async (req, res, next) => {
     };
 
     const makeBalance = async pays => {
-        var a = 0;
+        var  a = 0;
 
         for (let i in pays) {
             if (pays[i].sum && pays[i].status != "pending") {
@@ -203,42 +202,100 @@ router.get('/report/createReport', async (req, res, next) => {
         return a;
     };
 
+
+    //**********************************residencesUser DB cache *****************************
+
+    const residencesUser = await Residence.find()
+        .catch(e => {
+            return e
+        });
+    const getDb = async (db, id, name) => {
+        for (let i in db) {
+            const element = db[i];
+            if (element[name] === id && element.endDate === null) return element;
+        }
+    };
+    /*
+     { _id: 5a53d624c032000004eae591,
+     userID: '5a53d2fdc032000004eae568',
+     houseID: '5a2688a2e07bab686882ae11',
+     room: 1,
+     bed: 2,
+     price: 500,
+     __v: 0,
+     created: 2018-01-08T20:35:48.599Z,
+     description: null,
+     endDate: null,
+     startDate: 2018-01-08T00:00:00.000Z }
+     */
+    //**********************************houseUser DB cache *****************************
+    const houseUser = await House.find()
+        .catch(e => {
+            return e
+        });
+    const getDbH = async (db, id, name) => {
+        for (let i in db) {
+            const element = db[i];
+            //console.log('element', element);
+            //console.log('address', element.address);
+            if (id == element[name]) {
+                return element;
+            }
+        }
+    };
+    /*
+     { _id: 5a268a08e07bab686882aeac,
+     name: 'SOUL 10',
+     address: '214-216 W. 79th STREET, LOS ANGELES, CA 90003',
+     description: '',
+     image: 'http://res.cloudinary.com/soul-housing/image/upload/v1512475144/a8ypq65alq86k1tzslsa.jpg',
+     __v: 1,
+     created: 2017-12-05T11:59:04.740Z,
+     rooms:
+     [ [Object],
+     [Object],
+     [Object],
+     [Object],
+     [Object],
+     [Object],
+     [Object],
+     [Object],
+     [Object],
+     [Object] ] }
+     */
+
+
+    // Начинаем перебирать каждого гостя наполняя его инфой
     await gistInfo.forEachAsync(async el => {
-        const residencesByUser = await Residence.find({ userID: el._id.toString() })
-            .catch(e => {
-                return e
-            });
-        let addres, room, price, date;
 
-        // const payments = await Payment.find({userID: el._id.toString()})
-        // .catch(e => {
-        //     return e
-        // });
-
-        // var balance = await makeBalance(payments);
-
-
-        const residenceInfo = await findActualResidence(residencesByUser);
+        const residencesByUser = await getDb(residencesUser, el._id.toString(), 'userID');
+        //console.log('residencesByUser', residencesByUser);
+        const residenceInfo = residencesByUser;
         const emptyValue = "empty";
 
+        let addres, room, price, date;
+        //если с базы что-то вернулось
         if (el.residence && residenceInfo) {
-            const houseInfo = await House.find({ _id: residenceInfo.houseID })
+            const houseInfo = await getDbH(houseUser, residenceInfo.houseID, '_id')
                 .catch(e => {
                     console.log(e);
                     return e
                 });
-            if (!houseInfo[0] || !houseInfo[0].address) {
+            //console.log('houseID', residenceInfo.houseID);
+            //console.log('houseInfo', houseInfo);
+
+            if (!houseInfo || !houseInfo.address) {
                 addres = emptyValue;
             } else {
-                addres = houseInfo[0].address;
+                addres = houseInfo.address;
             }
             var d = residenceInfo.startDate.getDate();
             var m = residenceInfo.startDate.getMonth() + 1;
             var y = residenceInfo.startDate.getFullYear();
-            if (d < 10) {
+            if(d<10){
                 d = '0' + d;
             }
-            if (m < 10) {
+            if(m<10){
                 m = '0' + m;
             }
 
@@ -251,7 +308,7 @@ router.get('/report/createReport', async (req, res, next) => {
             price = "0";
         }
 
-        console.log('Balance is ')
+        //console.log('Balance is ')
 
 
         let answer = {
@@ -262,11 +319,11 @@ router.get('/report/createReport', async (req, res, next) => {
             ROOM: room,
             SOURCE: el.program,
             RATE: price,
-            MOVE_IN: date,
+            MOVE_IN: date
             // PENDING: balance.toString()
         };
         response.push(answer);
-        //if (!residenceInfo || residenceInfo.error) return res.status(500).json(residenceInfo);
+        //if (!residenceInfo || residenceInfo.error) return res.status(500).json
 
     });
     //console.log(response);
@@ -297,13 +354,13 @@ router.get('/report/createReport', async (req, res, next) => {
     date.setHours(date.getUTCHours() + config.get('timeZone'));
     var h = date.getHours();
     var min = date.getMinutes();
-    if (h < 10) h = '0' + h;
-    if (min < 10) min = '0' + min;
+    if(h < 10) h = '0' + h;
+    if(min < 10) min = '0' + min;
     var m = date.getMonth() + 1;
     var d = date.getDate();
     var y = date.getFullYear().toString().slice(2);
-    if (m < 10) m = '0' + m;
-    if (d < 10) d = '0' + d;
+    if(m < 10) m = '0' + m;
+    if(d < 10) d = '0' + d;
     // var fileName = 'census_' + h + '_' + min + '_' + m + '_' + d + '_' + y + '.xlsx'
     var fileName = 'census_' + m + '_' + d + '_' + y + '_' + h + '_' + min + '.xlsx'
 
