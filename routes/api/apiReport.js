@@ -171,11 +171,14 @@ router.post('/report/payments', async (req, res, next) => {
 //------------------Exel create--------------------
 
 router.get('/report/createReport', async (req, res, next) => {
-    const gistInfo = await Gist.find()
+    const gistInfo = await Gist.find({status: true})
         .catch(e => {
             return e
         });
-
+    const payments = await Payment.find()
+        .catch(e => {
+            return e
+        })
 
 
     if (!gistInfo || gistInfo.error) return res.status(500).json(gistInfo);
@@ -190,16 +193,18 @@ router.get('/report/createReport', async (req, res, next) => {
         }
     };
 
-    const makeBalance = async pays => {
+    const makeBalance = async id => {
         var  a = 0;
 
-        for (let i in pays) {
-            if (pays[i].sum && pays[i].status != "pending") {
-                a += +pays[i].sum;
+        for (let i of payments) {
+            if (id === i.userID && i.status === 'pending') {
+                a += +i.sum;
+                console.log(i)
             }
+
         }
 
-        return a;
+        return -a;
     };
 
 
@@ -265,7 +270,7 @@ router.get('/report/createReport', async (req, res, next) => {
      */
 
 
-    // Начинаем перебирать каждого гостя наполняя его инфой
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
     await gistInfo.forEachAsync(async el => {
 
         const residencesByUser = await getDb(residencesUser, el._id.toString(), 'userID');
@@ -273,8 +278,10 @@ router.get('/report/createReport', async (req, res, next) => {
         const residenceInfo = residencesByUser;
         const emptyValue = "empty";
 
+        let getUserPending = await makeBalance(el._id.toString())
+
         let addres, room, price, date;
-        //если с базы что-то вернулось
+        //пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         if (el.residence && residenceInfo) {
             const houseInfo = await getDbH(houseUser, residenceInfo.houseID, '_id')
                 .catch(e => {
@@ -319,8 +326,8 @@ router.get('/report/createReport', async (req, res, next) => {
             ROOM: room,
             SOURCE: el.program,
             RATE: price,
-            MOVE_IN: date
-            // PENDING: balance.toString()
+            MOVE_IN: date,
+            PENDING: getUserPending.toString()
         };
         response.push(answer);
         //if (!residenceInfo || residenceInfo.error) return res.status(500).json
