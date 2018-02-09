@@ -94,7 +94,7 @@ router.get('/report/data', function(req, res, next){
     
   })
 }, function(items, req, res, next){
-  Gist.find().then(function(doc){
+  Gist.find({status: true}).then(function(doc){
     items.u = doc
     items.users = doc.length;
     next(items);
