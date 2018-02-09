@@ -572,6 +572,9 @@ function getPages(items){
             } else {
               room.columns[2].table.body[0][0] = bed;
             }
+            if (items.houses[i].rooms[e].beds.length === 1) {
+              room.columns.splice(2, 1)
+            }
             // расширяем для большего количества кроватей
           }
         }
@@ -734,6 +737,9 @@ if(result.rooms.length > 0){
           } else {
             room.columns[2].table.body[0][0] = bed;
           }
+          if (result.rooms[i].beds.length === 1) {
+            room.columns.splice(2, 1)
+          }
           // расширяем для большего количества кроватей
 
           if(result.rooms[i].beds.length === 1){
@@ -795,6 +801,9 @@ if(result.rooms.length > 0){
             room.columns[1].table.body[0][0] = bed;
           } else {
             room.columns[2].table.body[0][0] = bed;
+          }
+          if (result.rooms[i].beds.length === 1) {
+            room.columns.splice(2, 1)
           }
           // расширяем для большего количества кроватей
         }
